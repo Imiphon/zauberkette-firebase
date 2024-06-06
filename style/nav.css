@@ -1,0 +1,172 @@
+
+
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+.nav-left {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+.nav-left img {
+  width: 60px;
+  height: 60px;
+  
+}
+.nav-center {
+  
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-right{
+  flex-grow: 0.2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menuToggle ul{
+position: relative;
+left: -80px;
+}
+
+#menuToggle {
+  display: block;
+  position: absolute;
+  top: 20px;
+  right: 220px; /* POSITIONsPunkt menuToggle/menu */
+  z-index: 1;
+  -webkit-user-select: none;
+  user-select: none;
+  
+}
+
+#menuToggle a {
+  text-decoration: none;
+  color: #232323; /* FONT COLOR */
+  transition: color 0.3s ease;
+  
+}
+
+#menuToggle a:hover {
+  color: tomato;
+}
+
+/* HIDDEN-CHECKBOX über hamburger */
+#menuToggle input {
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -11px;
+  left: 188px;
+  cursor: pointer;
+  opacity: 0; /* BOX IST VERSTECKT*/
+  z-index: 2; /* HIDDEN-CHECKBOX über hamburger */
+  -webkit-touch-callout: none;
+  /*spezielle webkit-erweiterung
+    verhindert standardkontext wenn user
+    touchscreen tippt und hält*/
+}
+
+/* hamburger */
+#menuToggle span {
+  display: block;
+  width: 33px; /*Strichdicke*/
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  right: -200px; /*burger & X Position horizontal verschieben*/
+  background: #232323; /*COLOR FÜR BURGER*/
+  border-radius: 3px;
+  z-index: 1;
+  transform-origin: 4px 0px;
+  transition: /*cubic-b. = timing-func mit beschleunigung und verzögerung*/ transform
+      0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease; /*Sichtbarkeit um 0.05s verzögert*/
+  /*ease = accelerando-ritardando*/
+}
+
+#menuToggle span:first-child {
+  /* Bestimmungspunkt von parent aus
+     wo transform startet alt. für hier
+     left top oder 0px 0px*/
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+/* Transform span zu 'X'.*/
+#menuToggle input:checked ~ span {
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323; /*COLOR FÜR X*/
+}
+/* versteckt dritten span */
+#menuToggle input:checked ~ span:nth-last-child(3) {
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+/* Transform span zu crossmark.*/
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  transform: rotate(-45deg) translate(0, -1px);
+}
+/*Position festlegen*/
+#menu {
+  position: absolute;
+  width: 100px;
+  margin: -100px 0 0 200px; /*Top, left, bottom,right mit umgekehrter Wirkung*/
+  padding: 20px;
+  padding-top: 125px;
+
+  background: #ededed;
+  list-style-type: none;
+  /* kantenglättung für chrom und safari fonts*/
+  -webkit-font-smoothing: antialiased;
+  /* Bestimmungspunkt von parent aus 
+   wo transform startet alt. für hier
+   left top oder 0px 0px*/
+  transform-origin: 100% 0%; /*anstatt: 0 0*/
+  transform: translate(100%, 0); /*anstatt: -100%, 0*/
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+#menu li {
+  padding: 10px 0;
+  font-size: 22px;
+}
+
+#menuToggle input:checked ~ ul {
+  /* belässt Objekt in Form und Position bei Ausblendung*/
+  transform: none;
+}
+
+@media (max-width: 375px) {
+  body {
+    overflow-x: hidden;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;   
+  }
+  nav {
+    justify-content: flex-start;
+  }
+  .nav-center {
+
+padding-left: 80px;
+  }
+  #menu {
+    position: absolute;
+    width: 100px;
+    margin: -100px 0 0 160px; /*Top, left, bottom,right mit umgekehrter Wirkung*/
+}

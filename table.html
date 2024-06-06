@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <link rel="shortcut icon" href="images/Locri-49K.jpeg">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style/nav.css">
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/table.css">
+
+    <script src="scripts/arrays.js"></script>
+    <script src="scripts/templates.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/play-cards.js"></script>
+    <script src="scripts/play-accords.js"></script>
+    <script src="scripts/start-end-round.js"></script>
+    <title>Zauberkette</title>
+</head>
+
+<body class="table-body" onload="renderTable()" id="body">
+    <!-------------------- NAVBAR -------------------->
+    <header w3-include-html="./templates/header.html"></header>
+    <!-------------------- MAIN STUFF -------------------->
+    <div class="container">
+        <main class="table-content" id="tableContentID">            
+            <div class="observer-part" id="observerPartID">
+                        <!-------------OBSERVER PART-------------------->
+                <div class="accord-zone" id="">
+                    <div class="circle-img" id="obsCircle1">
+                        <!-------------ACC CIRCLE-------------------->
+                    </div>
+                    <div class="circle-img" id="obsCircle2">
+                        <!-------------ACC CIRCLE-------------------->
+                    </div>
+                </div>
+
+                <div class="top-zone" id="topZoneID"> <!-- mit btn startRound wird eigentlich PL1 und Pl2 getauscht-->
+                    <h3>Observer-Card Zone</h3>
+                    <div class="card-group" id="observerStackID">
+                        <!-- 5 Cards -->
+                    </div>
+                </div>
+            </div>
+
+            <!-------------SECOND PART-------------------->
+            <div class="second-part" id="secondPartID">
+                <div class="gameGoal">Spielziel ist die erste:<br>5er-Kette</div>
+                <div class="info-zone" id="infoID">
+                    <div class="info-text" id="infoTextID">
+                        <!------------- CURRENT INFOS-------------->
+                    </div>
+                    <div class="btn-group">
+                        <button onclick="awaitChangeCard()" id="changeClicks(1)"
+                            style="display: inline;">Kartentausch</button>
+                        <button onclick="noChanges()" id="changeClicks(2)" style="display: inline;">Nothing to
+                            Change</button>
+                        <button onclick="setCardCombi()" id="changeClicks(3)" style="display: none;">Komponiere einen
+                            Zauber</button>
+                        <button onclick="useMellot()" id="changeClicks(4)" style="display: none;">useMellot</button>
+                        <button onclick="useGoblin()" id="changeClicks(5)" style="display: none;">useGoblin</button>
+                        <button onclick="useWizzard()" id="changeClicks(6)" style="display: none;">useWizzard</button>
+                        <button onclick="stepBack()" id="changeClicks(8)" style="display: none;">Step Back</button>
+                        <!--actually nextPlayer() insted of changeCard()-->
+                        <button onclick="finishRound()" id="changeClicks(7)" style="display: none;">Finish
+                            Round</button>
+                    </div>
+                </div>
+            </div>
+
+            <!------------------- PLAYER PART ------------------------>
+            <div class="current-player-part" id="currentPlayerPartID">
+                <div class="accord-zone" id="">
+                    <div class="circle-img" id="playerCircle1">
+                        <!-----------ACC CIRCLE---------------->
+                    </div>
+                    <div class="circle-img" id="playerCircle2">
+                        <!-----------ACC CIRCLE---------------->
+                    </div>
+                </div>
+                <div class="bottom-zone" id="">
+                    <h3>Player-Card Zone</h3>
+                    <div class="card-group" id="playerStackID">
+                        <!-- 5 Cards -->
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
+    </div>
+</body>
+
+</html>

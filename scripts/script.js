@@ -1,0 +1,333 @@
+function docID(id) {
+  return document.getElementById(id);
+}
+
+async function includeHTML() { //Kay -- template function for header  unnessassary better js template
+  let includeElements = document.querySelectorAll("[w3-include-html]");
+
+  for (let i = 0; i < includeElements.length; i++) {
+    const element = includeElements[i];
+    file = element.getAttribute("w3-include-html"); // "includes/header.html"
+    let resp = await fetch(file);
+
+    if (resp.ok) {
+      element.innerHTML = await resp.text();
+    } else {
+      element.innerHTML = "Page not found";
+    }
+  }
+}
+
+function chainHelper() { //Kay --handle the cheat sheet for the accords. Z-Index higher!
+  let chainHelper = document.querySelector('.chain-helper');
+  chainHelper.addEventListener('click', function (event) {
+    // Das Event stoppen, damit der document click-Handler nicht ausgelöst wird
+    event.stopPropagation();
+    this.classList.toggle('expanded');
+  });
+  // a click anywhere to remove listener
+  document.addEventListener('click', function () {
+    chainHelper.classList.remove('expanded');
+  });
+}
+
+/* --------------- INDEX.HTML  ------------------------*/
+async function renderIndex() { //Kay -- render the content
+  await includeHTML(); // Kay -- render the header
+  let mainContent = docID("mainContentID"); //Kay - docID?
+  mainContent.innerHTML = infoStartSite(); //Kay -- render Main Content
+}
+
+/*------------------------------- BUTTONS ---------------------------*/
+
+function btnGroup1() { //Kay -- shows infotext start
+  noBtns(); //Kay reset all Button style
+  docID("changeClicks(1)").style.display = "inline";//change card --Kay-- docID!
+  docID("changeClicks(2)").style.display = "inline";//nothing to change
+  showInfo(infoStart()); //Kay --render text of starting round
+}
+
+function btnGroup2() { // Kay --shows infotext after card change
+  noBtns(); //Kay reset all Button style
+  docID("changeClicks(3)").style.display = "inline"; // check Combi
+  docID("changeClicks(7)").style.display = "inline"; //next Round
+  showInfo(infoPlayCards()); //Kay --render
+  specialBtn(); //Kay render button if special card is in deck ( Mellot, Goblin, Wizzard)
+}
+
+function btnGroup3() {
+  noBtns();
+  document.getElementById("changeClicks(8)").style.display = "inline"; //step back
+  document.getElementById("changeClicks(7)").style.display = "inline"; //next Round
+}
+
+/**
+ * Shows special btn if 
+ */
+function specialBtn() { // Kay -- check if special Card in deck
+  for (let i = 0; i < playerCards.length; i++) {
+    let currentCard = docID(`playerCard${i}`);
+    let title = playerCards[i]['title'];
+    if (currentCard.style.opacity != 0.5) { //Kay - use docID 
+      if (title === 'mellot') { //Kay -- maybe &&-short Version
+        docID("changeClicks(4)").style.display = "inline"; //Mellot 
+      } else if (title === 'goblin') {
+        docID("changeClicks(5)").style.display = "inline"; //Goblin
+      } else if (title === 'wizzard') {
+        docID("changeClicks(6)").style.display = "inline"; //Wizzard
+      }
+    }
+  }
+}
+
+function noBtns() { // Kay -- set btn-group buttons invisible
+  let buttons = document.querySelectorAll('.btn-group button');
+  buttons.forEach(function (button) {
+    button.style.display = 'none';
+  });
+}
+
+/*------------------------------- POPUPs  ------------*/
+function openRulesPopup() { //Kay --create the Game rule Pop up -- is that a good style?
+  let popup = document.createElement('div');
+  popup.className = 'popup';
+  popup.style.display = 'flex';
+  body.style.overflow = 'auto';
+  document.body.appendChild(popup);
+  popup.innerHTML = gameRules();
+}
+
+function openCardPopup() { //Kay -- create Pop-Up Element 
+  let popup = document.createElement('div');
+  popup.className = 'popup';
+  popup.style.display = 'flex';
+  document.body.appendChild(popup);
+}
+
+// for wizzard and goblin NOT IN USE BY NOW
+function openCirclePopup() { // Kay -- create Pop up Element
+  let popup = document.createElement('div');
+  popup.className = 'circle-popup';
+  popup.style.display = 'flex';
+  document.body.appendChild(popup);
+  circleBoard(popup);
+}
+
+function closeEvent() { // Kay -- close Popup element by click on the site
+  document.addEventListener('DOMContentLoaded', function () {
+    let popup = document.querySelector('.popup');
+    if (popup) {
+      popup.addEventListener('click', function () {
+        popup.style.display = 'none';
+      });
+    }
+  });
+}
+
+function closePopup() { //Kay -- remove Element
+  let popup = document.querySelector('.popup');
+  if (popup) {
+    popup.remove();
+    body.style.overflow = 'hidden';
+  }
+}
+
+/* --------------- play on table ------------------------*/
+
+async function renderTable() {
+  await includeHTML();
+    showInfo(infoStart());
+    buildStack("playerCards"); // Kay -- render player stack with joined function
+    buildStack("observerCards");
+    renderCircles();
+    chainHelper(); 
+    clickedCardID = -1;    
+    startRound(); //HIER STARTROUND DAMIT ALS ERSTES DER AKTUELLE STAND AUF FIREBASE GEPOSTET WERDEN KANN
+}
+
+/**
+ * add new random card into the playerCards and 
+ * old card is getting amount++ in allTones[]
+ */
+function changeCard() {
+  let newCard = randomStack(); // get randomNewCard with amount:1 --Kay-- or height
+  let oldNr = playerCards[clickedCardID]['nr']; // Kay-- Selected card?
+  let allTonesUpdate = allTones.find((card) => card.nr === oldNr); // Kay -- work it correct?
+  if (allTonesUpdate) {
+    allTonesUpdate.amount++;
+  }
+  playerCards[clickedCardID] = newCard; // Kay -- add card to player cards
+  let cardElement = docID(`playerCard${clickedCardID}`);
+  cardElement.src = newCard.src; //all infos include
+  renderStack("playerCard", "playerStackID"); //Kay --render the player Stack
+  disableCardClicks(); //Kay --remove Pointer and Click-eventlistener of 
+  btnGroup2(); //Kay -- set Btns
+}
+
+function randomStack() {
+  let availableCards = allTones.filter(card => card.amount > 0);
+  let randomIndex = Math.floor(Math.random() * availableCards.length);
+  let randomCard = availableCards[randomIndex];
+
+  do { //Kay -- nutzt man noch do 
+    randomIndex = Math.floor(Math.random() * allTones.length);
+    randomCard = allTones[randomIndex];
+
+    if (randomCard.amount >= 1) {
+      let newAmount = 1; // set amount for userCard to 1
+      allTones[randomIndex].amount -= 1; // reduce  amount in allTones - 1
+      return { ...randomCard, amount: newAmount };
+    }   //repeat process 
+  } while (randomCard === null || randomCard.amount === 0);
+}
+
+function changeWinnerCards() { // Kay -- cards combine to magic card. 
+  for (i = 0; i < cardCombi.length; i++) {
+    clickedCardID = cardCombi[i].stackNr;
+    changeCard();
+    cardCombi[i].stackNr = -1;
+  }
+  noBtns(); //Kay reset all Button style
+  showInfo(infoWinMagic()); //Kay -- Infotext
+
+  setTimeout(() => {
+    finishRound();
+  }, 2000);  
+}
+
+/*------------------------------- CLICK CARD STUFF -------------------------------*/
+
+function stepBack() {
+  if (specialInProgress) {
+    usedSpecials.pop(); //last special will be removed
+    specialInProgress = false;
+    mellotArray = [];
+}
+  stackOpacity1(playerCards, 'playerCard');
+  setBackArrays();
+  disableCardClicks();
+  btnGroup2();
+}
+
+function enablePlayerCards() {
+  const styledCards = document.querySelectorAll('#playerStackID .card');
+  styledCards.forEach((card) => {
+    card.style.pointerEvents = 'auto';
+  });
+}
+
+function enableObserverCards() {
+  const styledCards = document.querySelectorAll('#observerStackID .card');
+  styledCards.forEach((card) => {
+    card.style.pointerEvents = 'auto';
+  });
+}
+
+function disableCardClicks() {
+  const styledCards = document.querySelectorAll('.card');
+  styledCards.forEach((card) => {
+    card.style.pointerEvents = 'none';
+    card.removeEventListener('click', getCardInfo);
+  });
+}
+
+async function getCardInfo(i) { //Kay - why async?
+  clickedCardID = i; // Setzt durch cardClick den Kartenindex
+  console.log("clickedCardID = " + clickedCardID)
+}
+
+function enableObserverAccordClicks() {
+  const styledCards = document.querySelectorAll('#obsCircle1 .accCard, #obsCircle2 .accCard');
+  styledCards.forEach((accordCard) => {
+    accordCard.style.pointerEvents = 'auto';
+  });
+}
+
+function enablePlayerAccordClicks() {
+  const styledCards = document.querySelectorAll('#playerCircle1 .accCard, #playerCircle2 .accCard');
+  styledCards.forEach((accordCard) => {
+    accordCard.style.pointerEvents = 'auto';
+  });
+}
+
+function disableAccClicks() {
+  const styledCards = document.querySelectorAll('.accCard');
+  styledCards.forEach((card) => {
+    card.style.pointerEvents = 'none';
+    card.removeEventListener('click', getCardInfo);
+  });
+}
+
+function savePosition(accInCircle) {
+  let originalTransform = window.getComputedStyle(accInCircle).transform;
+  let originalZIndex = window.getComputedStyle(accInCircle).zIndex;
+  accInCircle.dataset.originalTransform = originalTransform === 'none' ? '' : originalTransform;
+  accInCircle.dataset.originalZIndex = originalZIndex === 'auto' ? '0' : originalZIndex;
+
+  accInCircle.addEventListener('mouseenter', function () {
+    this.style.transform = `${this.dataset.originalTransform} scale(15)`;
+    this.style.zIndex = '10';
+  });
+  accInCircle.addEventListener('mouseleave', function () {
+    this.style.transform = this.style.transform = this.dataset.originalTransform;
+    this.style.zIndex = this.dataset.originalZIndex;
+  });
+}
+
+async function awaitChangeCard() {
+  enablePlayerCards(); // getCardInfo activ
+showInfo(infoChange());
+  btnGroup3();
+  // docID('changeClicks(1)').style.display = 'none';
+  clickedCardID = await waitForCardClick();
+  changeCard();
+  clickedCardID = -1;
+}
+
+function waitForCardClick() {
+  return new Promise((resolve, reject) => {
+    const clickHandler = function (event) {
+      const cardIndex = event.target.getAttribute('stackNr');
+      if (cardIndex === null) return; // Ignore other clicks
+      clickedCardID = parseInt(cardIndex, 10); // 10 stands for dezimal count system
+      document.removeEventListener('click', clickHandler);
+      resolve(cardIndex);
+    };
+    document.addEventListener('click', clickHandler);
+  });
+}
+
+function showInfo(infoTemplate) {
+  let info = docID("infoTextID");
+  if (!info) {
+    console.log('found not the info div');
+    return;
+  }
+  info.innerHTML = '';
+  info.innerHTML = `<h3>Info Text</h3>`;
+  info.innerHTML += infoTemplate;
+
+  // Setzt die Animation direkt über JavaScript
+  info.style.animation = 'none';
+  info.offsetHeight; // Trigger reflow
+  info.style.animation = null; // Reset die Animation
+  info.style.animation = 'yellowFade 4s forwards';
+}
+
+function showWithTimeout(text, timeout, text2) {
+  showInfo(text());
+  setTimeout(() => {
+    if (text2) {
+      showInfo(text2());
+    } else {
+      return;
+    }
+  }, timeout);
+}
+
+/**
+ * Vergleicht neue 
+ */
+function theWinnerIs() { 
+  console.log('theWinneIs() starts');
+}
