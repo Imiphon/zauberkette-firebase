@@ -109,7 +109,8 @@ async function finishRound() {
         changeSpecial();
     }
 
-    checkPlayerChains();
+    checkPlayerChains('player');
+    checkPlayerChains('observer');
     await swapParts();
     startRound();
 }
@@ -122,50 +123,66 @@ async function swapParts() { // Kay why async? shorter possible
     let tempAccords = playerAccords;
     playerAccords = observerAccords;
     observerAccords = tempAccords;
-    console.log('new playerAcc: ', playerAccords);
-    console.log('new observerAcc: ', observerAccords);
+    //console.log('new playerAcc: ', playerAccords);
+    //console.log('new observerAcc: ', observerAccords);
     renderStack("playerCard", "playerStackID");
     renderStack("observerCard", "observerStackID");
     renderCircles();
 }
 
 function startRound() {
-    console.log('next round');
     btnGroup1();
     disableCardClicks();
     setBackArrays();
     // AN DIESER STELLE AUF FIREBASE DEN AKTUELLEN STAND VON PLAYER UND OBSERVER ÜBERGEBEN 
     // ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
     // DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN
+    // ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
 }
 
-//Part is 'player'or 'observer'
-function checkPlayerChains() {
-    playerChains = [];
-    observerChains = [];
+/**
+ * Is checking for accord chains in accord(-Arrays) while finishRound() 
+ * @param {string} part is 'player'or 'observer'
+ */
+function checkPlayerChains(part) {
+    let currentAccArray = part === 'player' ? playerAccords : observerAccords;
+    let currChainArr = part === 'player' ? playerChains : observerChains;
+    currentAccArray.forEach((accord) => {
+        if (accord) {
+            const prevCircleNr = accord.circleNr - 1 === 0 ? 12 : accord.circleNr - 1;
+            const nextCircleNr = accord.circleNr + 1 === 13 ? 1 : accord.circleNr + 1;
 
-    playerAccords.forEach((accord) => {
-        const prevCircleNr = accord.circleNr - 1 === 0 ? 12 : accord.circleNr - 1;
-        const nextCircleNr = accord.circleNr + 1 === 13 ? 1 : accord.circleNr + 1;
+            const isPrev = currentAccArray.find(a => a.circleNr === prevCircleNr);
+            const isNext = currentAccArray.find(a => a.circleNr === nextCircleNr);
 
-        const hasPrev = playerAccords.some(a => a.circleNr === prevCircleNr);
-        const hasNext = playerAccords.some(a => a.circleNr === nextCircleNr);
-
-        if (!hasPrev && hasNext) {
-            addToChainArray(1, accord.circleNr, 'player');
-        }
-
-        if (accord.amount === 2) {
-            const nextAccord = playerAccords.find(a => a.circleNr === nextCircleNr);
-            if (nextAccord && nextAccord.amount === 2) {
-                addToChainArray(2, accord.circleNr, 'player');
+            //one chain in one of the circles
+            if ((!isPrev && accord.amount === 1 && isNext && isNext.amount >= 1) ||
+                (!isPrev && accord.amount === 2 && isNext && isNext.amount === 1) ||
+                (isPrev && isPrev.amount === 1 && accord.amount === 2 && isNext && isNext.amount === 2)) {
+                addToChainArray(1, accord.circleNr, part); //'player' or 'observer'
             }
+
+            if (!isPrev && accord.amount === 2 && isNext && isNext.amount === 2) {
+                addToChainArray(2, accord.circleNr, part);//'player' or 'observer'
+            }
+        } else {
+            return;
         }
     });
-
-    console.log('playerChains: ', playerChains);
+    console.log(part, 'Ende checkPlayerChains() besitzt folgende Ketten: ', currChainArr);
+    let winnerChain = currChainArr.find(chain => chain.length > 4);
+    if (winnerChain) youWin(part, winnerChain.length); 
 }
 
+
+/**
+ * Is adding accords in chains and collect them in chain-arrays 
+ * starts youWin() if true
+ * @param {string} part is 'player'or 'observer'
+ * @param {number} circle 
+ * @param {number} circleNr 
+ * @returns 
+ */
 function addToChainArray(circle, circleNr, part) {
     let currentChain = [];
     let currentAccArray = part === 'player' ? playerAccords : observerAccords;
@@ -192,6 +209,7 @@ function addToChainArray(circle, circleNr, part) {
         }
         nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
     }
+
 }
 
 function setBackArrays() {

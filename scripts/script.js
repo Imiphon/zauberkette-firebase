@@ -233,7 +233,7 @@ function disableCardClicks() {
 
 async function getCardInfo(i) { //Kay - why async?
   clickedCardID = i; // Setzt durch cardClick den Kartenindex
-  console.log("clickedCardID = " + clickedCardID)
+  //console.log("clickedCardID = " + clickedCardID)
 }
 
 function enableObserverAccordClicks() {
@@ -328,6 +328,6 @@ function showWithTimeout(text, timeout, text2) {
 /**
  * Vergleicht neue 
  */
-function theWinnerIs() { 
-  console.log('theWinneIs() starts');
+function youWin(part, length) { 
+  alert(part + ' gewinnt mit einer Kettenzahl von: ' + length);
 }
