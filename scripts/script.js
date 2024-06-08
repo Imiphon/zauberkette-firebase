@@ -208,6 +208,8 @@ function stepBack() {
     usedSpecials.pop(); //last special will be removed
     specialInProgress = false;
     mellotArray = [];
+    tryWizzardStrike = false;
+    tryGoblinStrike = false;
 }
   stackOpacity1(playerCards, 'playerCard');
   setBackArrays();

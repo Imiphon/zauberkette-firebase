@@ -63,10 +63,12 @@ function updateNewCard(accInStack, accInCircle) {
  * @param {string} part is clicked part in 'observer' or 'player'
  */
 function chooseAccord(circle, circleNr, part) {
+  if(!tryWizzardStrike && !tryGoblinStrike) return;
   choosenAcc = [];
   if (part === 'observer') {
     choosenAcc = observerAccords.find(acc => acc.circleNr === circleNr);
     let choosenAccElement = document.getElementById(`obsCircle(${circle})Acc(${circleNr})`);
+    if(!choosenAccElement.src) return;
     if (choosenAcc && choosenAccElement.classList.contains('accCard')) {
       checkNeighbors(circle, circleNr, part);
     }
@@ -74,6 +76,7 @@ function chooseAccord(circle, circleNr, part) {
   else if (part === 'player') {
     choosenAcc = playerAccords.find(acc => acc.circleNr === circleNr);
     let choosenAccElement = document.getElementById(`playerCircle(${circle})Acc(${circleNr})`);
+    if(!choosenAccElement.src) return;
     if (choosenAcc && choosenAccElement.classList.contains('accCard')) {
       checkNeighbors(circle, circleNr, part);
     }
@@ -312,6 +315,7 @@ function startExchange(circle, circleNr, part) {
   }
   wizzardStrike(observerAccords, playerAccords, wizzardTakes);
   wizzardStrike(playerAccords, observerAccords, wizzardGives);
+  tryWizzardStrike = false;
   showWithTimeout(infoWizzardComplete, 2000, finishRound);
 }
 

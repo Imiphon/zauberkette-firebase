@@ -119,7 +119,7 @@ async function finishRound() {
 function changeNames() {
     let obsName = document.getElementById('obsNameID'); 
     let playName = document.getElementById('playNameID');
-    [obsName.innerHTML, playName.innerHTML] = [playName.innerHTML, obsName.innerHTML];
+    [obsName.innerHTML, playName.innerHTML] = [playName.innerHTML, obsName.innerHTMLNames()];
 }
 
 //starts after first time startRound()
