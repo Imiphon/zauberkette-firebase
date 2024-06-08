@@ -203,7 +203,7 @@ function sortAccsinCurrAccArray(currentAccArray) {
  * @param {string} part - The part identifier ('player' or 'observer').
  * @returns {Object} - An object containing the currentAccArray, chaineToChange, and currAcc.
  */
-function initializeChain(circle, circleNr, part) {
+function initializeChain(part) {
   let currentAccArray = part === 'player' ? playerAccords : observerAccords;
   let chaineToChange = part === 'player' ? wizzardGives : wizzardTakes;
   currentAccArray = sortAccsinCurrAccArray(currentAccArray);
@@ -265,13 +265,11 @@ function processSubdominantChain(circle, currentAccArray, chaineToChange, currAc
 /**
  * Adds the chosen accord to the chain and processes the dominant or subdominant chain
  * based on the neighbor type.
- * @param {number} circle - The circle identifier.
- * @param {number} circleNr - The circle number.
  * @param {string} part - The part identifier ('player' or 'observer').
  */
 function addToChain(circle, circleNr, part) {
-  let { currentAccArray, chaineToChange, currAcc } = initializeChain(circle, circleNr, part);
-
+  let { currentAccArray, chaineToChange, currAcc } = initializeChain(part);
+  debugger
   if (sharpNeighbour) {
     processDominantChain(circle, currentAccArray, chaineToChange, currAcc);
   } else if (flatNeighbour) {

@@ -44,6 +44,34 @@ function updateGoal() {
   goalValue = document.getElementById('goalInput').value;
 }
 
+function detectTouchDevice() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints) {
+      // It is a touch device
+      document.querySelectorAll('.hover-effect').forEach(function(element) {
+          let hasHover = false;
+          element.addEventListener('click', function(event) {
+              if (!hasHover) {
+                  event.preventDefault();
+                  element.classList.add('hover');
+                  hasHover = true;
+                  setTimeout(function() {
+                      hasHover = false;
+                  }, 300); // Adjust the timeout as needed
+              } else {
+                  element.classList.remove('hover');
+                  hasHover = false;
+                  // Trigger the original click event
+                  let originalClickEvent = new Event('click', {
+                      bubbles: true,
+                      cancelable: true
+                  });
+                  element.dispatchEvent(originalClickEvent);
+              }
+          });
+      });
+  }
+}
+
 /*-------------------- BUTTONS -------------------*/
 
 function btnGroup1() { //Kay -- shows infotext start
