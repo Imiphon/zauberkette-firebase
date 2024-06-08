@@ -2,21 +2,21 @@
 let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty("--vh", `${vh}px`); //Kay -- What exactly do that?
 
+let goalValue;
+
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
 let playerAccords = [
-  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'images/accords/accC.jpg' },
-  { nr: 3, circleNr: 3, title: 'D', amount: 2, src: 'images/accords/accD.jpg' },
   { nr: 4, circleNr: 10, title: 'Eb', amount: 1, src: 'images/accords/accEb.jpg' },
-  { nr: 6, circleNr: 12, title: 'F', amount: 2, src: 'images/accords/accF.jpg' },
-  { nr: 8, circleNr: 2, title: 'G', amount: 2, src: 'images/accords/accG.jpg' },
   { nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'images/accords/accDb.jpg' },
-  { nr: 9, circleNr: 9, title: 'Ab', amount: 2, src: 'images/accords/accAb.jpg' },
+  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
+  { nr: 9, circleNr: 9, title: 'Ab', amount: 1, src: 'images/accords/accAb.jpg' },
+  { nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'images/accords/accB.jpg' },
 ];//all Accords in current Array of player Accords
 let observerAccords = [
   { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
   { nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'images/accords/accDb.jpg' },
-  { nr: 9, circleNr: 9, title: 'Ab', amount: 2, src: 'images/accords/accAb.jpg' },
+  { nr: 9, circleNr: 9, title: 'Ab', amount: 1, src: 'images/accords/accAb.jpg' },
 ];//all Accords in current Array of observer Accords
 let clickedCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
 let clickAccount = 0; // counts clicks in setCardCombi()

@@ -112,7 +112,14 @@ async function finishRound() {
     checkPlayerChains('player');
     checkPlayerChains('observer');
     await swapParts();
+    changeNames();
     startRound();
+}
+
+function changeNames() {
+    let obsName = document.getElementById('obsNameID'); 
+    let playName = document.getElementById('playNameID');
+    [obsName.innerHTML, playName.innerHTML] = [playName.innerHTML, obsName.innerHTML];
 }
 
 //starts after first time startRound()
@@ -170,14 +177,13 @@ function checkPlayerChains(part) {
         }
     });
     console.log(part, 'Ende checkPlayerChains() besitzt folgende Ketten: ', currChainArr);
-    let winnerChain = currChainArr.find(chain => chain.length > 4);
+    let winnerChain = currChainArr.find(chain => chain.length > goalValue);
     if (winnerChain) youWin(part, winnerChain.length); 
 }
 
 
 /**
  * Is adding accords in chains and collect them in chain-arrays 
- * starts youWin() if true
  * @param {string} part is 'player'or 'observer'
  * @param {number} circle 
  * @param {number} circleNr 

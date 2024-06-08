@@ -25,9 +25,9 @@
     <header w3-include-html="./templates/header.html"></header>
     <!-------------------- MAIN STUFF -------------------->
     <div class="container">
-        <main class="table-content" id="tableContentID">            
+        <main class="table-content" id="tableContentID">
             <div class="observer-part" id="observerPartID">
-                        <!-------------OBSERVER PART-------------------->
+                <!-------------OBSERVER PART-------------------->
                 <div class="accord-zone" id="">
                     <div class="circle-img" id="obsCircle1">
                         <!-------------ACC CIRCLE-------------------->
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="top-zone" id="topZoneID"> <!-- mit btn startRound wird eigentlich PL1 und Pl2 getauscht-->
-                    <h3>Observer-Card Zone</h3>
+                    <h3>Observer-Card Zone</h3><span id="obsNameID">Alfa</span>
                     <div class="card-group" id="observerStackID">
                         <!-- 5 Cards -->
                     </div>
@@ -47,7 +47,10 @@
 
             <!-------------SECOND PART-------------------->
             <div class="second-part" id="secondPartID">
-                <div class="gameGoal">Spielziel ist die erste:<br>5er-Kette</div>
+                <div class="game-goal" id="gameGoalID">
+                    <p>Das Spielziel ist die Zauberkettenlänge:</p>
+                    <input type="number" id="goalInput" value="5" min="2" max="12" step="1" onchange="updateGoal()">
+                </div>
                 <div class="info-zone" id="infoID">
                     <div class="info-text" id="infoTextID">
                         <!------------- CURRENT INFOS-------------->
@@ -81,7 +84,7 @@
                     </div>
                 </div>
                 <div class="bottom-zone" id="">
-                    <h3>Player-Card Zone</h3>
+                    <h3>Player-Card Zone</h3><span id="playNameID">Beta</span>
                     <div class="card-group" id="playerStackID">
                         <!-- 5 Cards -->
                     </div>

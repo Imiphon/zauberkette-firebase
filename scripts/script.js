@@ -38,7 +38,13 @@ async function renderIndex() { //Kay -- render the content
   mainContent.innerHTML = infoStartSite(); //Kay -- render Main Content
 }
 
-/*------------------------------- BUTTONS ---------------------------*/
+/*------------------------------- TABLE FUNCTIONS ---------------------------*/
+
+function updateGoal() {
+  goalValue = document.getElementById('goalInput').value;
+}
+
+/*-------------------- BUTTONS -------------------*/
 
 function btnGroup1() { //Kay -- shows infotext start
   noBtns(); //Kay reset all Button style

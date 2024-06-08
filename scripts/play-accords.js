@@ -156,6 +156,9 @@ function isSecondPlayerConnection() {
  * @param {*} circle 
  * @param {*} circleNr 
  * @param {*} part 
+ * needs actually: if(askForConnectionOfNeighbor) *wenn der Ketten-Nachbar vom choosenChord
+ * schon als Ketten-Nachbar vom passenden playerAccord besteht, dann wird nur der choosenAcc 
+ * übergeben und nicht die ganze Kette von observer. Dafür muss die Func 
  */
 function checkConnection(circle, circleNr, part) {
   let isInPlayerArr = playerAccords.find(acc => acc.circleNr === choosenAcc.circleNr);
@@ -189,7 +192,15 @@ function sortAccsinCurrAccArray(currentAccArray) {
 }
 
 
-function addToChain(circle, circleNr, part) {
+/**
+ * Initializes the chain by selecting the correct accord array and initial accord.
+ * Sorts the accord array and adds the chosen accord to the chain.
+ * @param {number} circle - The circle identifier.
+ * @param {number} circleNr - The circle number.
+ * @param {string} part - The part identifier ('player' or 'observer').
+ * @returns {Object} - An object containing the currentAccArray, chaineToChange, and currAcc.
+ */
+function initializeChain(circle, circleNr, part) {
   let currentAccArray = part === 'player' ? playerAccords : observerAccords;
   let chaineToChange = part === 'player' ? wizzardGives : wizzardTakes;
   currentAccArray = sortAccsinCurrAccArray(currentAccArray);
@@ -197,36 +208,84 @@ function addToChain(circle, circleNr, part) {
   let currAcc = choosenAcc;
   chaineToChange.push(choosenAcc);
 
-  let nextCircleNr = currAcc.circleNr + 1 === 13 ? 1 : currAcc.circleNr + 1;
-  let prevCircleNr = currAcc.circleNr - 1 === 0 ? 12 : currAcc.circleNr - 1;
-
-  if (sharpNeighbour) {
-    // for dominant-chain clockwise
-    while (true) {
-      let nextAcc = currentAccArray.find(acc => acc.circleNr === nextCircleNr);
-      if (!nextAcc) break;
-      if ((circle === 1) || (circle === 2 && nextAcc.amount === 2)) {
-        if (isCheckWinner)
-          chaineToChange.push(nextAcc);
-      }
-      nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
-    }
-  } else if (flatNeighbour) {
-    // for subdominant-chain counterclockwise
-    while (true) {
-      let nextAcc = currentAccArray.find(acc => acc.circleNr === prevCircleNr);
-      if (!nextAcc) break;
-      if ((circle === 1) || (circle === 2 && nextAcc.amount === 2)) {
-        chaineToChange.push(nextAcc);
-      }
-      prevCircleNr = nextAcc.circleNr - 1 === 0 ? 12 : nextAcc.circleNr - 1;
-    }
-  }
-
-  if (part === 'observer') choosePlayerAccs();
-  else if (part === 'player') startExchange(circle, circleNr, part);
+  return { currentAccArray, chaineToChange, currAcc };
 }
 
+/**
+ * Processes the dominant chain in a clockwise direction.
+ * Adds accords to the chain based on the given rules.
+ * @param {number} circle - The circle identifier.
+ * @param {Array} currentAccArray - The array of current accords.
+ * @param {Array} chaineToChange - The chain to which accords are added.
+ * @param {Object} currAcc - The current accord.
+ */
+function processDominantChain(circle, currentAccArray, chaineToChange, currAcc) {
+  let nextCircleNr = currAcc.circleNr + 1 === 13 ? 1 : currAcc.circleNr + 1;
+  
+  while (true) {
+    let nextAcc = currentAccArray.find(acc => acc.circleNr === nextCircleNr);
+    if (!nextAcc) break;
+    if ((circle === 1) || (circle === 2 && nextAcc.amount === 2)) {
+      
+      if (playerAccords.some(a => a.circleNr === nextAcc.circleNr)) {
+        // Needs actually an update of options for the possibility if the observer-chain is blocked in playerCircle1 but possible in playerCircle2
+        console.log('You only get the clicked spell because its next chain neighbor is your connecting spell');
+        break;
+      }
+      chaineToChange.push(nextAcc);
+    }
+    nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
+  }
+}
+
+/**
+ * Processes the subdominant chain in a counterclockwise direction.
+ * Adds accords to the chain based on the given rules.
+ * @param {number} circle - The circle identifier.
+ * @param {Array} currentAccArray - The array of current accords.
+ * @param {Array} chaineToChange - The chain to which accords are added.
+ * @param {Object} currAcc - The current accord.
+ */
+function processSubdominantChain(circle, currentAccArray, chaineToChange, currAcc) {
+  let prevCircleNr = currAcc.circleNr - 1 === 0 ? 12 : currAcc.circleNr - 1;
+
+  while (true) {
+    let nextAcc = currentAccArray.find(acc => acc.circleNr === prevCircleNr);
+    if (!nextAcc) break;
+    if ((circle === 1) || (circle === 2 && nextAcc.amount === 2)) {
+      chaineToChange.push(nextAcc);
+    }
+    prevCircleNr = nextAcc.circleNr - 1 === 0 ? 12 : nextAcc.circleNr - 1;
+  }
+}
+
+/**
+ * Adds the chosen accord to the chain and processes the dominant or subdominant chain
+ * based on the neighbor type.
+ * @param {number} circle - The circle identifier.
+ * @param {number} circleNr - The circle number.
+ * @param {string} part - The part identifier ('player' or 'observer').
+ */
+function addToChain(circle, circleNr, part) {
+  let { currentAccArray, chaineToChange, currAcc } = initializeChain(circle, circleNr, part);
+
+  if (sharpNeighbour) {
+    processDominantChain(circle, currentAccArray, chaineToChange, currAcc);
+  } else if (flatNeighbour) {
+    processSubdominantChain(circle, currentAccArray, chaineToChange, currAcc);
+  }
+
+  if (part === 'observer') {
+    choosePlayerAccs();
+  } else if (part === 'player') {
+    startExchange(circle, circleNr, part);
+  }
+}
+
+/**
+ * Toggles between two text options and between enabledClickedAccords.
+ * called by addToChain()
+ */
 function choosePlayerAccs() {
   if (wizzardTakes.length === 1) {
     showInfo(wizzardTookSoloCard());
