@@ -7,8 +7,9 @@ let goalValue;
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
 let playerAccords = [
-  { nr: 4, circleNr: 10, title: 'Eb', amount: 1, src: 'images/accords/accEb.jpg' },
   { nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'images/accords/accDb.jpg' },
+  { nr: 3, circleNr: 3, title: 'D', amount: 0, src: 'images/accords/accD.jpg' },
+  { nr: 4, circleNr: 10, title: 'Eb', amount: 1, src: 'images/accords/accEb.jpg' },
   { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
   { nr: 9, circleNr: 9, title: 'Ab', amount: 1, src: 'images/accords/accAb.jpg' },
   { nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'images/accords/accB.jpg' },
