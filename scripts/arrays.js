@@ -8,8 +8,8 @@ let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
 let playerAccords = [
   { nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'images/accords/accDb.jpg' },
-  { nr: 3, circleNr: 3, title: 'D', amount: 0, src: 'images/accords/accD.jpg' },
-  { nr: 7, circleNr: 7, title: 'Gb', amount: 2, src: 'images/accords/accGb.jpg' },
+  { nr: 3, circleNr: 3, title: 'D', amount: 1, src: 'images/accords/accD.jpg' },
+  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
   { nr: 9, circleNr: 9, title: 'Ab', amount: 1, src: 'images/accords/accAb.jpg' },
   { nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'images/accords/accB.jpg' },
 ];//all Accords in current Array of player Accords
@@ -60,18 +60,18 @@ let allTones = [
 ];
 
 let allMaj = [
-  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'images/accords/accC.jpg' },
+  { nr: 1, circleNr: 1, title: 'C', amount: 2, src: 'images/accords/accC.jpg' },
   { nr: 2, circleNr: 8, title: 'Db', amount: 0, src: 'images/accords/accDb.jpg' },
-  { nr: 3, circleNr: 3, title: 'D', amount: 0, src: 'images/accords/accD.jpg' },
-  { nr: 4, circleNr: 10, title: 'Eb', amount: 1, src: 'images/accords/accEb.jpg' },
+  { nr: 3, circleNr: 3, title: 'D', amount: 1, src: 'images/accords/accD.jpg' },
+  { nr: 4, circleNr: 10, title: 'Eb', amount: 2, src: 'images/accords/accEb.jpg' },
   { nr: 5, circleNr: 5, title: 'E', amount: 2, src: 'images/accords/accE.jpg' },
-  { nr: 6, circleNr: 12, title: 'F', amount: 0, src: 'images/accords/accF.jpg' },
-  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
-  { nr: 8, circleNr: 2, title: 'G', amount: 0, src: 'images/accords/accG.jpg' },
+  { nr: 6, circleNr: 12, title: 'F', amount: 2, src: 'images/accords/accF.jpg' },
+  { nr: 7, circleNr: 7, title: 'Gb', amount: 0, src: 'images/accords/accGb.jpg' },
+  { nr: 8, circleNr: 2, title: 'G', amount: 2, src: 'images/accords/accG.jpg' },
   { nr: 9, circleNr: 9, title: 'Ab', amount: 0, src: 'images/accords/accAb.jpg' },
   { nr: 10, circleNr: 4, title: 'A', amount: 2, src: 'images/accords/accA.jpg' },
   { nr: 11, circleNr: 11, title: 'Bb', amount: 2, src: 'images/accords/accBb.jpg' },
-  { nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'images/accords/accB.jpg' },
+  { nr: 12, circleNr: 6, title: 'B', amount: 0, src: 'images/accords/accB.jpg' },
 ];
 
 

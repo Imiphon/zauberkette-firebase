@@ -154,6 +154,14 @@ function isSecondPlayerConnection() {
   return false;
 }
 
+function isOneSecondPlayerConnection() {
+  if (((flatPlayerConnection && flatPlayerConnection.amount === 2) && (sharpPlayerConnection && sharpPlayerConnection.amount != 2) )||
+    (sharpPlayerConnection && sharpPlayerConnection.amount === 2) && (flatPlayerConnection && flatPlayerConnection.amount != 2) ) {
+    return true;
+  }
+  return false;
+}
+
 /**
  * check the connection for choosenAcc in playerAccords
  * @param {*} circle 
@@ -169,6 +177,10 @@ function checkConnection(circle, circleNr, part) {
   if ((!flatPlayerConnection && !sharpPlayerConnection) && !isSecondPlayerConnection()) {
     showWithTimeout(noConnection, 2000, chooseAnotherAcc);
     return;
+  }
+  if (isInPlayerArr && isOneSecondPlayerConnection()) {
+    console.log('there is one second player connection');
+    addToChain(circle, circleNr, part);
   }
   else if (!isInPlayerArr && ((flatPlayerConnection || sharpPlayerConnection))
   ) {
@@ -231,9 +243,10 @@ function processDominantChain(circle, currentAccArray, chaineToChange, currAcc) 
     if ((circle === 1)) {
       
       if (playerAccords.some(a => a.circleNr === nextAcc.circleNr)) {
-        // Needs actually an update of options for the possibility if the observer-chain is blocked in playerCircle1 but possible in playerCircle2
-        console.log('You only get the clicked spell because its next chain neighbor is your connecting spell');
-        break;
+        if(!isOneSecondPlayerConnection){
+          console.log('You only get the clicked spell because its next chain neighbor is your connecting spell');
+          break;
+        }
       }
       chaineToChange.push(nextAcc);
     }
