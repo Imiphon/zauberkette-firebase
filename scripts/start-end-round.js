@@ -170,14 +170,15 @@ function checkPlayerChains(part) {
             }
 
             if (!isPrev && accord.amount === 2 && isNext && isNext.amount === 2) {
-                addToChainArray(2, accord.circleNr, part);//'player' or 'observer'
+                addToChainArray(1, accord.circleNr, part);
+                addToChainArray(2, accord.circleNr, part);
             }
         } else {
             return;
         }
     });
     console.log(part, 'Ende checkPlayerChains() besitzt folgende Ketten: ', currChainArr);
-    let winnerChain = currChainArr.find(chain => chain.length > goalValue);
+    let winnerChain = currChainArr.find(chain => chain.length >= goalValue);
     if (winnerChain) youWin(part, winnerChain.length); 
 }
 

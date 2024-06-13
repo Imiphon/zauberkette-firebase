@@ -2,15 +2,14 @@
 let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty("--vh", `${vh}px`); //Kay -- What exactly do that?
 
-let goalValue;
+let goalValue = 5;
 
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
 let playerAccords = [
   { nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'images/accords/accDb.jpg' },
   { nr: 3, circleNr: 3, title: 'D', amount: 0, src: 'images/accords/accD.jpg' },
-  { nr: 4, circleNr: 10, title: 'Eb', amount: 1, src: 'images/accords/accEb.jpg' },
-  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
+  { nr: 7, circleNr: 7, title: 'Gb', amount: 2, src: 'images/accords/accGb.jpg' },
   { nr: 9, circleNr: 9, title: 'Ab', amount: 1, src: 'images/accords/accAb.jpg' },
   { nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'images/accords/accB.jpg' },
 ];//all Accords in current Array of player Accords

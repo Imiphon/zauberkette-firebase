@@ -228,7 +228,7 @@ function processDominantChain(circle, currentAccArray, chaineToChange, currAcc) 
   while (true) {
     let nextAcc = currentAccArray.find(acc => acc.circleNr === nextCircleNr);
     if (!nextAcc) break;
-    if ((circle === 1) || (circle === 2 && nextAcc.amount === 2)) {
+    if ((circle === 1)) {
       
       if (playerAccords.some(a => a.circleNr === nextAcc.circleNr)) {
         // Needs actually an update of options for the possibility if the observer-chain is blocked in playerCircle1 but possible in playerCircle2
@@ -236,6 +236,9 @@ function processDominantChain(circle, currentAccArray, chaineToChange, currAcc) 
         break;
       }
       chaineToChange.push(nextAcc);
+    }
+    if(circle === 2 && nextAcc.amount === 2){
+      console.log('circle === 2 && nextAcc.amount === 2');
     }
     nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
   }
@@ -269,7 +272,6 @@ function processSubdominantChain(circle, currentAccArray, chaineToChange, currAc
  */
 function addToChain(circle, circleNr, part) {
   let { currentAccArray, chaineToChange, currAcc } = initializeChain(part);
-  debugger
   if (sharpNeighbour) {
     processDominantChain(circle, currentAccArray, chaineToChange, currAcc);
   } else if (flatNeighbour) {
