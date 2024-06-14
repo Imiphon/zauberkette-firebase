@@ -121,6 +121,72 @@ function noBtns() { // Kay -- set btn-group buttons invisible
   });
 }
 
+/*-------------------- BUTTON FUNCTIONS -------------------*/
+
+async function useMellot() {
+  disableCardClicks();
+  specialInProgress = true;
+  enablePlayerCards();
+  separateSpecial('mellot');
+  mellotArray = []; //to define the two cards for change  
+  showInfo(infoToGiveCard());
+  btnGroup3();
+  await waitForCardClick();
+  if (mellotArray.length === 0) {
+    toggleCardOpacity(clickedCardID);
+  }
+  let firstClickedIndex = clickedCardID;
+  if (mellotArray.length === 0) {
+    mellotArray.push(playerCards[clickedCardID]);
+  }
+  showInfo(infoToTakeCard());
+  enableObserverCards();
+  await waitForCardClick();
+  //in case of a 'step back' after first click and start useMellot() again function jumps to mellotArray.push(observerCards[clickedCardID]); otherwise.
+  if (mellotArray.length === 1) {
+    mellotArray.push(observerCards[clickedCardID]);
+  } else if (mellotArray.length === 0) {
+    mellotArray.push(playerCards[clickedCardID]);
+    firstClickedIndex = clickedCardID;
+  }
+  toggleCardOpacity(firstClickedIndex);
+  changeMellotCards();
+  specialInProgress = false;
+  newCardOrder();
+  btnGroup2();
+}
+
+/**
+ * onclick="chooseAccord(${i}, ${j}, 'player') = circle, circleNr, part
+ */
+function useGoblin() {
+  if(observerAccords.length === 0){
+    showWithTimeout(goblinRules, 6000, infoPlayCards);
+    return;
+  }
+  tryGoblinStrike = true;
+  separateSpecial('goblin');
+  disableAccClicks();
+  enableObserverAccordClicks();
+  showInfo(infoUseGoblin());
+  btnGroup3();
+  specialInProgress = true;
+}
+
+function useWizzard() {
+  if(observerAccords.length === 0){
+    showWithTimeout(wizzardRules, 6000, infoPlayCards);
+    return;
+  }
+  tryWizzardStrike = true;
+  separateSpecial('wizzard');
+  disableAccClicks();
+  enableObserverAccordClicks();
+  showInfo(infoUseWizzard());
+  btnGroup3();
+  specialInProgress = true;
+}
+
 /*------------------------------- POPUPs  ------------*/
 function openRulesPopup() { //Kay --create the Game rule Pop up -- is that a good style?
   let popup = document.createElement('div');

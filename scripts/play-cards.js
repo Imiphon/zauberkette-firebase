@@ -219,8 +219,7 @@ function threeJoker() {
   }
 }
 
-/*---------------- SPECIAL CARDS -----------------*/
-
+/*---------------- SPECIAL-CARD FUNCTIONS -----------------*/
 
 /**
  * let currentSpecial be the clicked element
@@ -244,6 +243,10 @@ function separateSpecial(mySpecial) {
   }
 }
 
+/**
+ * is changing choosen player- with observer-card
+ * @returns if not both cards are clicked
+ */
 function changeMellotCards() {
   if (specialInProgress && mellotArray.length != 2) {
     return;
