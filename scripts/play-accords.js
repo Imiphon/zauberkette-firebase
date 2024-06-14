@@ -66,6 +66,9 @@ function chooseAccord(circle, circleNr, part) {
   if(!tryWizzardStrike && !tryGoblinStrike) return;
   choosenAcc = [];
   if (part === 'observer') {
+    if(tryWizzardStrike){
+      observerConnection = choosenAcc; //
+    }
     choosenAcc = observerAccords.find(acc => acc.circleNr === circleNr);
     let choosenAccElement = document.getElementById(`obsCircle(${circle})Acc(${circleNr})`);
     if(!choosenAccElement.src) return;
@@ -83,24 +86,24 @@ function chooseAccord(circle, circleNr, part) {
   }
 }
 
-function neighboursAround(circle) {
-  if (circle === 1 && (flatNeighbour && sharpNeighbour)) {
+function NeighborsAround(circle) {
+  if (circle === 1 && (flatNeighbor && sharpNeighbor)) {
     return true;
   }
-  if (circle === 2 && flatNeighbour && sharpNeighbour &&
-    flatNeighbour.amount === 2 && sharpNeighbour.amount === 2) {
+  if (circle === 2 && flatNeighbor && sharpNeighbor &&
+    flatNeighbor.amount === 2 && sharpNeighbor.amount === 2) {
     return true;
   }
   return false;
 }
 
-function oneNeighbour(circle) {
-  if (circle === 1 && (!flatNeighbour || !sharpNeighbour)) {
+function oneNeighbor(circle) {
+  if (circle === 1 && (!flatNeighbor || !sharpNeighbor)) {
     return true;
   }
   else if (circle === 2 &&
-    ((flatNeighbour && flatNeighbour.amount === 2) ||
-      (sharpNeighbour && sharpNeighbour.amount === 2))) {
+    ((flatNeighbor && flatNeighbor.amount === 2) ||
+      (sharpNeighbor && sharpNeighbor.amount === 2))) {
     return true;
   }
   return false;
@@ -115,16 +118,16 @@ function oneNeighbour(circle) {
 function checkNeighbors(circle, circleNr, part) {
   let prevCircleNr = circleNr - 1 === 0 ? 12 : circleNr - 1;
   let nextCircleNr = circleNr + 1 === 13 ? 1 : circleNr + 1;
-  flatNeighbour = [];
-  sharpNeighbour = [];
+  flatNeighbor = [];
+  sharpNeighbor = [];
   let accords = part === 'observer' ? observerAccords : playerAccords;
-  flatNeighbour = accords.find(acc => acc.circleNr === prevCircleNr);
-  sharpNeighbour = accords.find(acc => acc.circleNr === nextCircleNr);
-  if (neighboursAround(circle)) {
+  flatNeighbor = accords.find(acc => acc.circleNr === prevCircleNr);
+  sharpNeighbor = accords.find(acc => acc.circleNr === nextCircleNr);
+  if (NeighborsAround(circle)) {
     showWithTimeout(accIsBetween, 2000, chooseAnotherAcc);
     return;
   }
-  else if (!neighboursAround(circle) || oneNeighbour(circle)) {
+  else if (!NeighborsAround(circle) || oneNeighbor(circle)) {
     if (part === 'observer') {
       checkConnection(circle, circleNr, part);
     }
@@ -216,10 +219,9 @@ function sortAccsinCurrAccArray(currentAccArray) {
  * @returns {Object} - An object containing the currentAccArray, chaineToChange, and currAcc.
  */
 function initializeChain(part) {
-  let currentAccArray = part === 'player' ? playerAccords : observerAccords;
+  let currentAccArray = part === 'player' ? playerAccords : observerAccords;  
   let chaineToChange = part === 'player' ? wizzardGives : wizzardTakes;
   currentAccArray = sortAccsinCurrAccArray(currentAccArray);
-
   let currAcc = choosenAcc;
   chaineToChange.push(choosenAcc);
 
@@ -285,9 +287,9 @@ function processSubdominantChain(circle, currentAccArray, chaineToChange, currAc
  */
 function addToChain(circle, circleNr, part) {
   let { currentAccArray, chaineToChange, currAcc } = initializeChain(part);
-  if (sharpNeighbour) {
+  if (sharpNeighbor) {
     processDominantChain(circle, currentAccArray, chaineToChange, currAcc);
-  } else if (flatNeighbour) {
+  } else if (flatNeighbor) {
     processSubdominantChain(circle, currentAccArray, chaineToChange, currAcc);
   }
 
@@ -324,7 +326,9 @@ function startExchange(circle, circleNr, part) {
 
   if ((choosenAcc === flatPlayerConnection) || (choosenAcc === sharpPlayerConnection)) {
     // if choosenAcc in playerPart the connection for wizzardTakes
-    showWithTimeout(needForConnection, 2000); // does return in this func working?
+    showWithTimeout(needForConnection, 2000); 
+    wizzardGives = []; 
+    return; 
   }
   wizzardStrike(observerAccords, playerAccords, wizzardTakes);
   wizzardStrike(playerAccords, observerAccords, wizzardGives);

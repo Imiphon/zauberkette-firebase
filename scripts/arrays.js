@@ -1,30 +1,22 @@
 
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty("--vh", `${vh}px`); //Kay -- What exactly do that?
+let vh = window.innerHeight * 0.01; //saves 1% of 100vh manual (somtimes neccassary for mobiles with border)
+document.documentElement.style.setProperty("--vh", `${vh}px`); //set var '--v' for css stuff like: height: calc(var(--vh, 1vh) * 100);
 
 let goalValue = 5;
 
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
-let playerAccords = [
-  { nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'images/accords/accDb.jpg' },
-  { nr: 3, circleNr: 3, title: 'D', amount: 1, src: 'images/accords/accD.jpg' },
-  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
-  { nr: 9, circleNr: 9, title: 'Ab', amount: 1, src: 'images/accords/accAb.jpg' },
-  { nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'images/accords/accB.jpg' },
-];//all Accords in current Array of player Accords
-let observerAccords = [
-  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'images/accords/accGb.jpg' },
-  { nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'images/accords/accDb.jpg' },
-  { nr: 9, circleNr: 9, title: 'Ab', amount: 1, src: 'images/accords/accAb.jpg' },
-];//all Accords in current Array of observer Accords
+let playerAccords = [];//all Accords in current Array of player Accords
+let observerAccords = [];//all Accords in current Array of observer Accords
+
+// The following var are set back in every startRound()
 let clickedCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
 let clickAccount = 0; // counts clicks in setCardCombi()
 let cardCombi = []; //sammelt 3 tones oder joker
 let choosenCards = []; // 3 numbers for checkRightCombi()
 let accOffer = []; // acc offer for user open in popup
 let mellotArray = []; //to change card with opponent
-let currentSpecial = null;
+let currentSpecial = null; // current coosed specialCard
 let specialInProgress = false; //if btn for special is clicked in process before end
 let usedSpecials = []; //coming from separateSpecial()
 let choosenAcc = []; //taken from observerAccords to put it into playerAccords and reversed
@@ -32,8 +24,8 @@ let tryGoblinStrike = false; //if player clicks goblin btn
 let tryWizzardStrike = false;//if player clicks wizzard btn 
 let wizzardTakes = []; // is storing all neighbors in observer circle(higher OR lower) of choosenAcc, or only single Accords
 let wizzardGives = []; //     -"-   in player circle     -"-
-let flatNeighbour = []; //neighbor of choosenAcc (for observer (or also player in wizzardGives)
-let sharpNeighbour = [];//    -"-
+let flatNeighbor = []; //neighbor of choosenAcc (for observer (or also player in wizzardGives)
+let sharpNeighbor = [];//    -"-
 let playerChains = []; //Array of accord chains after every round
 let observerChains = [];//    -"-
 let flatPlayerConnection = []; //card neighbors in player card stack
@@ -64,7 +56,7 @@ let allMaj = [
   { nr: 2, circleNr: 8, title: 'Db', amount: 0, src: 'images/accords/accDb.jpg' },
   { nr: 3, circleNr: 3, title: 'D', amount: 1, src: 'images/accords/accD.jpg' },
   { nr: 4, circleNr: 10, title: 'Eb', amount: 2, src: 'images/accords/accEb.jpg' },
-  { nr: 5, circleNr: 5, title: 'E', amount: 2, src: 'images/accords/accE.jpg' },
+  { nr: 5, circleNr: 5, title: 'E', amount: 0, src: 'images/accords/accE.jpg' },
   { nr: 6, circleNr: 12, title: 'F', amount: 2, src: 'images/accords/accF.jpg' },
   { nr: 7, circleNr: 7, title: 'Gb', amount: 0, src: 'images/accords/accGb.jpg' },
   { nr: 8, circleNr: 2, title: 'G', amount: 2, src: 'images/accords/accG.jpg' },

@@ -109,8 +109,8 @@ async function finishRound() {
         changeSpecial();
     }
 
-    checkPlayerChains('player');
-    checkPlayerChains('observer');
+    checkChainLength('player');
+    checkChainLength('observer');
     await swapParts();
     changeNames();
     startRound();
@@ -151,7 +151,7 @@ function startRound() {
  * Is checking for accord chains in accord(-Arrays) while finishRound() 
  * @param {string} part is 'player'or 'observer'
  */
-function checkPlayerChains(part) {
+function checkChainLength(part) {
     let currentAccArray = part === 'player' ? playerAccords : observerAccords;
     let currChainArr = part === 'player' ? playerChains : observerChains;
     currentAccArray.forEach((accord) => {
@@ -177,7 +177,7 @@ function checkPlayerChains(part) {
             return;
         }
     });
-    console.log(part, 'Ende checkPlayerChains() besitzt folgende Ketten: ', currChainArr);
+    console.log(part, 'Ende checkChainLength() besitzt folgende Ketten: ', currChainArr);
     let winnerChain = currChainArr.find(chain => chain.length >= goalValue);
     if (winnerChain) youWin(part, winnerChain.length); 
 }
@@ -220,15 +220,27 @@ function addToChainArray(circle, circleNr, part) {
 }
 
 function setBackArrays() {
-    cardCombi = [];
     clickedCardID = -1;
-    currentSpecial = null;
     clickAccount = 0;
+    cardCombi = [];
     choosenCards = [];
+    accOffer = [];
     mellotArray = [];
+    currentSpecial = null;
+    specialInProgress = false;
     usedSpecials = [];
+    choosenAcc = [];
+    tryGoblinStrike = false;
+    tryWizzardStrike = false;
     wizzardTakes = [];
     wizzardGives = [];
+    flatNeighbor = [];
+    sharpNeighbor = [];
+    playerChains = [];
+    observerChains = [];
+    flatPlayerConnection = [];
+    sharpPlayerConnection = [];
+    isChainCheck = false;
 }
 
 function renderCircles() {
