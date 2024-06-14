@@ -26,6 +26,18 @@ function infoPlayCards() {
     `;
 }
 
+function goblinRules() {
+  return `
+  <p>Mit einem Kobold kannst du einen Zauber des Gegners stibitzen, wenn er nicht zwischen zwei anderen Zaubern liegt und sich mit einem deiner Zauber verketten lässt. Dies ist leider gerade nicht möglich.</p> 
+  `;
+}
+
+function wizzardRules() {
+  return `
+  <p>Mit einem Zauberer kannst du einen Zauber oder eine Kette des Gegners mit einem eigenen Zauber oder einer Kette austauschen. Dies ist leider gerade nicht möglich.</p> 
+  `;
+}
+
 function infoChange() {
   return `
     <p>Klicke eine Karte an zum Tauschen.</p>

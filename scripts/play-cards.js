@@ -295,6 +295,10 @@ function changeMellotCards() {
  * onclick="chooseAccord(${i}, ${j}, 'player') = circle, circleNr, part
  */
 function useGoblin() {
+  if(observerAccords.length === 0){
+    showWithTimeout(goblinRules, 6000, infoPlayCards);
+    return;
+  }
   tryGoblinStrike = true;
   separateSpecial('goblin');
   disableAccClicks();
@@ -305,6 +309,10 @@ function useGoblin() {
 }
 
 function useWizzard() {
+  if(observerAccords.length === 0){
+    showWithTimeout(wizzardRules, 6000, infoPlayCards);
+    return;
+  }
   tryWizzardStrike = true;
   separateSpecial('wizzard');
   disableAccClicks();
