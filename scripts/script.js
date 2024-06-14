@@ -223,7 +223,7 @@ function changeWinnerCards() { // Kay -- cards combine to magic card.
   }
   noBtns(); //Kay reset all Button style
 
-  showWithTimeout(infoWinMagic(), 2000, finishRound());
+  showWithTimeout(infoWinMagic, 2000, finishRound);
 }
 
 /*------------------------------- CLICK CARD STUFF -------------------------------*/
@@ -347,11 +347,11 @@ function showInfo(infoTemplate) {
   info.style.animation = 'yellowFade 4s forwards';
 }
 
-function showWithTimeout(text, timeout, text2) {
-  showInfo(text());
+function showWithTimeout(func, timeout, func2) {
+  showInfo(func());
   setTimeout(() => {
-    if (text2) {
-      showInfo(text2());
+    if (func2) {
+      showInfo(func2());
     } else {
       return;
     }

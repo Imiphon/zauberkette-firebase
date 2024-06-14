@@ -136,10 +136,7 @@ function checkRightCombi() {
     let prime = x + 8;
     setAcc(prime, true);
   } else {
-    showInfo(infoNoCombi());
-    setTimeout(() => {
-      setCardCombi();
-    }, 2000);
+    showWithTimeout(infoNoCombi, 2000, setCardCombi);
   }
 }
 
@@ -223,38 +220,7 @@ function threeJoker() {
 }
 
 /*---------------- SPECIAL CARDS -----------------*/
-async function useMellot() {
-  disableCardClicks();
-  specialInProgress = true;
-  enablePlayerCards();
-  separateSpecial('mellot');
-  mellotArray = []; //to define the two cards for change  
-  showInfo(infoToGiveCard());
-  btnGroup3();
-  await waitForCardClick();
-  if (mellotArray.length === 0) {
-    toggleCardOpacity(clickedCardID);
-  }
-  let firstClickedIndex = clickedCardID;
-  if (mellotArray.length === 0) {
-    mellotArray.push(playerCards[clickedCardID]);
-  }
-  showInfo(infoToTakeCard());
-  enableObserverCards();
-  await waitForCardClick();
-  //in case of a 'step back' after first click and start useMellot() again function jumps to mellotArray.push(observerCards[clickedCardID]); otherwise.
-  if (mellotArray.length === 1) {
-    mellotArray.push(observerCards[clickedCardID]);
-  } else if (mellotArray.length === 0) {
-    mellotArray.push(playerCards[clickedCardID]);
-    firstClickedIndex = clickedCardID;
-  }
-  toggleCardOpacity(firstClickedIndex);
-  changeMellotCards();
-  specialInProgress = false;
-  newCardOrder();
-  btnGroup2();
-}
+
 
 /**
  * let currentSpecial be the clicked element
@@ -289,35 +255,4 @@ function changeMellotCards() {
   observerCards[card2Index] = temp;
   document.getElementById(`playerCard${card1Index}`).src = playerCards[card1Index].src;
   document.getElementById(`observerCard${card2Index}`).src = observerCards[card2Index].src;
-}
-
-/**
- * onclick="chooseAccord(${i}, ${j}, 'player') = circle, circleNr, part
- */
-function useGoblin() {
-  if(observerAccords.length === 0){
-    showWithTimeout(goblinRules, 6000, infoPlayCards);
-    return;
-  }
-  tryGoblinStrike = true;
-  separateSpecial('goblin');
-  disableAccClicks();
-  enableObserverAccordClicks();
-  showInfo(infoUseGoblin());
-  btnGroup3();
-  specialInProgress = true;
-}
-
-function useWizzard() {
-  if(observerAccords.length === 0){
-    showWithTimeout(wizzardRules, 6000, infoPlayCards);
-    return;
-  }
-  tryWizzardStrike = true;
-  separateSpecial('wizzard');
-  disableAccClicks();
-  enableObserverAccordClicks();
-  showInfo(infoUseWizzard());
-  btnGroup3();
-  specialInProgress = true;
 }
