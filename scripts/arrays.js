@@ -6,7 +6,8 @@ let goalValue = 5;
 
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
-let playerAccords = [];//all Accords in current Array of player Accords
+let playerAccords = [
+  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'images/accords/accC.jpg' },];//all Accords in current Array of player Accords
 let observerAccords = [];//all Accords in current Array of observer Accords
 
 // The following var are set back in every startRound()
@@ -52,7 +53,7 @@ let allTones = [
 ];
 
 let allMaj = [
-  { nr: 1, circleNr: 1, title: 'C', amount: 2, src: 'images/accords/accC.jpg' },
+  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'images/accords/accC.jpg' },
   { nr: 2, circleNr: 8, title: 'Db', amount: 2, src: 'images/accords/accDb.jpg' },
   { nr: 3, circleNr: 3, title: 'D', amount: 2, src: 'images/accords/accD.jpg' },
   { nr: 4, circleNr: 10, title: 'Eb', amount: 2, src: 'images/accords/accEb.jpg' },

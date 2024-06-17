@@ -33,6 +33,7 @@ function renderStack(player, part) {
 
 
 /**
+ * shows for wich accords each tone is usefull (as prime, terz and quint)
  * @param {array} optAcc opt.accordNr (3) or 1 specialCardNr
  * @param {number} stackNr 
  */
@@ -53,7 +54,8 @@ function renderOptAccords(optAcc, stackNr, optAccsPart) {
     }
 }
 
-async function renderObserverStack() {
+/**
+ * async function renderObserverStack() {
     let currObserverCards = document.getElementById("observerStackID");
     currObserverCards.innerHTML = '';
     for (let i = 0; i < observerCards.length; i++) {
@@ -69,6 +71,7 @@ async function renderObserverStack() {
     }
     stackOpacity1(observerCards, 'observerCard');
 }
+*/
 
 function changeSpecial() {
     usedSpecials.forEach(element => {

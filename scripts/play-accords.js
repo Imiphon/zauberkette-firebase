@@ -48,7 +48,7 @@ function updateNewCard(accInStack, accInCircle) {
     changeWinnerCards();
   } else {
     showInfo(infoAccEmpty());
-    clickedCardID = -1;
+   // clickedCardID = -1;
     startRound();
   }
 }
