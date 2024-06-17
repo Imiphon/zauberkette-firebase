@@ -47,7 +47,7 @@ async function setCardCombi() {
   while (cardCombi.length < 3 && clickAccount < 5) {
     await clickCardsforCombi();
     setTimeout(() => {
-      showInfo(infoSetCombi);
+      showInfo(infoSetCombi());
     }, 2000);
   }
   if (cardCombi.length === 3) {
@@ -136,9 +136,11 @@ function checkRightCombi() {
     let prime = x + 8;
     setAcc(prime, true);
   } else {
-debugger
     playSound('failed', 'buzzer', 0.5);
-    showWithTimeout(infoNoCombi, 2000, setCardCombi);
+    showInfo(infoNoCombi);
+    setTimeout(() => {
+      setCardCombi()
+    }, 2000);
   }
 }
 
@@ -205,7 +207,6 @@ function choiceAcc() {
   let popup = document.querySelector('.popup');
   for (let i = 0; i < accOffer.length; i++) {
     let card = accOffer[i];
-    // Schließt das Popup beim Klicken
     popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true); closePopup();">`;
   }
 }
@@ -216,7 +217,6 @@ function threeJoker() {
   popup.classList.add('allCards');
   for (let i = 0; i < allMaj.length; i++) {
     let card = allMaj[i];
-    // Schließt das Popup beim Klicken
     popup.innerHTML += `<img class="all-pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true); closePopup();">`;
   }
 }
