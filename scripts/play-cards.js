@@ -47,7 +47,7 @@ async function setCardCombi() {
   while (cardCombi.length < 3 && clickAccount < 5) {
     await clickCardsforCombi();
     setTimeout(() => {
-      showInfo(infoSetCombi());
+      showInfo(infoSetCombi);
     }, 2000);
   }
   if (cardCombi.length === 3) {
@@ -136,6 +136,8 @@ function checkRightCombi() {
     let prime = x + 8;
     setAcc(prime, true);
   } else {
+debugger
+    playSound('failed', 'buzzer', 0.5);
     showWithTimeout(infoNoCombi, 2000, setCardCombi);
   }
 }

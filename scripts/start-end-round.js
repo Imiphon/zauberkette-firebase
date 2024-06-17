@@ -21,7 +21,7 @@ function renderStack(player, part) {
           <img class="card" id="${img_id}" 
           stackNr="${card.stackNr}"  
           src="${card.src}"
-          onclick="getCardInfo(${i})">
+          onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.5)">
           <div class="optAccContainer" id="${optAccsPart}${i}"></div>
         </div>
         `;

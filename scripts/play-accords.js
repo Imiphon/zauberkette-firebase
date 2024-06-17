@@ -10,7 +10,8 @@
 function setAcc(prime, isNew, isObserver, isDouble) {
   let accInStack = allMaj.find((acc) => acc.nr === prime);
   if (isNew && accInStack.amount <= 0) {
-    console.log('accInStack is empty.');
+    console.log('Es gibt nur jeweils zwei Zauber von jeder Sorte.');
+    playSound('failed', 'buzzer', 0.5);
     stepBack();
     return
   } else if (isNew && accInStack.amount > 0) {
@@ -20,6 +21,7 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   let accInCircle = getCardElement(circleNr, isObserver, isDouble);
 
   if (isNew) {
+    playSound('success', 'magic-signal', 0.5);
     updateNewCard(accInStack, accInCircle);
   } else {
     accInCircle.src = accInStack.src;
