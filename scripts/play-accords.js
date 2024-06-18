@@ -2,13 +2,15 @@
 
 /**
  * 
- * @param {number} prime 
+ * @param {number} prime nr of the allMaj-Object
  * @param {boolean} isNew Acc is coming from stack 
  * @param {boolean} isObserver is observer or undefined and then player
  * @param {boolean} isDouble is set by renderAccords() due to amount from player- or observer
  */
-function setAcc(prime, isNew, isObserver, isDouble) {
+function setAcc(prime, isNew, isObserver, isDouble) {  
   let accInStack = allMaj.find((acc) => acc.nr === prime);
+  let circleNr = accInStack.circleNr;
+  let accInCircle = getCardElement(circleNr, isObserver, isDouble);
   if (isNew && accInStack.amount <= 0) {
     console.log('Es gibt nur jeweils zwei Zauber von jeder Sorte.');
     playSound('failed', 'buzzer', 0.5);
@@ -16,12 +18,8 @@ function setAcc(prime, isNew, isObserver, isDouble) {
     return
   } else if (isNew && accInStack.amount > 0) {
     accInStack.amount--;
-  }
-  let circleNr = accInStack.circleNr;
-  let accInCircle = getCardElement(circleNr, isObserver, isDouble);
-
-  if (isNew) {
-    playSound('success', 'magic-signal', 0.5);
+    let title = accInStack.title;
+    playSound('accords-magic', 'Maj-mag-'+ title, 0.5);
     updateNewCard(accInStack, accInCircle);
   } else {
     accInCircle.src = accInStack.src;

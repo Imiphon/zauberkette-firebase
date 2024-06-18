@@ -21,6 +21,20 @@ function playSound(folder, title, volume) {
     }
 }
 
+function changeMute() {
+    isMuted = !isMuted;
+    const volumeUpImg = document.querySelector('.volume_up');
+    const volumeOffImg = document.querySelector('.volume_off');
+    
+    if (isMuted) {
+        volumeUpImg.style.display = 'none';
+        volumeOffImg.style.display = 'block';
+    } else {
+        volumeUpImg.style.display = 'block';
+        volumeOffImg.style.display = 'none';
+    }
+}
+
 /**
  * Stopps the current audio sound
  * @param {audio} sound 

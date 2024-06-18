@@ -124,6 +124,7 @@ function noBtns() { // Kay -- set btn-group buttons invisible
 /*-------------------- BUTTON FUNCTIONS -------------------*/
 
 async function useMellot() {
+  playSound('tone', 'mellot', 0.5);
   disableCardClicks();
   specialInProgress = true;
   enablePlayerCards();
@@ -165,6 +166,7 @@ function useGoblin() {
     return;
   }
   tryGoblinStrike = true;
+  playSound('tone', 'goblin', 0.5);
   separateSpecial('goblin');
   disableAccClicks();
   enableObserverAccordClicks();
@@ -174,6 +176,7 @@ function useGoblin() {
 }
 
 function useWizzard() {
+  playSound('tone', 'wizzard', 0.5);
   if(observerAccords.length === 0){
     showWithTimeout(wizzardRules, 6000, infoPlayCards);
     return;
@@ -304,6 +307,7 @@ function stepBack() {
 }
   stackOpacity1(playerCards, 'playerCard');
   setBackArrays();
+  playSound('failed', 'buzzer', 0.5);
   disableCardClicks();
   btnGroup2();
 }

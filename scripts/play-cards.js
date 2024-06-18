@@ -57,8 +57,7 @@ async function setCardCombi() {
   }
   if (clickAccount === 5) {
     showInfo(infoNothinToChange());
-    startRound();
-    clickedCard.style.opacity = 1;
+    startRound();    
     clickAccount = 0;
   }
 }
@@ -73,6 +72,7 @@ async function clickCardsforCombi() {
   }
   if (currentCardNr > 12) {
     showInfo(infoNoSpecials());
+    playSound('failed', 'buzzer-short', 0.4);
     clickAccount++;
     return;
   }
