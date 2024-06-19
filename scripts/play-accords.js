@@ -63,6 +63,8 @@ function updateNewCard(accInStack, accInCircle) {
  * @param {string} part is clicked part in 'observer' or 'player'
  */
 function chooseAccord(circle, circleNr, part) {
+  let acc = allMaj.find(acc => acc.circleNr === circleNr);
+  playSound('accords-maj', 'Maj-'+acc.title, 0.5);
   if(!tryWizzardStrike && !tryGoblinStrike) return;
   choosenAcc = [];
   if (part === 'observer') {

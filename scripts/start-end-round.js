@@ -21,7 +21,7 @@ function renderStack(player, part) {
           <img class="card" id="${img_id}" 
           stackNr="${card.stackNr}"  
           src="${card.src}"
-          onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.5)">
+          onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)">
           <div class="optAccContainer" id="${optAccsPart}${i}"></div>
         </div>
         `;
@@ -144,6 +144,9 @@ function startRound() {
     btnGroup1();
     disableCardClicks();
     setBackArrays();
+    setTimeout(() => {
+        playSound('success', 'gong-deep', 0.5);
+      }, 500);
     // AN DIESER STELLE AUF FIREBASE DEN AKTUELLEN STAND VON PLAYER UND OBSERVER ÜBERGEBEN 
     // ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
     // DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN

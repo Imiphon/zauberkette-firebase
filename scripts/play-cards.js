@@ -136,8 +136,9 @@ function checkRightCombi() {
     let prime = x + 8;
     setAcc(prime, true);
   } else {
-    playSound('failed', 'buzzer', 0.5);
-    showInfo(infoNoCombi);
+    playSound('failed', 'backMag', 0.5);
+    debugger
+    showInfo(infoNoCombi());
     setTimeout(() => {
       setCardCombi()
     }, 2000);

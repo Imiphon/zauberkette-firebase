@@ -307,7 +307,7 @@ function stepBack() {
 }
   stackOpacity1(playerCards, 'playerCard');
   setBackArrays();
-  playSound('failed', 'buzzer', 0.5);
+  playSound('failed', 'backMag', 0.5);
   disableCardClicks();
   btnGroup2();
 }
