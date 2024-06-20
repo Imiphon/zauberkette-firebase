@@ -21,7 +21,7 @@ function stackOpacity1(stack, cardString) { //Kay -- Wieso der Name?
     let card = document.getElementById(cardString + `${i}`);
     card.style.opacity = 1;
   }
-  if (usedSpecials != [] && cardString === 'playerCard') {
+  if (usedSpecials.length != 0 && cardString === 'playerCard') {
     usedSpecials.forEach(card => {
       let usedSpecial = stack.find(acc => acc.stackNr === card.stackNr);
       let element = document.getElementById(cardString + `${usedSpecial.stackNr}`);

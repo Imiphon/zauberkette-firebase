@@ -276,7 +276,7 @@ function renderAccords(isObserver) {
     } else {
         array = playerAccords;
     }
-    if (array != []) {
+    if (array.length != 0) {
         array.forEach(accord => {
             //accNr,isNew,isObserver,isDouble
             setAcc(accord.nr, false, isObserver, false);

@@ -13,7 +13,7 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   let accInCircle = getCardElement(circleNr, isObserver, isDouble);
   if (isNew && accInStack.amount <= 0) {
     console.log('Es gibt nur jeweils zwei Zauber von jeder Sorte.');
-    playSound('failed', 'buzzer', 0.5);
+    playSound('failed', 'backMag', 0.5);
     stepBack();
     return
   } else if (isNew && accInStack.amount > 0) {
