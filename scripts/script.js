@@ -407,7 +407,6 @@ function showInfo(infoTemplate) {
     return;
   }
   info.innerHTML = '';
-  info.innerHTML = `<h3>Info Text</h3>`;
   info.innerHTML += infoTemplate;
 
   // Setzt die Animation direkt über JavaScript

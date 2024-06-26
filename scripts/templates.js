@@ -14,7 +14,7 @@ function infoStartSite() { // in index.html
 
 function infoStart() {
   return `
-    <p>Drücke Kartentausch, um eine Karte zu tauschen.<br>
+    <p>Drücke Kartentausch, um eine Karte zu tauschen.
     Oder "Nothing to Change"</p> 
     `;
 }

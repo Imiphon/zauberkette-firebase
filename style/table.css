@@ -1,31 +1,61 @@
-.shine {
-  box-shadow: 0 0 20px rgba(64, 255, 0, 0.7);
-  /* green Schein */
-}
-
-body {
-  margin: 0;
-  /* Setzt den Außenabstand des Body-Tags auf 0 */
-}
-
-.container {
+.info-bar {
+  position: relative;
+  width: 100%;
+  height: 60px;
   display: flex;
-  flex-direction: column;
-  height: 100vh;
-  /* Setzt die Höhe des Containers auf die volle Bildschirmhöhe */
+  color: #f2f2f2;
 }
 
-.nav-bar {
-  height: 10%;
-  /* Setzt die Höhe der Navigationsleiste auf 10% des Containerbereichs */
-  background-color: #f2f2f2;
+.game-goal {
+  width: 100%;
+  display: flex;
+  padding: 4px 0 4px 12px;
+  gap: 4px;
+}
+.game-goal input {
+  margin: 4px;
+  width: auto;
+}
+.info-text {
+  margin-right: 12px;
+  padding: 0 12px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.info-text p {
+  width: 100%;
+  white-space: nowrap;
+}
+
+@keyframes yellowFade {
+  0% {
+    background-color: transparent;
+
+  color: black;
+  }
+  50% {
+    background-color: yellow;
+  }  
+  100% {
+    background-color: transparent;
+    color: #f2f2f2;
+  }
+}
+
+.info-animate {
+  animation-name: yellowFade;
+  animation-duration: 4s;
 }
 
 .table-content {
-  flex-grow: 1;
-  /* Nimmt den restlichen verfügbaren Platz ein */
-  display: flex;
-  flex-direction: column;
+  height: auto;
+    display: flex;
+    padding: 4px;
+    position: relative;
 }
 
 .observer-part {
@@ -37,36 +67,11 @@ body {
 }
 
 .second-part {
+  top: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20%;
   background-color: rgb(248, 255, 233);
-}
-
-.info-zone {
-  width: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-@keyframes yellowFade {
-  0% {
-    background-color: transparent;
-  }
-  50% {
-    background-color: yellow;
-  }  
-  100% {
-    background-color: transparent;
-  }
-}
-
-.info-animate {
-  animation-name: yellowFade;
-  animation-duration: 4s;
 }
 
 .btn-group {
