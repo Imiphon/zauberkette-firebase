@@ -1,10 +1,13 @@
-nav {
-  position: absolute;
+
+ 
+ nav,header {
+  position: fixed;
   width: 100%;
   display: flex;
   justify-content: space-between;
   background-color: rgb(84, 83, 83);
   color: wheat;
+  z-index: 1000;
 }
 
 .nav-left {

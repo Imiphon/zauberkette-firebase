@@ -1,10 +1,15 @@
 .info-bar {
-  position: relative;
+  position: fixed;
+  top: 60px;
+  left: 0;
   width: 100%;
   height: 60px;
   display: flex;
   color: #f2f2f2;
+  background-color: black; 
+  z-index: 1000; 
 }
+
 
 .game-goal {
   width: 100%;
@@ -61,7 +66,8 @@
 
 .table-frame {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
 }
 
 .table-top {
@@ -81,6 +87,7 @@
   justify-content: end;
   align-items: center;
   background-color: transparent;
+  z-index: 1000;
 }
 
 .btn-group {
