@@ -54,25 +54,6 @@ function renderOptAccords(optAcc, stackNr, optAccsPart) {
     }
 }
 
-/**
- * async function renderObserverStack() {
-    let currObserverCards = document.getElementById("observerStackID");
-    currObserverCards.innerHTML = '';
-    for (let i = 0; i < observerCards.length; i++) {
-        let card = observerCards[i];
-        currObserverCards.innerHTML += `      
-          <img class="card" id="observerCard${i}" 
-          stackNr="${i}"         
-           src="${card.src}"
-           >`;
-
-        let cardInStack = document.getElementById(`observerCard${i}`);
-        cardInStack.style.opacity = 1;
-    }
-    stackOpacity1(observerCards, 'observerCard');
-}
-*/
-
 function changeSpecial() {
     usedSpecials.forEach(element => {
         clickedCardID = element.getAttribute('stackNr');
@@ -133,8 +114,6 @@ async function swapParts() { // Kay why async? shorter possible
     let tempAccords = playerAccords;
     playerAccords = observerAccords;
     observerAccords = tempAccords;
-    //console.log('new playerAcc: ', playerAccords);
-    //console.log('new observerAcc: ', observerAccords);
     renderStack("playerCard", "playerStackID");
     renderStack("observerCard", "observerStackID");
     renderCircles();

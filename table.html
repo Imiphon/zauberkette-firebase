@@ -34,68 +34,71 @@
             </div>
             <div class="info-text" id="infoTextID"></div>
         </div>
-        <div class="observer-part" id="observerPartID">
-            <!-------------OBSERVER PART-------------------->
-            <div class="accord-zone" id="">
-                <div class="circle-img hover-effect" id="obsCircle1">
-                    <!-------------ACC CIRCLE-------------------->
+        <div class="table-frame">
+            <div class="table-top" id="observerPartID">
+                <!-------------OBSERVER PART-------------------->
+                <div class="accord-zone" id="">
+                    <div class="circle-img hover-effect" id="obsCircle1">
+                        <!-------------ACC CIRCLE-------------------->
+                    </div>
+                    <div class="circle-img hover-effect" id="obsCircle2">
+                        <!-------------ACC CIRCLE-------------------->
+                    </div>
                 </div>
-                <div class="circle-img hover-effect" id="obsCircle2">
-                    <!-------------ACC CIRCLE-------------------->
+
+                <div class="top-zone" id="topZoneID"> <!-- mit btn startRound wird eigentlich PL1 und Pl2 getauscht-->
+                    <h3>Observer-Card Zone</h3><span id="obsNameID">Alfa</span>
+                    <div class="card-group" id="observerStackID">
+                        <!-- 5 Cards -->
+                    </div>
                 </div>
             </div>
 
-            <div class="top-zone" id="topZoneID"> <!-- mit btn startRound wird eigentlich PL1 und Pl2 getauscht-->
-                <h3>Observer-Card Zone</h3><span id="obsNameID">Alfa</span>
-                <div class="card-group" id="observerStackID">
-                    <!-- 5 Cards -->
+            <!-------------BUTTON PART-------------------->
+            <div class="table-center" id="secondPartID">
+                <div class="btn-group">
+                    <button class="hover-effect" onclick="awaitChangeCard()" id="changeClicks(1)"
+                        style="display: inline;">Kartentausch</button>
+                    <button class="hover-effect" onclick="noChanges()" id="changeClicks(2)"
+                        style="display: inline;">Nothing
+                        to
+                        Change</button>
+                    <button class="hover-effect" onclick="setCardCombi()" id="changeClicks(3)"
+                        style="display: none;">Komponiere einen
+                        Zauber</button>
+                    <button class="hover-effect" onclick="useMellot()" id="changeClicks(4)"
+                        style="display: none;">useMellot</button>
+                    <button class="hover-effect" onclick="useGoblin()" id="changeClicks(5)"
+                        style="display: none;">useGoblin</button>
+                    <button class="hover-effect" onclick="useWizzard()" id="changeClicks(6)"
+                        style="display: none;">useWizzard</button>
+                    <button class="hover-effect" onclick="stepBack()" id="changeClicks(8)" style="display: none;">Step
+                        Back</button>
+                    <!--actually nextPlayer() insted of changeCard()-->
+                    <button class="hover-effect" onclick="finishRound()" id="changeClicks(7)"
+                        style="display: none;">Finish
+                        Round</button>
+                </div>
+            </div>
+
+            <!------------------- PLAYER PART ------------------------>
+            <div class="table-bottom" id="currentPlayerPartID">
+                <div class="accord-zone" id="">
+                    <div class="circle-img hover-effect" id="playerCircle1">
+                        <!-----------ACC CIRCLE---------------->
+                    </div>
+                    <div class="circle-img hover-effect" id="playerCircle2">
+                        <!-----------ACC CIRCLE---------------->
+                    </div>
+                </div>
+                <div class="bottom-zone" id="">
+                    <h3>Player-Card Zone</h3><span id="playNameID">Beta</span>
+                    <div class="card-group" id="playerStackID">
+                        <!-- 5 Cards -->
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-------------BUTTON PART-------------------->
-        <div class="second-part" id="secondPartID">
-            <div class="btn-group">
-                <button class="hover-effect" onclick="awaitChangeCard()" id="changeClicks(1)"
-                    style="display: inline;">Kartentausch</button>
-                <button class="hover-effect" onclick="noChanges()" id="changeClicks(2)" style="display: inline;">Nothing
-                    to
-                    Change</button>
-                <button class="hover-effect" onclick="setCardCombi()" id="changeClicks(3)"
-                    style="display: none;">Komponiere einen
-                    Zauber</button>
-                <button class="hover-effect" onclick="useMellot()" id="changeClicks(4)"
-                    style="display: none;">useMellot</button>
-                <button class="hover-effect" onclick="useGoblin()" id="changeClicks(5)"
-                    style="display: none;">useGoblin</button>
-                <button class="hover-effect" onclick="useWizzard()" id="changeClicks(6)"
-                    style="display: none;">useWizzard</button>
-                <button class="hover-effect" onclick="stepBack()" id="changeClicks(8)" style="display: none;">Step
-                    Back</button>
-                <!--actually nextPlayer() insted of changeCard()-->
-                <button class="hover-effect" onclick="finishRound()" id="changeClicks(7)" style="display: none;">Finish
-                    Round</button>
-            </div>
-        </div>
-
-        <!------------------- PLAYER PART ------------------------>
-        <div class="current-player-part" id="currentPlayerPartID">
-            <div class="accord-zone" id="">
-                <div class="circle-img hover-effect" id="playerCircle1">
-                    <!-----------ACC CIRCLE---------------->
-                </div>
-                <div class="circle-img hover-effect" id="playerCircle2">
-                    <!-----------ACC CIRCLE---------------->
-                </div>
-            </div>
-            <div class="bottom-zone" id="">
-                <h3>Player-Card Zone</h3><span id="playNameID">Beta</span>
-                <div class="card-group" id="playerStackID">
-                    <!-- 5 Cards -->
-                </div>
-            </div>
-        </div>
-
     </main>
     </div>
 </body>
