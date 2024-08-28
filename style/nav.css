@@ -36,7 +36,6 @@
 .nav-right {
   flex-grow: 0.2;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
@@ -174,6 +173,18 @@
   transform: none;
 }
 
+.sideInfo {
+display : flex;
+flex-direction : column;
+position : fixed;
+left : 0;
+top : 100%;
+transform : translateY(-50%) rotate(-90deg);
+transform-origin : left top;
+width : 100vh;
+z-index : 10;
+}
+
 @media (max-width: 375px) {
   body {
     overflow-x: hidden;
@@ -197,3 +208,4 @@
     margin: -100px 0 0 160px;
     /*Top, left, bottom,right mit umgekehrter Wirkung*/
   }
+}

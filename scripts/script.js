@@ -46,30 +46,58 @@ function updateGoal() {
 
 function detectTouchDevice() {
   if ('ontouchstart' in window || navigator.maxTouchPoints) {
-      // It is a touch device
-      document.querySelectorAll('.hover-effect').forEach(function(element) {
-          let hasHover = false;
-          element.addEventListener('click', function(event) {
-              if (!hasHover) {
-                  event.preventDefault();
-                  element.classList.add('hover');
-                  hasHover = true;
-                  setTimeout(function() {
-                      hasHover = false;
-                  }, 300); // Adjust the timeout as needed
-              } else {
-                  element.classList.remove('hover');
-                  hasHover = false;
-                  // Trigger the original click event
-                  let originalClickEvent = new Event('click', {
-                      bubbles: true,
-                      cancelable: true
-                  });
-                  element.dispatchEvent(originalClickEvent);
-              }
+    // It is a touch device
+    document.querySelectorAll('.hover-effect').forEach(function (element) {
+      let hasHover = false;
+      element.addEventListener('click', function (event) {
+        if (!hasHover) {
+          event.preventDefault();
+          element.classList.add('hover');
+          hasHover = true;
+          setTimeout(function () {
+            hasHover = false;
+          }, 300); // Adjust the timeout as needed
+        } else {
+          element.classList.remove('hover');
+          hasHover = false;
+          // Trigger the original click event
+          let originalClickEvent = new Event('click', {
+            bubbles: true,
+            cancelable: true
           });
+          element.dispatchEvent(originalClickEvent);
+        }
       });
+    });
   }
+}
+
+function changeView() {
+  mirrorView = !mirrorView;
+  let container = document.getElementById('headInfoID');  
+    if (mirrorView) {
+      container.classList.add('sideInfo');
+    }
+    if (!mirrorView) {
+      container.classList.remove('sideInfo');
+    }
+  toggleRotation();  
+}
+
+function toggleRotation() {
+    const container = document.getElementById('observerPartID');
+    if (isRotated) {
+        container.classList.remove('rotated-180');
+    } else {
+        container.classList.add('rotated-180');
+    }
+    isRotated = !isRotated;
+}
+
+function rotateWebsite() {
+  let table = document.getElementsByClassName('table-frame')[0];
+  table.style.transform = "rotate(180deg)";
+  table.style.transformOrigin = "center";
 }
 
 /*-------------------- BUTTONS -------------------*/
@@ -161,7 +189,7 @@ async function useMellot() {
  * onclick="chooseAccord(${i}, ${j}, 'player') = circle, circleNr, part
  */
 function useGoblin() {
-  if(observerAccords.length === 0){
+  if (observerAccords.length === 0) {
     showWithTimeout(goblinRules, 6000, infoPlayCards);
     return;
   }
@@ -177,7 +205,7 @@ function useGoblin() {
 
 function useWizzard() {
   playSound('tone', 'wizzard', 0.5);
-  if(observerAccords.length === 0){
+  if (observerAccords.length === 0) {
     showWithTimeout(wizzardRules, 6000, infoPlayCards);
     return;
   }
@@ -239,13 +267,13 @@ function closePopup() { //Kay -- remove Element
 
 async function renderTable() {
   await includeHTML();
-    showInfo(infoStart());
-    buildStack("playerCards"); // Kay -- render player stack with joined function
-    buildStack("observerCards");
-    renderCircles();
-    chainHelper(); 
-    clickedCardID = -1;    
-    startRound(); //HIER STARTROUND DAMIT ALS ERSTES DER AKTUELLE STAND AUF FIREBASE GEPOSTET WERDEN KANN
+  showInfo(infoStart());
+  buildStack("playerCards"); // Kay -- render player stack with joined function
+  buildStack("observerCards");
+  renderCircles();
+  chainHelper();
+  clickedCardID = -1;
+  startRound(); //HIER STARTROUND DAMIT ALS ERSTES DER AKTUELLE STAND AUF FIREBASE GEPOSTET WERDEN KANN
 }
 
 /**
@@ -304,7 +332,7 @@ function stepBack() {
     mellotArray = [];
     tryWizzardStrike = false;
     tryGoblinStrike = false;
-}
+  }
   stackOpacity1(playerCards, 'playerCard');
   setBackArrays();
   playSound('failed', 'backMag', 0.5);
@@ -379,7 +407,7 @@ function savePosition(accInCircle) {
 
 async function awaitChangeCard() {
   enablePlayerCards(); // getCardInfo activ
-showInfo(infoChange());
+  showInfo(infoChange());
   btnGroup3();
   // docID('changeClicks(1)').style.display = 'none';
   clickedCardID = await waitForCardClick();
@@ -430,6 +458,6 @@ function showWithTimeout(func, timeout, func2) {
 /**
  * Vergleicht neue 
  */
-function youWin(part, length) { 
+function youWin(part, length) {
   alert(part + ' gewinnt mit einer Kettenzahl von: ' + length);
 }

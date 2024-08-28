@@ -32,6 +32,8 @@ let observerChains = [];//    -"-
 let flatPlayerConnection = []; //card neighbors in player card stack
 let sharpPlayerConnection = [];//    -"-
 let isChainCheck = false;
+let mirrorView = false; 
+let isRotated = false; //rotates table-top
 
 let allTones = [
   { nr: 0, stackNr: -1, title: 'gnom', amount: 3, src: 'assets/images/joker/joker.jpg' },

@@ -97,6 +97,9 @@ async function finishRound() {
     checkChainLength('observer');
     await swapParts();
     changeNames();
+    if (mirrorView) {
+        rotateWebsite();
+    }
     startRound();
 }
 
@@ -242,10 +245,9 @@ function renderCircles() {
             <img class="accCard" id="obsCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'observer')">   
             `;
         }
-    }
-    //isPlayerCircle or isObserver
-    renderAccords(false);
-    renderAccords(true);
+    }    
+    renderAccords(false);//isPlayerCircle 
+    renderAccords(true); //isObserver
 }
 
 function renderAccords(isObserver) {

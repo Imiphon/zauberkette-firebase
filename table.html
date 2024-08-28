@@ -23,17 +23,19 @@
 
 <body class="table-body" onload="renderTable(); detectTouchDevice();" id="body">
     <!-------------------- MAIN STUFF -------------------->
+<div id="headInfoID">
     <header w3-include-html="./templates/header.html"></header>
-    <main>
 
-        <!-------------------- INFO BAR -------------------->
-        <div class="info-bar">
-            <div class="game-goal" id="gameGoalID">
-                <p>Spielziel Zauberkettenlänge:</p>
-                <input type="number" id="goalInput" value="5" min="2" max="12" step="1" onchange="updateGoal()">
-            </div>
-            <div class="info-text" id="infoTextID"></div>
+    <!-------------------- INFO BAR -------------------->
+    <div class="info-bar">
+        <div class="game-goal" id="gameGoalID">
+            <p>Spielziel Zauberkettenlänge:</p>
+            <input type="number" id="goalInput" value="5" min="2" max="12" step="1" onchange="updateGoal()">
         </div>
+        <div class="info-text" id="infoTextID"></div>
+    </div>
+</div>
+    <main>
         <div class="table-frame">
             <div class="table-top" id="observerPartID">
                 <!-------------OBSERVER PART-------------------->
