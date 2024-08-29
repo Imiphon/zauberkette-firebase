@@ -9,7 +9,6 @@ let isMuted = false;
  * @param {number} volume 
  */
 function playSound(folder, title, volume) {
-    console.log('title of card', title);
     if (!isMuted) {
         let currentSound = new Audio(`assets/sounds/${folder}/${title}.mp3`);
         currentSound.play();

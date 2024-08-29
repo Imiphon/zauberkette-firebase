@@ -1,3 +1,8 @@
+async function initialize() {
+  await renderTable();
+  detectTouchDevice();
+}
+
 function docID(id) {
   return document.getElementById(id);
 }
@@ -11,12 +16,62 @@ async function includeHTML() { //Kay -- template function for header  unnessassa
     let resp = await fetch(file);
 
     if (resp.ok) {
-      element.innerHTML = await resp.text();
+      element.innerHTML = await resp.text();      
     } else {
       element.innerHTML = "Page not found";
     }
-  }
+  }  
 }
+
+function toggleMenu() {
+  const menu = document.getElementById('menu');
+  const menuToggle = document.getElementById('menuToggle');
+
+  // Toggle the 'open' class to show or hide the menu
+  menu.classList.toggle('open');
+
+  // Optionally, toggle the class for hamburger to X transformation
+  menuToggle.classList.toggle('open');
+}
+
+// Optional: Close the menu if clicked outside
+document.addEventListener('click', function(event) {
+  const menu = document.getElementById('menu');
+  const menuToggle = document.getElementById('menuToggle');
+  
+  if (!menuToggle.contains(event.target) && !menu.contains(event.target)) {
+    menu.classList.remove('open');
+    menuToggle.classList.remove('open');
+  }
+});
+
+/* 
+let menuListener = false;
+
+function toggleMenuListener() {
+  if(menuListener) return;
+  console.log('start toggle listener');
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('set eventListener for toggle Menu')
+    const menuToggleInput = document.querySelector('#menuToggle input');
+    const menu = document.getElementById('menu');
+
+    if (menuToggleInput && menu) {
+      // close with click outside element
+      document.addEventListener('click', function (event) {
+        const isClickInside = menu.contains(event.target) || menuToggleInput.contains(event.target);
+
+        if (!isClickInside && menuToggleInput.checked) {
+          menuToggleInput.checked = false; // Checkbox deaktivate
+        }
+      });
+    } else {
+      console.error('menuToggleInput oder menu wurde nicht gefunden');
+    }
+  });
+}
+ */
 
 function chainHelper() { //Kay --handle the cheat sheet for the accords. Z-Index higher!
   let chainHelper = document.querySelector('.chain-helper');
@@ -74,33 +129,53 @@ function detectTouchDevice() {
 
 function changeView() {
   mirrorView = !mirrorView;
-  let container = document.getElementById('headInfoID');  
-    if (mirrorView) {
-      container.classList.add('sideInfo');
-    }
-    if (!mirrorView) {
-      container.classList.remove('sideInfo');
-    }
-  toggleRotation();  
+  let container = document.getElementById('headInfoID');
+  if (mirrorView) {
+    container.classList.add('sideInfo');
+  }
+  if (!mirrorView) {
+    container.classList.remove('sideInfo');
+  }
+  toggleRotation();
+  switchtableStyle();
 }
 
 function toggleRotation() {
-    const container = document.getElementById('observerPartID');
-    if (isRotated) {
-        container.classList.remove('rotated-180');
-    } else {
-        container.classList.add('rotated-180');
-    }
-    isRotated = !isRotated;
+  const container = document.getElementById('observerPartID');
+  if (isRotated) {
+    container.classList.remove('rotated-180');
+  } else {
+    container.classList.add('rotated-180');
+  }
+  isRotated = !isRotated;
+}
+
+function switchtableStyle() {
+  if (mirrorView) {
+    let table = document.querySelector('.table-frame'); //with dot cause it's lookin for a selector
+    table.classList.remove('table-frame'); //only class-name without dot
+    table.classList.add('table-mirror-frame');
+  } else {
+    let table = document.querySelector('.table-mirror-frame');
+    table.classList.remove('table-mirror-frame');
+    table.classList.add('table-frame');
+  }
 }
 
 function rotateWebsite() {
-  let table = document.getElementsByClassName('table-frame')[0];
-  table.style.transform = "rotate(180deg)";
+  let table = document.getElementsByClassName('table-mirror-frame')[0];
+  let currentRotation = table.style.transform;
+  if (currentRotation === "rotate(180deg)") {
+    table.style.transform = "rotate(0deg)";
+  } else {
+    table.style.transform = "rotate(180deg)";
+  }
   table.style.transformOrigin = "center";
 }
 
+
 /*-------------------- BUTTONS -------------------*/
+
 
 function btnGroup1() { //Kay -- shows infotext start
   noBtns(); //Kay reset all Button style
@@ -273,7 +348,8 @@ async function renderTable() {
   renderCircles();
   chainHelper();
   clickedCardID = -1;
-  startRound(); //HIER STARTROUND DAMIT ALS ERSTES DER AKTUELLE STAND AUF FIREBASE GEPOSTET WERDEN KANN
+  await startRound(); 
+  //HIER STARTROUND DAMIT ALS ERSTES DER AKTUELLE STAND AUF FIREBASE GEPOSTET WERDEN KANN
 }
 
 /**

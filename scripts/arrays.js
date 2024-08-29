@@ -4,6 +4,7 @@ document.documentElement.style.setProperty("--vh", `${vh}px`); //set var '--v' f
 
 let goalValue = 5;
 
+
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
 let playerAccords = [

@@ -165,7 +165,6 @@ function checkChainLength(part) {
             return;
         }
     });
-    console.log(part, 'Ende checkChainLength() besitzt folgende Ketten: ', currChainArr);
     let winnerChain = currChainArr.find(chain => chain.length >= goalValue);
     if (winnerChain) youWin(part, winnerChain.length); 
 }

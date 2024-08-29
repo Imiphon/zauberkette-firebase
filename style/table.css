@@ -6,8 +6,8 @@
   height: 60px;
   display: flex;
   color: #f2f2f2;
-  background-color: black; 
-  z-index: 10; 
+  background-color: black;
+  z-index: 10;
 }
 
 
@@ -18,10 +18,12 @@
   gap: 4px;
   align-items: center;
 }
+
 .game-goal input {
   margin: 4px;
   width: auto;
 }
+
 .info-text {
   margin-right: 12px;
   padding: 0 12px;
@@ -41,11 +43,13 @@
   0% {
     background-color: transparent;
 
-  color: black;
+    color: black;
   }
+
   50% {
     background-color: yellow;
-  }  
+  }
+
   100% {
     background-color: transparent;
     color: #f2f2f2;
@@ -59,14 +63,30 @@
 
 .table-content {
   height: auto;
-    display: flex;
-    padding: 4px;
-    position: relative;
+  display: flex;
+  padding: 4px;
+  position: relative;
 }
 
 .table-frame {
   width: 100%;
   height: calc(100vh - 60px);
+  overflow-y: auto;
+
+  position: absolute;
+  top: 60px;
+  overflow-y: auto;
+  margin: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-mirror-frame {
+  position: absolute;
+  left: 120px;
+  width: calc(100% - 120px);
+  height: 100vh;
   overflow-y: auto;
 }
 
