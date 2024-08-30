@@ -1,3 +1,40 @@
+main {
+  background-image: url('/assets/images/bgr.jpeg');
+  background-size: cover;
+  /* Skaliert das Bild, sodass es den gesamten Bereich ausfüllt */
+  background-position: center;
+  /* Zentriert das Bild */
+  background-repeat: no-repeat;
+  /* Verhindert, dass das Bild wiederholt wird */
+  min-height: 100vh;
+  /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */
+}
+
+.filter-bgr {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.name {
+  margin: 4px 0px;
+  border-radius: 50%;
+}
+
+.zone-descr {
+  margin: 4px 0px;
+}
+
+@keyframes fadeOutIn {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
 .info-bar {
   position: fixed;
   top: 60px;
@@ -39,10 +76,39 @@
   white-space: nowrap;
 }
 
+/* background color for curr player*/
+@keyframes yellowNameFade {
+  0% {
+    background-color: transparent;
+    color: gold;
+    border-radius: 50%;
+    box-shadow: none;
+  }
+
+  50% {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 0, 0.5);
+    box-shadow: 0 0 10px 10px rgba(255, 255, 0, 0.5);
+    /* Schimmer-Effekt */
+  }
+
+  100% {
+    background-color: transparent;
+    color:rgb(55, 42, 32);
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.schimmer-text {
+  animation: yellowNameFade 3s ease-in-out;
+  /* Weitere Stile für das Text-Element, falls gewünscht */
+}
+
+
 @keyframes yellowFade {
   0% {
     background-color: transparent;
-
     color: black;
   }
 
@@ -76,7 +142,7 @@
   position: absolute;
   top: 60px;
   overflow-y: auto;
-  margin: 0;
+  margin-top: 32px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -92,7 +158,7 @@
 
 .table-top {
   height: 50%;
-  background-color: rgb(222, 168, 61);
+  /*background-color: rgb(222, 168, 61);*/
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -116,10 +182,54 @@
 }
 
 .btn-group {
-  width: 50%;
+  width: 60%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 8px;
+}
+
+.btn-group button {
+  max-width: 100px;
+  border-radius: 40px;
+  border: #FFC107;
+  color: #6c5102;
+  cursor: pointer;
+}
+
+.shimmering-gold {
+  background: linear-gradient(45deg, #FFD700, #FFC107, #FFD700);
+  /* Goldene Farbtöne im Verlauf */
+  background-size: 200% 200%;
+  /* Größerer Hintergrund, um die Animation zu ermöglichen */
+  box-shadow: 0 4px 8px rgba(255, 223, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.7);
+  /* Glanz-Effekt */
+  border-radius: 20%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.btn-group button:hover,
+.optAccContainer:hover {
+  animation: shimmer 3s infinite linear;
+  /* Schimmer-Animation */
+}
+
+.btn-group img {
+  width: 60px;
+  height: 60px;
+  background-color: unset;
 }
 
 .chain-helper {
@@ -139,7 +249,7 @@
 
 .table-bottom {
   height: 50%;
-  background-color: rgb(222, 168, 61);
+  /*background-color: rgb(222, 168, 61);*/
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -150,7 +260,7 @@
   width: 40%;
   height: 100%;
   /* margin-bottom: 20px; */
-  background-color: #f2f2f2;
+  /*background-color: #f2f2f2;*/
   display: flex;
   justify-content: space-between;
 }
@@ -247,13 +357,18 @@
   right: 0;
   width: 70%;
   height: 100%;
-  background-color: rgb(222, 128, 61);
+  /*background-color: rgb(222, 128, 61);*/
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+
+
+.pl-card-frame {
+  margin: 0 12px;
+}
 
 .card-group {
   display: flex;
@@ -283,6 +398,18 @@ img {
 .hide-image {
   visibility: hidden;
 }
+
+.name-frame, .optAccContainer {
+  padding:20px;
+  color: rgb(55, 42, 32);
+  background-image: url('/assets/images/brass-plate.png');
+  max-width: fit-content;
+  max-height: fit-content;
+  background-size: 100% 100%; /* Passt das Bild an die Größe des Containers an */
+  background-position: center;
+  background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrundbildes */
+}
+
 
 /* ------------------------- CIRCLE BOARD --------------------------- */
 .circle-popup {

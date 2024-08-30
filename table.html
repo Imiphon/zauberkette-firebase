@@ -23,19 +23,21 @@
 
 <body class="table-body" onload="initialize();" id="body">
     <!-------------------- MAIN STUFF -------------------->
-<div id="headInfoID">
-    <header w3-include-html="./templates/header.html"></header>
+    <div id="headInfoID">
+        <header w3-include-html="./templates/header.html"></header>
 
-    <!-------------------- INFO BAR -------------------->
-    <div class="info-bar">
-        <div class="game-goal" id="gameGoalID">
-            <p>Spielziel Zauberkettenlänge:</p>
-            <input type="number" id="goalInput" value="5" min="2" max="12" step="1" onchange="updateGoal()">
+        <!-------------------- INFO BAR -------------------->
+        <div class="info-bar">
+            <div class="game-goal" id="gameGoalID">
+                <p>Spielziel Zauberkettenlänge:</p>
+                <input type="number" id="goalInput" value="5" min="2" max="12" step="1" onchange="updateGoal()">
+            </div>
+            <div class="info-text" id="infoTextID"></div>
         </div>
-        <div class="info-text" id="infoTextID"></div>
     </div>
-</div>
     <main>
+        <div class="filter-bgr">
+
         <div class="table-frame">
             <div class="table-top" id="observerPartID">
                 <!-------------OBSERVER PART-------------------->
@@ -49,7 +51,10 @@
                 </div>
 
                 <div class="top-zone" id="topZoneID"> <!-- mit btn startRound wird eigentlich PL1 und Pl2 getauscht-->
-                    <h3>Observer-Card Zone</h3><span id="obsNameID">Alfa</span>
+                    <div class="name-frame">
+                        <h5 class="zone-descr">Observer-Card Zone</h5>
+                        <h2 class="name" id="obsNameID">Alfa</h2>
+                    </div>
                     <div class="card-group" id="observerStackID">
                         <!-- 5 Cards -->
                     </div>
@@ -59,25 +64,26 @@
             <!-------------BUTTON PART-------------------->
             <div class="table-center" id="secondPartID">
                 <div class="btn-group">
-                    <button class="hover-effect" onclick="awaitChangeCard()" id="changeClicks(1)"
+                    <button class="hover-effect shimmering-gold" onclick="awaitChangeCard()" id="changeClicks(1)"
                         style="display: inline;">Kartentausch</button>
-                    <button class="hover-effect" onclick="noChanges()" id="changeClicks(2)"
+                    <button class="hover-effect shimmering-gold " onclick="noChanges()" id="changeClicks(2)"
                         style="display: inline;">Nothing
                         to
                         Change</button>
-                    <button class="hover-effect" onclick="setCardCombi()" id="changeClicks(3)"
+                    <button class="hover-effect shimmering-gold" onclick="setCardCombi()" id="changeClicks(3)"
                         style="display: none;">Komponiere einen
                         Zauber</button>
-                    <button class="hover-effect" onclick="useMellot()" id="changeClicks(4)"
-                        style="display: none;">useMellot</button>
-                    <button class="hover-effect" onclick="useGoblin()" id="changeClicks(5)"
-                        style="display: none;">useGoblin</button>
-                    <button class="hover-effect" onclick="useWizzard()" id="changeClicks(6)"
-                        style="display: none;">useWizzard</button>
-                    <button class="hover-effect" onclick="stepBack()" id="changeClicks(8)" style="display: none;">Step
+                    <button class="hover-effect shimmering-gold" onclick="useMellot()" id="changeClicks(4)"
+                        style="display: none;"><img src="assets/images/btn/mel-stand.png" alt="icon"></button>
+                    <button class="hover-effect shimmering-gold" onclick="useGoblin()" id="changeClicks(5)"
+                        style="display: none;"><img src="assets/images/btn/gob-stand.png" alt="icon"></button>
+                    <button class="hover-effect shimmering-gold" onclick="useWizzard()" id="changeClicks(6)"
+                        style="display: none;"><img src="assets/images/btn/wiz-stand.png" alt="icon"></button>
+                    <button class="hover-effect shimmering-gold" onclick="stepBack()" id="changeClicks(8)"
+                        style="display: none;">Step
                         Back</button>
                     <!--actually nextPlayer() insted of changeCard()-->
-                    <button class="hover-effect" onclick="finishRound()" id="changeClicks(7)"
+                    <button class="hover-effect shimmering-gold" onclick="finishRound()" id="changeClicks(7)"
                         style="display: none;">Finish
                         Round</button>
                 </div>
@@ -94,12 +100,16 @@
                     </div>
                 </div>
                 <div class="bottom-zone" id="">
-                    <h3>Player-Card Zone</h3><span id="playNameID">Beta</span>
+                    <div class="name-frame">
+                        <h5 class="zone-descr">Player-Card Zone</h5>
+                        <h2 class="name" id="playNameID">Beta</h2>
+                    </div>
                     <div class="card-group" id="playerStackID">
                         <!-- 5 Cards -->
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </main>
     </div>

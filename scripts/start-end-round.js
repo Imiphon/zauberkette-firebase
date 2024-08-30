@@ -85,22 +85,31 @@ function findOptAccords(cardNr) {
 }
 
 async function finishRound() {
+    animateTableFrame();
+    await new Promise(resolve => setTimeout(resolve, 1500));
     if (specialInProgress) {
-        usedSpecials.pop(); //last special will be removed
+        usedSpecials.pop(); // Last special will be removed
         specialInProgress = false;
     }
     if (usedSpecials.length != 0) {
         changeSpecial();
     }
-
     checkChainLength('player');
     checkChainLength('observer');
     await swapParts();
     changeNames();
     if (mirrorView) {
         rotateWebsite();
-    }
-    startRound();
+    }  
+    startRound();  
+}
+
+function animateTableFrame() {
+    let tableFrame = document.querySelector('.table-frame');
+    tableFrame.style.animation = 'none';
+    requestAnimationFrame(() => {
+        tableFrame.style.animation = 'fadeOutIn 3s ease-in-out';
+    });
 }
 
 function changeNames() {
@@ -121,18 +130,24 @@ async function swapParts() { // Kay why async? shorter possible
     renderStack("observerCard", "observerStackID");
     renderCircles();
 }
-
+ 
+    // AN DIESER STELLE AUF FIREBASE DEN AKTUELLEN STAND VON PLAYER UND OBSERVER ÜBERGEBEN 
+    // ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
+    // DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN
+    // ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
 function startRound() {
+    let name = document.getElementById('playNameID');
+    name.style.animation = 'none';
+    //a minimal delay to get sure for full animation
+    requestAnimationFrame(() => {
+        name.style.animation = 'yellowNameFade 6s forwards';
+    });
     btnGroup1();
     disableCardClicks();
     setBackArrays();
     setTimeout(() => {
         playSound('success', 'gong-deep', 0.5);
-      }, 500);
-    // AN DIESER STELLE AUF FIREBASE DEN AKTUELLEN STAND VON PLAYER UND OBSERVER ÜBERGEBEN 
-    // ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
-    // DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN
-    // ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
+      }, 500);     
 }
 
 /**
