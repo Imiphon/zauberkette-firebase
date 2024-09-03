@@ -177,7 +177,7 @@ main {
   justify-content: end;
   align-items: center;
   background-color: transparent;
-  z-index: 1000;
+  z-index: 20;
 }
 
 .btn-group {
