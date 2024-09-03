@@ -1,5 +1,5 @@
 main {
-  background-image: url('./../assets/images/bgr.jpeg');
+  background-image: url('/assets/images/bgr.jpeg');
   background-size: cover;
   /* Skaliert das Bild, sodass es den gesamten Bereich ausfüllt */
   background-position: center;
@@ -7,7 +7,7 @@ main {
   background-repeat: no-repeat;
   /* Verhindert, dass das Bild wiederholt wird */
   min-height: 100vh;
-  /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */  
+  /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */
 }
 
 .filter-bgr {
@@ -170,6 +170,7 @@ main {
 }
 
 .table-center {
+  position: absolute;
   width: 100%;
   height: auto;
   top: 50%;
@@ -265,11 +266,6 @@ main {
 }
 
 .circle-img {
-  background-image: url('./../assets/images/brass-circle.png');
-  background-size: 180px;
-  background-position-x: 64%;
-  background-position-y: 55%;
-  background-repeat: no-repeat; 
   position: relative;
   width: 240px;
 }
@@ -361,6 +357,7 @@ main {
   right: 0;
   width: 70%;
   height: 100%;
+  /*background-color: rgb(222, 128, 61);*/
   display: flex;
   justify-content: center;
   align-items: center;
@@ -405,7 +402,7 @@ img {
 .name-frame, .optAccContainer {
   padding:20px;
   color: rgb(55, 42, 32);
-  background-image: url('./../assets/images/brass-plate.png');
+  background-image: url('/assets/images/brass-plate.png');
   max-width: fit-content;
   max-height: fit-content;
   background-size: 100% 100%; /* Passt das Bild an die Größe des Containers an */

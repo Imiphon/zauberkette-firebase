@@ -12,26 +12,28 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   let circleNr = accInStack.circleNr;
   let accInCircle = getCardElement(circleNr, isObserver, isDouble);
   if (isNew && accInStack.amount <= 0) {
-    console.log('Es gibt nur jeweils zwei Zauber von jeder Sorte.');
+    showWithTimeout(infoAccEmpty, 3000);
     playSound('failed', 'backMag', 0.5);
     stepBack();
-    return
+    return;
   } else if (isNew && accInStack.amount > 0) {
-    accInStack.amount--;
     let title = accInStack.title;
     playSound('accords-magic', 'Maj-mag-'+ title, 0.5);
-    updateNewCard(accInStack, accInCircle);
+    updateNewCard(accInStack, accInCircle, isDouble);
   } else {
     accInCircle.src = accInStack.src;
   }
-  if (isDouble) {
-    accInCircle.src = accInStack.src;
-  }
-  savePosition(accInCircle);
+  savePosition(accInCircle); //to manage zoom position element
 }
 
+/** * 
+ * @param {*} circleNr 
+ * @param {*} isObserver 
+ * @param {*} isDouble 
+ * @returns circleID of element in html
+ */
 function getCardElement(circleNr, isObserver, isDouble) {
-  let circleID
+  let circleID;
   if (isDouble) {
     circleID = isObserver ? "#obsCircle2" : "#playerCircle2";
   } else {
@@ -40,15 +42,19 @@ function getCardElement(circleNr, isObserver, isDouble) {
   return document.querySelector(`${circleID} img:nth-child(${circleNr})`);
 }
 
-function updateNewCard(accInStack, accInCircle) {
+function updateNewCard(accInStack, accInCircle, isDouble) {
   if (accInStack.amount != 0) {
-    playerAccords.push(accInStack);
-    //accInStack.amount--;
+    if(isDouble){
+      let accInPlayerStack = playerAccords.find((acc) => acc.nr === accInStack.nr);
+      accInPlayerStack.amount++;
+    } else if (!isDouble) {
+      playerAccords.push(accInStack);
+    }
+    accInStack.amount--;
     accInCircle.src = accInStack.src;
     changeWinnerCards();
   } else {
-    showInfo(infoAccEmpty());
-   // clickedCardID = -1;
+    showWithTimeout(infoAccEmpty(), 3000);
     startRound();
   }
 }

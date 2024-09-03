@@ -33,7 +33,7 @@ function renderStack(player, part) {
 
 
 /**
- * shows for wich accords each tone is usefull (as prime, terz and quint)
+ * shows in .optAccContainer for wich accords each tone is usefull (as prime, terz and quint)
  * @param {array} optAcc opt.accordNr (3) or 1 specialCardNr
  * @param {number} stackNr 
  */
@@ -84,6 +84,16 @@ function findOptAccords(cardNr) {
     }
 }
 
+function handleFinishRoundClick() {
+    const finishButton = document.getElementById('changeClicks(7)');
+    finishButton.disabled = true;  // Deaktiviert den Button
+
+    finishRound().then(() => {
+        // Optional: Reaktiviere den Button nach Abschluss der Funktion
+        finishButton.disabled = false;
+    });
+}
+
 async function finishRound() {
     animateTableFrame();
     await new Promise(resolve => setTimeout(resolve, 1500));
@@ -105,7 +115,9 @@ async function finishRound() {
 }
 
 function animateTableFrame() {
-    let tableFrame = document.querySelector('.table-frame');
+    let tableFrame; 
+    if(!mirrorView) tableFrame = document.querySelector('.table-frame');
+    else if(mirrorView) tableFrame = document.querySelector('.table-mirror-frame');
     tableFrame.style.animation = 'none';
     requestAnimationFrame(() => {
         tableFrame.style.animation = 'fadeOutIn 3s ease-in-out';

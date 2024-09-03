@@ -520,11 +520,11 @@ function showInfo(infoTemplate) {
   info.style.animation = 'yellowFade 4s forwards';
 }
 
-function showWithTimeout(func, timeout, func2) {
+function showWithTimeout(func, timeout, optFunc) {
   showInfo(func());
   setTimeout(() => {
-    if (func2) {
-      showInfo(func2());
+    if (optFunc) {
+      showInfo(optFunc());
     } else {
       return;
     }

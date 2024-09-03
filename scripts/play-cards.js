@@ -57,7 +57,7 @@ async function setCardCombi() {
   }
   if (clickAccount === 5) {
     showInfo(infoNothinToChange());
-    startRound();    
+    startRound();
     clickAccount = 0;
   }
 }
@@ -115,33 +115,27 @@ function checkForJoker() {
   }
 }
 
-//Finds prime of Accord and send it to setAcc
+/**
+ * Finds prime of Accord and send it to setAcc
+ * info for setAcc(prime, isNew, isObserver, isDouble);
+ */
 function checkRightCombi() {
-  let x = Math.min(...choosenCards);
-  // x + gr.Terz + Quinte (Grundstellung)
-  if (choosenCards.includes(x + 4) && choosenCards.includes(x + 7)) {
-    console.log("Grundstellung");
-    let prime = x;
-    setAcc(prime, true);
+  let lowestTone = Math.min(...choosenCards);
+  let isDouble = playerAccords.some(acc => acc.nr === lowestTone);
+  if (choosenCards.includes(lowestTone + 4) && choosenCards.includes(lowestTone + 7)) {
+    let prime = lowestTone; // lowestTone + gr.Terz + Quinte (Grundstellung)
+    setAcc(prime, true, false, isDouble);
   }
-  // x + Quarte + gr.Terz (Quintstellung)
-  else if (choosenCards.includes(x + 5) && choosenCards.includes(x + 9)) {
-    console.log("Quintstellung");
-    let prime = x + 5;
-    setAcc(prime, true);
+  else if (choosenCards.includes(lowestTone + 5) && choosenCards.includes(lowestTone + 9)) {
+    let prime = lowestTone + 5; // lowestTone + Quarte + gr.Terz (Quintstellung)
+    setAcc(prime, true, false, isDouble);
   }
-  // x + gr.Terz + kl.Sexte (Terzstellung)
-  else if (choosenCards.includes(x + 3) && choosenCards.includes(x + 8)) {
-    console.log("Terzstellung");
-    let prime = x + 8;
-    setAcc(prime, true);
+  else if (choosenCards.includes(lowestTone + 3) && choosenCards.includes(lowestTone + 8)) {
+    let prime = lowestTone + 8;  // lowestTone + gr.Terz + kl.Sexte (Terzstellung)
+    setAcc(prime, true, false, isDouble);
   } else {
     playSound('failed', 'backMag', 0.5);
-    debugger
-    showInfo(infoNoCombi());
-    setTimeout(() => {
-      setCardCombi()
-    }, 2000);
+    showWithTimeout(infoNoCombi, 3000);
   }
 }
 
@@ -150,25 +144,27 @@ function checkRightCombi() {
 function oneJoker() {
   //return numbers without 0 from global [choosenCards]
   let filteredArray = choosenCards.filter((num) => num !== 0);
-  let x = Math.min(...filteredArray);
-  // initial(commonChord)
-  if (choosenCards.includes(x + 4) || choosenCards.includes(x + 7)) {
-    let prime = x;
-    setAcc(prime, true);
+  let lowTone = Math.min(...filteredArray);
+  if (choosenCards.includes(lowTone + 4) || choosenCards.includes(lowTone + 7)) {
+    prime = lowTone;
+    let isDouble = playerAccords.some(acc => acc.nr === prime);
+    setAcc(prime, true, false, isDouble);
   }
   // Terzstellung (third position)
-  else if (choosenCards.includes(x + 3) || choosenCards.includes(x + 8)) {
-    if (choosenCards.includes(x + 3)) { //fifth on top
-      prime = x - 4;
-    } if (x < 5) {
-      prime = x + 8; // octave on top
+  else if (choosenCards.includes(lowTone + 3) || choosenCards.includes(lowTone + 8)) {
+    if (choosenCards.includes(lowTone + 3)) { //fifth on top
+      prime = lowTone - 4;
+    } if (lowTone < 5) {
+      prime = lowTone + 8; // octave on top
     }
-    setAcc(prime, true);
+    let isDouble = playerAccords.some(acc => acc.nr === prime);
+    setAcc(prime, true, false, isDouble);
   }
   // fifth position
-  else if (choosenCards.includes(x + 5) || choosenCards.includes(x + 9)) {
-    prime = x + 5;
-    setAcc(prime, true);
+  else if (choosenCards.includes(lowTone + 5) || choosenCards.includes(lowTone + 9)) {
+    prime = lowTone + 5;
+    let isDouble = playerAccords.some(acc => acc.nr === prime);
+    setAcc(prime, true, false, isDouble);
   } else {
     showInfo(infoNoCombi());
     setTimeout(() => {
@@ -177,10 +173,9 @@ function oneJoker() {
   }
 }
 
-//funktioniert! Muss aber noch Hinweis ins Popup "Wähle einen Akkord aus."
+
 function twoJoker() {
-  let thisNr = choosenCards.find((nr) => nr !== 0);
-  //this Nr is going to be the third of the chord
+  let thisNr = choosenCards.find((nr) => nr !== 0); //the only real tone
   let nrToThird;
   let nrToFifth;
   let nrToPrime = allMaj.find((chord) => chord['nr'] === thisNr);
@@ -203,13 +198,25 @@ function twoJoker() {
   }
 }
 
+/**
+ * shows possible accords 
+ */
 function choiceAcc() {
   openCardPopup()
   let popup = document.querySelector('.popup');
   for (let i = 0; i < accOffer.length; i++) {
     let card = accOffer[i];
-    popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true); closePopup();">`;
+    let isDouble = playerAccords.some(acc => acc.nr === card.nr);
+    let cardInStack = allMaj.find(acc => acc.nr === card.nr);
+    let isEmptyAmount = cardInStack.amount === 0;
+    //popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true, false, ${isDouble}); closePopup();">`;
+    let cardHTML = `
+    <img class="pop-card" src="${card['src']}" 
+    onclick="${isEmptyAmount ? 'showWithTimeout(infoAccEmpty, 3000)' : `setAcc(${card.nr}, true, false, ${isDouble}); closePopup();`}" 
+    style="opacity: ${isEmptyAmount ? 0.3 : 1};">`;
+    popup.innerHTML += cardHTML;
   }
+
 }
 
 function threeJoker() {
@@ -218,7 +225,14 @@ function threeJoker() {
   popup.classList.add('allCards');
   for (let i = 0; i < allMaj.length; i++) {
     let card = allMaj[i];
-    popup.innerHTML += `<img class="all-pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true); closePopup();">`;
+    let isDouble = playerAccords.some(acc => acc.nr === card.nr);
+    let isEmptyAmount = card.amount === 0;
+    if (isEmptyAmount) {
+      card.style.opacity = 0.3;
+      popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 3000)">`;
+    } else {
+      popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true, false, ${isDouble}); closePopup();">`;
+    }
   }
 }
 
