@@ -104,20 +104,20 @@ async function finishRound() {
     if (usedSpecials.length != 0) {
         changeSpecial();
     }
-    checkChainLength('player');
-    checkChainLength('observer');
+    checkForChain('player');
+    checkForChain('observer');
     await swapParts();
     changeNames();
     if (mirrorView) {
         rotateWebsite();
-    }  
-    startRound();  
+    }
+    startRound();
 }
 
 function animateTableFrame() {
-    let tableFrame; 
-    if(!mirrorView) tableFrame = document.querySelector('.table-frame');
-    else if(mirrorView) tableFrame = document.querySelector('.table-mirror-frame');
+    let tableFrame;
+    if (!mirrorView) tableFrame = document.querySelector('.table-frame');
+    else if (mirrorView) tableFrame = document.querySelector('.table-mirror-frame');
     tableFrame.style.animation = 'none';
     requestAnimationFrame(() => {
         tableFrame.style.animation = 'fadeOutIn 3s ease-in-out';
@@ -125,7 +125,7 @@ function animateTableFrame() {
 }
 
 function changeNames() {
-    let obsName = document.getElementById('obsNameID'); 
+    let obsName = document.getElementById('obsNameID');
     let playName = document.getElementById('playNameID');
     [obsName.innerHTML, playName.innerHTML] = [playName.innerHTML, obsName.innerHTML];
 }
@@ -142,11 +142,11 @@ async function swapParts() { // Kay why async? shorter possible
     renderStack("observerCard", "observerStackID");
     renderCircles();
 }
- 
-    // AN DIESER STELLE AUF FIREBASE DEN AKTUELLEN STAND VON PLAYER UND OBSERVER ÜBERGEBEN 
-    // ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
-    // DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN
-    // ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
+
+// AN DIESER STELLE AUF FIREBASE DEN AKTUELLEN STAND VON PLAYER UND OBSERVER ÜBERGEBEN 
+// ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
+// DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN
+// ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
 function startRound() {
     let name = document.getElementById('playNameID');
     name.style.animation = 'none';
@@ -159,16 +159,26 @@ function startRound() {
     setBackArrays();
     setTimeout(() => {
         playSound('success', 'gong-deep', 0.5);
-      }, 500);     
+    }, 500);
+}
+
+function checkForWin(part) {
+    let currChainArr = part === 'player' ? playerChains : observerChains;
+
+    let winnerChain = currChainArr.find(chain => chain.length >= goalValue);
+    if (winnerChain) youWin(part, winnerChain.length);
 }
 
 /**
  * Is checking for accord chains in accord(-Arrays) while finishRound() 
  * @param {string} part is 'player'or 'observer'
  */
-function checkChainLength(part) {
+function checkForChain(part) {
     let currentAccArray = part === 'player' ? playerAccords : observerAccords;
-    let currChainArr = part === 'player' ? playerChains : observerChains;
+
+    const firstCircleAccs = [];
+    const secondCircleAccs = [];
+
     currentAccArray.forEach((accord) => {
         if (accord) {
             const prevCircleNr = accord.circleNr - 1 === 0 ? 12 : accord.circleNr - 1;
@@ -177,61 +187,82 @@ function checkChainLength(part) {
             const isPrev = currentAccArray.find(a => a.circleNr === prevCircleNr);
             const isNext = currentAccArray.find(a => a.circleNr === nextCircleNr);
 
-            //one chain in one of the circles
-            if ((!isPrev && accord.amount === 1 && isNext && isNext.amount >= 1) ||
-                (!isPrev && accord.amount === 2 && isNext && isNext.amount === 1) ||
-                (isPrev && isPrev.amount === 1 && accord.amount === 2 && isNext && isNext.amount === 2)) {
-                addToChainArray(1, accord.circleNr, part); //'player' or 'observer'
+            if (isNext && !isPrev) {
+                firstCircleAccs.push(accord.circleNr);
             }
-
-            if (!isPrev && accord.amount === 2 && isNext && isNext.amount === 2) {
-                addToChainArray(1, accord.circleNr, part);
-                addToChainArray(2, accord.circleNr, part);
+            if (isNext && isNext.amount === 2 && accord.amount === 2 && isPrev.amount != 2) {
+                secondCircleAccs.push(accord.circleNr);
             }
-        } else {
-            return;
         }
     });
-    let winnerChain = currChainArr.find(chain => chain.length >= goalValue);
-    if (winnerChain) youWin(part, winnerChain.length); 
+    firstCircleAccs.forEach(circleNr => {
+        addToChainArray(circleNr, part);
+    });
+    secondCircleAccs.forEach(circleNr => {
+        addToChainArray(circleNr, part, true);
+    });    
+
+    if (firstCircleAccs.length != 0) {
+        checkForWin(part);
+    }
 }
 
+function addToChainArray(circleNr, part, secondCircle) {
+    let currentChain = [];
+    let currentAccords = part === 'player' ? playerAccords : observerAccords;
+    let currChainArray = part === 'player' ? playerChains : observerChains;
+
+    let currAcc = currentAccords.find(a => a.circleNr === circleNr);
+    currentChain.push(currAcc);
+    let nextCircleNr = currAcc.circleNr + 1 === 13 ? 1 : currAcc.circleNr + 1;
+
+    while (true) {
+        let nextAcc = currentAccords.find(acc => acc.circleNr === nextCircleNr);
+        if (nextAcc && !secondCircle) {
+            currentChain.push(nextAcc);
+        } 
+        else if (nextAcc && secondCircle) {
+            currentChain.push(nextAcc);
+        } else {
+            currChainArray.push(currentChain);
+            break;
+        }
+        currAcc = nextAcc;
+        nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
+    }
+}
 
 /**
  * Is adding accords in chains and collect them in chain-arrays 
  * @param {string} part is 'player'or 'observer'
- * @param {number} circle 
  * @param {number} circleNr 
  * @returns 
- */
-function addToChainArray(circle, circleNr, part) {
+ *
+function addToChainArray(circleNr, part) {
     let currentChain = [];
-    let currentAccArray = part === 'player' ? playerAccords : observerAccords;
-    let currChainArr = part === 'player' ? playerChains : observerChains;
+    let currentAccords = part === 'player' ? playerAccords : observerAccords;
+    let currChainArray = part === 'player' ? playerChains : observerChains;
 
-    let currAcc = currentAccArray.find(a => a.circleNr === circleNr);
-    if (!currAcc) return; // If the starting accord is not found, return
-
+    let currAcc = currentAccords.find(a => a.circleNr === circleNr);
+    if (!currAcc) return;
     currentChain.push(currAcc);
-
     let nextCircleNr = currAcc.circleNr + 1 === 13 ? 1 : currAcc.circleNr + 1;
 
     while (true) {
-        let nextAcc = currentAccArray.find(acc => acc.circleNr === nextCircleNr);
-        if (!nextAcc) {
-            currChainArr.push(currentChain);
-            break;
-        }
-        if ((circle === 1) || (circle === 2 && nextAcc.amount === 2)) {
+        let nextAcc = currentAccords.find(acc => acc.circleNr === nextCircleNr);
+        if (nextAcc && currentChain.length < 13) {
             currentChain.push(nextAcc);
-        } else {
-            currChainArr.push(currentChain);
+        }
+        if (!nextAcc || currentChain.length === 12) {
+            currChainArray.push(currentChain);
             break;
         }
+        currAcc = nextAcc;
         nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
     }
-
+    checkForWin(part);
 }
+*/
 
 function setBackArrays() {
     clickedCardID = -1;
@@ -271,7 +302,7 @@ function renderCircles() {
             <img class="accCard" id="obsCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'observer')">   
             `;
         }
-    }    
+    }
     renderAccords(false);//isPlayerCircle 
     renderAccords(true); //isObserver
 }
