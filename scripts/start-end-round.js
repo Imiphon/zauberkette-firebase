@@ -187,7 +187,7 @@ function checkForChain(part) {
             const isPrev = currentAccArray.find(a => a.circleNr === prevCircleNr);
             const isNext = currentAccArray.find(a => a.circleNr === nextCircleNr);
 
-            if (isNext && !isPrev) {
+            if (isNext && (!isPrev || currentAccArray.length === 12)) {
                 firstCircleAccs.push(accord.circleNr);
             }
             if (isNext && isNext.amount === 2 && accord.amount === 2 && isPrev.amount != 2) {
@@ -207,6 +207,12 @@ function checkForChain(part) {
     }
 }
 
+/**
+ * fill up playerChains or observerChains with accord-objects
+ * @param {number} circleNr 
+ * @param {string} part 
+ * @param {boolean} secondCircle 
+ */
 function addToChainArray(circleNr, part, secondCircle) {
     let currentChain = [];
     let currentAccords = part === 'player' ? playerAccords : observerAccords;
@@ -218,10 +224,10 @@ function addToChainArray(circleNr, part, secondCircle) {
 
     while (true) {
         let nextAcc = currentAccords.find(acc => acc.circleNr === nextCircleNr);
-        if (nextAcc && !secondCircle) {
+        if (nextAcc && !secondCircle && currentChain.length < 12) {
             currentChain.push(nextAcc);
         } 
-        else if (nextAcc && secondCircle) {
+        else if (nextAcc && secondCircle && currentChain.length < 12) {
             currentChain.push(nextAcc);
         } else {
             currChainArray.push(currentChain);
@@ -231,38 +237,6 @@ function addToChainArray(circleNr, part, secondCircle) {
         nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
     }
 }
-
-/**
- * Is adding accords in chains and collect them in chain-arrays 
- * @param {string} part is 'player'or 'observer'
- * @param {number} circleNr 
- * @returns 
- *
-function addToChainArray(circleNr, part) {
-    let currentChain = [];
-    let currentAccords = part === 'player' ? playerAccords : observerAccords;
-    let currChainArray = part === 'player' ? playerChains : observerChains;
-
-    let currAcc = currentAccords.find(a => a.circleNr === circleNr);
-    if (!currAcc) return;
-    currentChain.push(currAcc);
-    let nextCircleNr = currAcc.circleNr + 1 === 13 ? 1 : currAcc.circleNr + 1;
-
-    while (true) {
-        let nextAcc = currentAccords.find(acc => acc.circleNr === nextCircleNr);
-        if (nextAcc && currentChain.length < 13) {
-            currentChain.push(nextAcc);
-        }
-        if (!nextAcc || currentChain.length === 12) {
-            currChainArray.push(currentChain);
-            break;
-        }
-        currAcc = nextAcc;
-        nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
-    }
-    checkForWin(part);
-}
-*/
 
 function setBackArrays() {
     clickedCardID = -1;
