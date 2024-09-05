@@ -86,14 +86,32 @@ function detectTouchDevice() {
   }
 }
 
+function calculateAvailableHeight() {
+  const viewportHeight = window.innerHeight;
+  const documentHeight = document.documentElement.clientHeight;
+
+  // Höhe der Tableiste ermitteln (Differenz zwischen Viewport und Dokumenthöhe)
+  const toolbarHeight = viewportHeight - documentHeight;
+
+  // Verfügbare Höhe abzüglich der Tableiste
+  const availableHeight = viewportHeight - toolbarHeight;
+
+  return availableHeight;
+}
+
 function changeView() {
   mirrorView = !mirrorView;
   let container = document.getElementById('headInfoID');
+  
+  const availableHeight = calculateAvailableHeight();
+
   if (mirrorView) {
     container.classList.add('sideInfo');
+    document.querySelector('nav').style.width = `${availableHeight}px`;
   }
   if (!mirrorView) {
     container.classList.remove('sideInfo');
+    document.querySelector('nav').style.width = '100%';
   }
   toggleRotation();
   switchtableStyle();

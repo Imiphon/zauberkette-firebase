@@ -78,30 +78,29 @@ height: auto;
   width: auto;
 }
 
-.menuToggle ul {
-  position: relative;
-  left: -80px;
+#menu {
+  position: absolute;
+  width: 100px;
+  margin: -100px 0 0 210px;
+  padding: 20px;
+  padding-top: 125px;
+  background: #ededed;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  transform-origin: 100% 0%;
+  transform: translate(100%, 0);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 }
 
 #menuToggle {
   display: block;
   position: absolute;
   top: 20px;
-  right: 220px;
+  right: 230px;
   z-index: 1;
   -webkit-user-select: none;
   user-select: none;
   cursor: pointer;
-}
-
-#menuToggle a {
-  text-decoration: none;
-  color: #232323;
-  transition: color 0.3s ease;
-}
-
-#menuToggle a:hover {
-  color: tomato;
 }
 
 #menuToggle span {
@@ -117,6 +116,23 @@ height: auto;
   transform-origin: 4px 0px;
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
 }
+
+.menuToggle ul {
+  position: relative;
+  left: -80px;
+}
+
+
+#menuToggle a {
+  text-decoration: none;
+  color: #232323;
+  transition: color 0.3s ease;
+}
+
+#menuToggle a:hover {
+  color: tomato;
+}
+
 
 #menuToggle span:first-child {
   transform-origin: 0% 0%;
@@ -139,20 +155,6 @@ height: auto;
 
 #menuToggle.open span:nth-last-child(2) {
   transform: rotate(-45deg) translate(0, -1px);
-}
-
-#menu {
-  position: absolute;
-  width: 100px;
-  margin: -100px 0 0 200px;
-  padding: 20px;
-  padding-top: 125px;
-  background: #ededed;
-  list-style-type: none;
-  -webkit-font-smoothing: antialiased;
-  transform-origin: 100% 0%;
-  transform: translate(100%, 0);
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 }
 
 #menu li {
