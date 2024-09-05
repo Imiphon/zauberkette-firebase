@@ -45,47 +45,6 @@ document.addEventListener('click', function(event) {
   }
 });
 
-/* 
-let menuListener = false;
-
-function toggleMenuListener() {
-  if(menuListener) return;
-  console.log('start toggle listener');
-  
-  document.addEventListener('DOMContentLoaded', function () {
-    console.log('set eventListener for toggle Menu')
-    const menuToggleInput = document.querySelector('#menuToggle input');
-    const menu = document.getElementById('menu');
-
-    if (menuToggleInput && menu) {
-      // close with click outside element
-      document.addEventListener('click', function (event) {
-        const isClickInside = menu.contains(event.target) || menuToggleInput.contains(event.target);
-
-        if (!isClickInside && menuToggleInput.checked) {
-          menuToggleInput.checked = false; // Checkbox deaktivate
-        }
-      });
-    } else {
-      console.error('menuToggleInput oder menu wurde nicht gefunden');
-    }
-  });
-}
- */
-
-function chainHelper() { //Kay --handle the cheat sheet for the accords. Z-Index higher!
-  let chainHelper = document.querySelector('.chain-helper');
-  chainHelper.addEventListener('click', function (event) {
-    // Das Event stoppen, damit der document click-Handler nicht ausgelöst wird
-    event.stopPropagation();
-    this.classList.toggle('expanded');
-  });
-  // a click anywhere to remove listener
-  document.addEventListener('click', function () {
-    chainHelper.classList.remove('expanded');
-  });
-}
-
 /* --------------- INDEX.HTML  ------------------------*/
 async function renderIndex() { //Kay -- render the content
   await includeHTML(); // Kay -- render the header
@@ -226,6 +185,23 @@ function noBtns() { // Kay -- set btn-group buttons invisible
 
 /*-------------------- BUTTON FUNCTIONS -------------------*/
 
+function toggleFullscreen() {
+  const fullscreenEnterImg = document.querySelector('.fullscreen-enter');
+  const fullscreenExitImg = document.querySelector('.fullscreen-exit');
+  
+  if (!document.fullscreenElement) {
+    // In den Vollbildmodus wechseln
+    document.documentElement.requestFullscreen();
+    fullscreenEnterImg.style.display = 'none';
+    fullscreenExitImg.style.display = 'block';
+  } else {
+    // Vollbildmodus verlassen
+    document.exitFullscreen();
+    fullscreenEnterImg.style.display = 'block';
+    fullscreenExitImg.style.display = 'none';
+  }
+}
+
 async function useMellot() {
   playSound('tone', 'mellot', 0.5);
   disableCardClicks();
@@ -301,6 +277,19 @@ function openRulesPopup() { //Kay --create the Game rule Pop up -- is that a goo
   body.style.overflow = 'auto';
   document.body.appendChild(popup);
   popup.innerHTML = gameRules();
+}
+
+function chainHelper() { //Kay --handle the cheat sheet for the accords. Z-Index higher!
+  let chainHelper = document.querySelector('.chain-helper');
+  chainHelper.addEventListener('click', function (event) {
+    // Das Event stoppen, damit der document click-Handler nicht ausgelöst wird
+    event.stopPropagation();
+    this.classList.toggle('expanded');
+  });
+  // a click anywhere to remove listener
+  document.addEventListener('click', function () {
+    chainHelper.classList.remove('expanded');
+  });
 }
 
 function openCardPopup() { //Kay -- create Pop-Up Element 

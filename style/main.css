@@ -62,18 +62,7 @@ h3 {
 }
 
 /*-------------------- volume-btn--------------------*/
-.vol-btn {
-	position: relative;
-	width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 8px;
-	border-radius: 4px;
-	border-width: 1px;
-	box-shadow: 2px 2px 2px rgb(0,0,0,0.5);
-}
+
 .volume_up {
 	width: 2em;
 	display: block;

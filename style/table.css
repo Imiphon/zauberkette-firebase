@@ -1,4 +1,5 @@
 main {
+  position: relative;
   background-image: url('./../assets/images/bgr.jpeg');
   background-size: cover;
   /* Skaliert das Bild, sodass es den gesamten Bereich ausfüllt */
@@ -7,7 +8,14 @@ main {
   background-repeat: no-repeat;
   /* Verhindert, dass das Bild wiederholt wird */
   min-height: 100vh;
-  /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */  
+  /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */
+}
+
+
+.info-chain {
+position: absolute;
+top: 32px;
+right: 32px;
 }
 
 .filter-bgr {
@@ -53,7 +61,7 @@ main {
 
   100% {
     background-color: transparent;
-    color:rgb(55, 42, 32);
+    color: rgb(55, 42, 32);
     border-radius: 0;
     box-shadow: none;
   }
@@ -137,6 +145,12 @@ main {
   z-index: 20;
 }
 
+.left-center-frame {
+  display: flex;
+  align-items: center;
+  margin-left: 32px;
+}
+
 .btn-group {
   width: 60%;
   display: flex;
@@ -206,12 +220,29 @@ main {
   justify-content: space-between;
 }
 
+.chain-helper-frame {
+position: relative;
+}
+
+.chain-helper {
+  display: none; 
+  position: fixed;
+  top: 80px; 
+  left: 50px; 
+  z-index: 100; 
+}
+
+.chain-helper-frame:hover .chain-helper {
+  display: block; 
+}
+
+
 .circle-img {
   background-image: url('./../assets/images/brass-circle.png');
   background-size: 180px;
   background-position-x: 64%;
   background-position-y: 55%;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   position: relative;
   width: 240px;
 }
@@ -342,14 +373,16 @@ img {
   visibility: hidden;
 }
 
-.name-frame, .optAccContainer {
+.name-frame,
+.optAccContainer {
   background-image: url('./../assets/images/brass-plate.png');
 }
+
 .info-frame {
   background-image: url('./../assets/images/brass-long1.png');
 }
 
-.info-text {  
+.info-text {
   width: 98%;
   display: flex;
   justify-content: center;
@@ -363,12 +396,14 @@ img {
 }
 
 .brass-plate {
-  padding:20px;
-  color: rgb(55, 42, 32); 
+  padding: 20px;
+  color: rgb(55, 42, 32);
   max-height: fit-content;
-  background-size: 100% 100%; /* Passt das Bild an die Größe des Containers an */
+  background-size: 100% 100%;
+  /* Passt das Bild an die Größe des Containers an */
   background-position: center;
-  background-repeat: no-repeat; /* Verhindert das Wiederholen des Hintergrundbildes */
+  background-repeat: no-repeat;
+  /* Verhindert das Wiederholen des Hintergrundbildes */
 }
 
 
