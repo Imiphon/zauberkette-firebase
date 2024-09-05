@@ -7,8 +7,18 @@ let goalValue = 5;
 
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
-let playerAccords = [];//all Accords in current Array of player Accords
-let observerAccords = [];//all Accords in current Array of observer Accords
+let playerAccords = [
+  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'assets/images/accords/accC.jpg' },
+  { nr: 3, circleNr: 3, title: 'D', amount: 1, src: 'assets/images/accords/accD.jpg' },
+  { nr: 8, circleNr: 2, title: 'G', amount: 1, src: 'assets/images/accords/accG.jpg' },
+  { nr: 10, circleNr: 4, title: 'A', amount: 1, src: 'assets/images/accords/accA.jpg' },
+
+];//all Accords in current Array of player Accords
+let observerAccords = [
+  { nr: 5, circleNr: 5, title: 'E', amount: 1, src: 'assets/images/accords/accE.jpg' },
+  { nr: 6, circleNr: 12, title: 'F', amount: 1, src: 'assets/images/accords/accF.jpg' },
+  { nr: 12, circleNr: 6, title: 'B', amount: 1, src: 'assets/images/accords/accB.jpg' },
+];//all Accords in current Array of observer Accords
 
 // The following var are set back in every startRound()
 let clickedCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
@@ -32,7 +42,7 @@ let observerChains = [];//    -"-
 let flatPlayerConnection = []; //card neighbors in player card stack
 let sharpPlayerConnection = [];//    -"-
 let isChainCheck = false;
-let mirrorView = false; 
+let mirrorView = false;
 let isRotated = false; //rotates table-top
 
 let allTones = [

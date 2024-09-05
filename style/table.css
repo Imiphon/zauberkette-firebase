@@ -35,47 +35,6 @@ main {
   }
 }
 
-.info-bar {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  color: #f2f2f2;
-  background-color: black;
-  z-index: 10;
-}
-
-
-.game-goal {
-  width: 100%;
-  display: flex;
-  padding: 4px 0 4px 12px;
-  gap: 4px;
-  align-items: center;
-}
-
-.game-goal input {
-  margin: 4px;
-  width: auto;
-}
-
-.info-text {
-  margin-right: 12px;
-  padding: 0 12px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.info-text p {
-  width: 100%;
-  white-space: nowrap;
-}
-
 /* background color for curr player*/
 @keyframes yellowNameFade {
   0% {
@@ -102,7 +61,6 @@ main {
 
 .schimmer-text {
   animation: yellowNameFade 3s ease-in-out;
-  /* Weitere Stile für das Text-Element, falls gewünscht */
 }
 
 
@@ -138,9 +96,8 @@ main {
   width: 100%;
   height: calc(100vh - 60px);
   overflow-y: auto;
-
   position: absolute;
-  top: 60px;
+  top: 40px;
   overflow-y: auto;
   margin-top: 32px;
   flex-grow: 1;
@@ -231,21 +188,6 @@ main {
   background-color: unset;
 }
 
-.chain-helper {
-  height: 40px;
-  width: auto;
-  z-index: 30;
-}
-
-.chain-helper.expanded {
-  position: absolute;
-  top: 100px;
-  right: 100px;
-  margin: 32px;
-  height: 600px;
-  width: auto;
-}
-
 .table-bottom {
   height: 50%;
   /*background-color: rgb(222, 168, 61);*/
@@ -277,7 +219,7 @@ main {
 /*.chain */
 .accCard {
   position: absolute;
-  left: 50%;
+  left: 49%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 12px;
@@ -367,8 +309,6 @@ main {
   flex-direction: column;
 }
 
-
-
 .pl-card-frame {
   margin: 0 12px;
 }
@@ -403,10 +343,28 @@ img {
 }
 
 .name-frame, .optAccContainer {
-  padding:20px;
-  color: rgb(55, 42, 32);
   background-image: url('./../assets/images/brass-plate.png');
-  max-width: fit-content;
+}
+.info-frame {
+  background-image: url('./../assets/images/brass-long1.png');
+}
+
+.info-text {  
+  width: 98%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.info-text p {
+  width: 100%;
+  white-space: wrap;
+}
+
+.brass-plate {
+  padding:20px;
+  color: rgb(55, 42, 32); 
   max-height: fit-content;
   background-size: 100% 100%; /* Passt das Bild an die Größe des Containers an */
   background-position: center;

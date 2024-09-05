@@ -22,7 +22,7 @@ function renderStack(player, part) {
           stackNr="${card.stackNr}"  
           src="${card.src}"
           onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)">
-          <div class="optAccContainer" id="${optAccsPart}${i}"></div>
+          <div class="optAccContainer brass-plate" id="${optAccsPart}${i}"></div>
         </div>
         `;
         let optAccNr = findOptAccords(card.nr);

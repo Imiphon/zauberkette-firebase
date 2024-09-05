@@ -517,7 +517,7 @@ function showInfo(infoTemplate) {
   info.style.animation = 'none';
   info.offsetHeight; // Trigger reflow
   info.style.animation = null; // Reset die Animation
-  info.style.animation = 'yellowFade 4s forwards';
+  info.style.animation = 'yellowNameFade 4s forwards';
 }
 
 function showWithTimeout(func, timeout, optFunc) {

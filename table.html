@@ -2,7 +2,7 @@
 <html lang="de">
 
 <head>
-    <link rel="shortcut icon" href="assets/images/Locri-49K.jpeg">
+    <link rel="shortcut icon" href="assets/images/logo-black.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,20 +23,12 @@
 
 <body class="table-body" onload="initialize();" id="body">
     <!-------------------- MAIN STUFF -------------------->
-    <div id="headInfoID">
-        <header w3-include-html="./templates/header.html"></header>
 
-        <!-------------------- INFO BAR -------------------->
-        <div class="info-bar">
-            <div class="game-goal" id="gameGoalID">
-                <p>Spielziel Zauberkettenlänge:</p>
-                <input type="number" id="goalInput" value="5" min="2" max="12" step="1" onchange="updateGoal()">
-            </div>
-            <div class="info-text" id="infoTextID"></div>
-        </div>
-    </div>
     <main>
-        
+        <div id="headInfoID">
+            <header w3-include-html="./templates/header.html"></header>
+        </div>
+
         <div class="filter-bgr">
 
         <div class="table-frame">
@@ -52,7 +44,7 @@
                 </div>
 
                 <div class="top-zone" id="topZoneID"> <!-- mit btn startRound wird eigentlich PL1 und Pl2 getauscht-->
-                    <div class="name-frame">
+                    <div class="name-frame brass-plate">
                         <h5 class="zone-descr">Observer-Card Zone</h5>
                         <h2 class="name" id="obsNameID">Alfa</h2>
                     </div>
@@ -64,6 +56,11 @@
 
             <!-------------BUTTON PART-------------------->
             <div class="table-center" id="secondPartID">
+
+                <div class="info-frame brass-plate">
+                    <div class="info-text" id="infoTextID"></div>
+                </div>
+
                 <div class="btn-group">
                     <button class="hover-effect shimmering-gold" onclick="awaitChangeCard()" id="changeClicks(1)"
                         style="display: inline;">Kartentausch</button>
@@ -101,7 +98,7 @@
                     </div>
                 </div>
                 <div class="bottom-zone" id="">
-                    <div class="name-frame">
+                    <div class="name-frame brass-plate">
                         <h5 class="zone-descr">Player-Card Zone</h5>
                         <h2 class="name" id="playNameID">Beta</h2>
                     </div>

@@ -1,29 +1,35 @@
 <nav>
-    <div class="nav-left">
-        <img src="assets/images/Locri-49K.jpeg" alt="">
+  <div class="nav-left">
+    <img class="logo" src="assets/images/logo-wheat.png" alt="">
+  </div>
+  <div class="nav-center">
+    <h3>Zauberkette</h3>
+    <div class="center-right">
+      <div class="game-goal" id="gameGoalID">
+        <span>Spielziel Zauberkettenlänge:</span>
+        <input type="number" id="goalInput" value="5" min="2" max="12" step="1" onchange="updateGoal()">
+  
+      </div>
+      <button class="vol-btn" onclick="changeMute()">
+        <img class="volume_up" src="assets/images/icons/volume_up.png" alt="">
+        <img class="volume_off" src="assets/images/icons/volume_off.png" alt="">
+      </button>
+      <img src="assets/images/acc-helper.jpg" class="chain-helper">
     </div>
-    <div class="nav-center">
-        <h3>Zauberkette</h3>
     </div>
-    <div class="nav-right">
-        <button class="vol-btn" onclick="changeMute()">
-            <img class="volume_up" src="assets/images/icons/volume_up.png" alt="">
-            <img class="volume_off" src="assets/images/icons/volume_off.png" alt="">
-        </button>
-        <img src="assets/images/acc-helper.jpg" class="chain-helper">
+  <div class="nav-right">
+    <div class="menuToggle" id="menuToggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+      <ul id="menu">
+        <a href="#">
+          <div onclick="changeView()">mirror-view</div>
+        </a>
+        <a href="index.html">Home</a><br>
+        <a href="javascript:void(0);" onclick="openRulesPopup()">Game Rules</a><br>
+        <a href="">More</a>
+      </ul>
+    </div>
 
-        <div class="menuToggle" id="menuToggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-            <ul id="menu">
-              <a href="#">
-                <div onclick="changeView()">mirror-view</div>
-              </a>
-              <a href="index.html">Home</a><br>
-              <a href="javascript:void(0);" onclick="openRulesPopup()">Game Rules</a><br>
-              <a href="">More</a>
-            </ul>
-          </div>
-          
 </nav>
