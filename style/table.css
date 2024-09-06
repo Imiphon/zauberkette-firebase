@@ -4,9 +4,6 @@ main {
   height: 100vh;
 }
 
-
-.bgr-img {}
-
 .name {
   margin: 4px 0px;
   border-radius: 50%;
@@ -289,12 +286,17 @@ img {
 .special {
   position: relative;
 }
+.special img {
+  width: 62px !important;
+  height: 62px !important;
+}
+
 .helper-frame {
   position: absolute;
-  width: 32px;
-  height: 32px;
+  width: 12px;
+  height: 12px;
   left: 0;
-  top: -8px;
+  top: 8px;
 }
 
 .helper-frame:hover .chain-helper,
@@ -307,7 +309,6 @@ img {
 .mellot-info,
 .goblin-info,
 .wizzard-info {
-  background-color: #f2f2f2;
   width: min-content;
   display: none;
   position: absolute;
@@ -341,6 +342,12 @@ img {
   width: min-content;
   height: min-content;
   min-width: 300px;
+}
+
+.chain-frame {
+  position: absolute;
+  right: -10px;
+  bottom: -8px;
 }
 
 
@@ -379,7 +386,6 @@ img {
   }
 }
 
-
 .btn-group {
   margin: 12px 12px;
   width: 60%;
@@ -394,18 +400,27 @@ img {
 }
 
 .btn-group img {
-  width: 60px;
-  height: 60px;
+  width: 32px;
+  height: 32px;
   background-color: unset;
 }
 
-.btn,
-.no-btn {
+.btn {
   padding: 20px;
   max-height: fit-content;
   background-size: 100% 100%;
   background-position: center;
   background-color: unset;
+  text-align: center;
+}
+
+.no-btn {  
+  padding: 20px;
+  max-height: fit-content;
+  background-size: 100% 100%;
+  background-position: center;
+  background-color: unset;
+  text-align: center;
 }
 
 .btn {
@@ -417,6 +432,11 @@ img {
   color: rgb(55, 42, 32);
 }
 
+.brass-long-high {
+  background-image: url('./../assets/images/bgr/brass-long-high.png');
+  color: rgb(55, 42, 32);
+}
+
 .brass-plate {
   background-image: url('./../assets/images/bgr/brass-plate.png');
   color: rgb(55, 42, 32);
@@ -425,26 +445,28 @@ img {
 .brass-gear1 {
   background-image: url('./../assets/images/bgr/brass-gear1.png');
   color: rgb(55, 42, 32);
+  background-size: 24px 24px;
+  background-repeat: no-repeat; 
+  background-position: center;
 }
 
 .brass-gear2 {
   background-image: url('./../assets/images/bgr/brass-gear2.png');
   color: rgb(55, 42, 32);
+  background-size: 24px 24px;
+  background-repeat: no-repeat; 
+  background-position: center;
 }
 
 .iron-circle {
   background-image: url('./../assets/images/bgr/iron-circle.png');
-  color: #FFC107;
+  background-size: 72px 72px;
+  background-repeat: no-repeat; 
+  background-position: center;
 }
 
 .iron-long-cross {
   background-image: url('./../assets/images/bgr/iron-long-cross.png');
-  color: #000000;
-  font-weight: 700;
-}
-
-.iron-circle {
-  background-image: url('./../assets/images/bgr/iron-circle.png');
   color: #000000;
   font-weight: 700;
 }

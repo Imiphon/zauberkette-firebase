@@ -199,7 +199,8 @@ function specialBtn() { // Kay -- check if special Card in deck
 }
 
 function noBtns() { // Kay -- set btn-group buttons invisible
-  let buttons = document.querySelectorAll('.btn-group button');
+  let buttons = document.querySelectorAll('.btn-group .btn');
+
   buttons.forEach(function (button) {
     button.style.display = 'none';
   });
