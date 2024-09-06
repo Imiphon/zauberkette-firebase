@@ -179,7 +179,7 @@ function infoGoblinComplete() {
 function gameRules() {
   return `
 	<div class="popup-info">
-        <img class="close-box" onclick="closePopup()" src="assets/images/close.png">
+        <img class="close-box" onclick="closePopup()" src="assets/images/btn/close.png">
         <div>
             <h3>Zauberkette - Spielbeschreibung</h3>
             <p>Ein Spiel für 2-4 Spieler, ab 5 Jahre. Musikalische Vorkenntnisse sind nicht nötig!<br>

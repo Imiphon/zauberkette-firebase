@@ -45,6 +45,10 @@ document.addEventListener('click', function(event) {
   }
 });
 
+function skipToStart() {
+  window.location.reload();
+}
+
 /* --------------- INDEX.HTML  ------------------------*/
 async function renderIndex() { //Kay -- render the content
   await includeHTML(); // Kay -- render the header

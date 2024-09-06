@@ -41,7 +41,7 @@ header {
   align-items: center;
 }
 
-.screen-btn, .vol-btn {
+.nav-btn {
   width: fit-content;
   background-color: unset;
   padding: 8px;

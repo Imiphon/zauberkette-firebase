@@ -1,26 +1,11 @@
 main {
   position: relative;
-  background-image: url('./../assets/images/bgr.jpeg');
-  background-size: cover;
-  /* Skaliert das Bild, sodass es den gesamten Bereich ausfüllt */
-  background-position: center;
-  /* Zentriert das Bild */
-  background-repeat: no-repeat;
-  /* Verhindert, dass das Bild wiederholt wird */
-  min-height: 100vh;
-  /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */
+  width: 100%;
+  height: 100vh;
 }
 
 
-.info-chain {
-position: absolute;
-top: 32px;
-right: 32px;
-}
-
-.filter-bgr {
-  background-color: rgba(0, 0, 0, 0.3);
-}
+.bgr-img {}
 
 .name {
   margin: 4px 0px;
@@ -71,28 +56,6 @@ right: 32px;
   animation: yellowNameFade 3s ease-in-out;
 }
 
-
-@keyframes yellowFade {
-  0% {
-    background-color: transparent;
-    color: black;
-  }
-
-  50% {
-    background-color: yellow;
-  }
-
-  100% {
-    background-color: transparent;
-    color: #f2f2f2;
-  }
-}
-
-.info-animate {
-  animation-name: yellowFade;
-  animation-duration: 4s;
-}
-
 .table-content {
   height: auto;
   display: flex;
@@ -102,15 +65,24 @@ right: 32px;
 
 .table-frame {
   width: 100%;
-  height: calc(100vh - 60px);
+  height: 100%;
   overflow-y: auto;
   position: absolute;
   top: 40px;
   overflow-y: auto;
-  margin-top: 32px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  padding: 32px 0;
+  background-image: url('./../assets/images/bgr/bgr.jpeg');
+  background-size: cover;
+  /* Skaliert das Bild, sodass es den gesamten Bereich ausfüllt */
+  background-position: center;
+  /* Zentriert das Bild */
+  background-repeat: no-repeat;
+  /* Verhindert, dass das Bild wiederholt wird */
+  min-height: 100vh;
+  /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */
 }
 
 .table-mirror-frame {
@@ -139,7 +111,7 @@ right: 32px;
   height: auto;
   top: 50%;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
   background-color: transparent;
   z-index: 20;
@@ -148,22 +120,8 @@ right: 32px;
 .left-center-frame {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   margin-left: 32px;
-}
-
-.btn-group {
-  width: 60%;
-  display: flex;
-  justify-content: space-evenly;
-  gap: 8px;
-}
-
-.btn-group button {
-  max-width: 100px;
-  border-radius: 40px;
-  border: #FFC107;
-  color: #6c5102;
-  cursor: pointer;
 }
 
 .shimmering-gold {
@@ -176,35 +134,8 @@ right: 32px;
   border-radius: 20%;
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.btn-group button:hover,
-.optAccContainer:hover {
-  animation: shimmer 3s infinite linear;
-  /* Schimmer-Animation */
-}
-
-.btn-group img {
-  width: 60px;
-  height: 60px;
-  background-color: unset;
-}
-
 .table-bottom {
   height: 50%;
-  /*background-color: rgb(222, 168, 61);*/
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -214,31 +145,12 @@ right: 32px;
   position: relative;
   width: 40%;
   height: 100%;
-  /* margin-bottom: 20px; */
-  /*background-color: #f2f2f2;*/
   display: flex;
   justify-content: space-between;
 }
 
-.chain-helper-frame {
-position: relative;
-}
-
-.chain-helper {
-  display: none; 
-  position: fixed;
-  top: 80px; 
-  left: 50px; 
-  z-index: 100; 
-}
-
-.chain-helper-frame:hover .chain-helper {
-  display: block; 
-}
-
-
 .circle-img {
-  background-image: url('./../assets/images/brass-circle.png');
+  background-image: url('./../assets/images/bgr/brass-circle.png');
   background-size: 180px;
   background-position-x: 64%;
   background-position-y: 55%;
@@ -268,7 +180,6 @@ position: relative;
   object-fit: cover;
   border-radius: 10px;
 }
-
 
 /*.chain */
 .accCard:nth-child(1) {
@@ -319,13 +230,6 @@ position: relative;
   transform: rotate(360deg) translateY(-50px) rotate(-360deg);
 }
 
-
-/*
-.accCard:nth-child(n+13) {
-  display: none;  
-}*/
-
-
 /*----------GAME ZONE---------------*/
 
 .bottom-zone,
@@ -373,17 +277,53 @@ img {
   visibility: hidden;
 }
 
-.name-frame,
-.optAccContainer {
-  background-image: url('./../assets/images/brass-plate.png');
+.name-frame {
+  background-image: url('./../assets/images/bgr/brass-plate.png');
+  padding: 20px;
+  color: rgb(55, 42, 32);
+  max-height: fit-content;
+  background-size: 100% 100%;
+  background-position: center;
 }
 
-.info-frame {
-  background-image: url('./../assets/images/brass-long1.png');
+.special {
+  position: relative;
+}
+.helper-frame {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 0;
+  top: -8px;
+}
+
+.helper-frame:hover .chain-helper,
+.helper-frame:hover .mellot-info,
+.helper-frame:hover .goblin-info,
+.helper-frame:hover .wizzard-info {
+  display: block;
+}
+
+.mellot-info,
+.goblin-info,
+.wizzard-info {
+  background-color: #f2f2f2;
+  width: min-content;
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 50px;
+  z-index: 100;
+}
+.chain-helper {
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 50px;
+  z-index: 100;
 }
 
 .info-text {
-  width: 98%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -395,17 +335,125 @@ img {
   white-space: wrap;
 }
 
-.brass-plate {
-  padding: 20px;
-  color: rgb(55, 42, 32);
-  max-height: fit-content;
-  background-size: 100% 100%;
-  /* Passt das Bild an die Größe des Containers an */
-  background-position: center;
-  background-repeat: no-repeat;
-  /* Verhindert das Wiederholen des Hintergrundbildes */
+.info-frame {
+  position: relative;
+  left: 32px;
+  width: min-content;
+  height: min-content;
+  min-width: 300px;
 }
 
+
+@keyframes yellowFade {
+  0% {
+    background-color: transparent;
+    color: black;
+  }
+
+  50% {
+    background-color: yellow;
+  }
+
+  100% {
+    background-color: transparent;
+    color: #f2f2f2;
+  }
+}
+
+.info-animate {
+  animation-name: yellowFade;
+  animation-duration: 4s;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.btn-group {
+  margin: 12px 12px;
+  width: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 8px;
+}
+
+.btn-group button:hover {
+  animation: shimmer 3s infinite linear;
+}
+
+.btn-group img {
+  width: 60px;
+  height: 60px;
+  background-color: unset;
+}
+
+.btn,
+.no-btn {
+  padding: 20px;
+  max-height: fit-content;
+  background-size: 100% 100%;
+  background-position: center;
+  background-color: unset;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.brass-long {
+  background-image: url('./../assets/images/bgr/brass-long.png');
+  color: rgb(55, 42, 32);
+}
+
+.brass-plate {
+  background-image: url('./../assets/images/bgr/brass-plate.png');
+  color: rgb(55, 42, 32);
+}
+
+.brass-gear1 {
+  background-image: url('./../assets/images/bgr/brass-gear1.png');
+  color: rgb(55, 42, 32);
+}
+
+.brass-gear2 {
+  background-image: url('./../assets/images/bgr/brass-gear2.png');
+  color: rgb(55, 42, 32);
+}
+
+.iron-circle {
+  background-image: url('./../assets/images/bgr/iron-circle.png');
+  color: #FFC107;
+}
+
+.iron-long-cross {
+  background-image: url('./../assets/images/bgr/iron-long-cross.png');
+  color: #000000;
+  font-weight: 700;
+}
+
+.iron-circle {
+  background-image: url('./../assets/images/bgr/iron-circle.png');
+  color: #000000;
+  font-weight: 700;
+}
+
+.iron-plate {
+  background-image: url('./../assets/images/bgr/iron-plate.png');
+  color: #000000;
+  font-weight: 700;
+}
 
 /* ------------------------- CIRCLE BOARD --------------------------- */
 .circle-popup {

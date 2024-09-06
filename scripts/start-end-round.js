@@ -22,7 +22,7 @@ function renderStack(player, part) {
           stackNr="${card.stackNr}"  
           src="${card.src}"
           onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)">
-          <div class="optAccContainer brass-plate" id="${optAccsPart}${i}"></div>
+          <div class="brass-plate no-btn" id="${optAccsPart}${i}"></div>
         </div>
         `;
         let optAccNr = findOptAccords(card.nr);
@@ -33,7 +33,7 @@ function renderStack(player, part) {
 
 
 /**
- * shows in .optAccContainer for wich accords each tone is usefull (as prime, terz and quint)
+ * shows for wich accords each tone is usefull (as prime, terz and quint)
  * @param {array} optAcc opt.accordNr (3) or 1 specialCardNr
  * @param {number} stackNr 
  */
