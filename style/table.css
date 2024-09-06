@@ -286,39 +286,18 @@ img {
 .special {
   position: relative;
 }
+
 .special img {
   width: 62px !important;
   height: 62px !important;
 }
 
-.helper-frame {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  left: 0;
-  top: 8px;
-}
-
-.helper-frame:hover .chain-helper,
-.helper-frame:hover .mellot-info,
-.helper-frame:hover .goblin-info,
-.helper-frame:hover .wizzard-info {
-  display: block;
-}
-
 .mellot-info,
 .goblin-info,
 .wizzard-info {
-  width: min-content;
+  width: auto;
   display: none;
   position: absolute;
-  top: 80px;
-  left: 50px;
-  z-index: 100;
-}
-.chain-helper {
-  display: none;
-  position: fixed;
   top: 80px;
   left: 50px;
   z-index: 100;
@@ -344,12 +323,34 @@ img {
   min-width: 300px;
 }
 
+.helper-frame {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  top: 8px;
+}
+
+.chain-frame:hover .chain-helper,
+.helper-frame:hover .mellot-info,
+.helper-frame:hover .goblin-info,
+.helper-frame:hover .wizzard-info {
+  display: block;
+}
+
+.chain-helper {
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 50px;
+  z-index: 100;
+}
+
 .chain-frame {
   position: absolute;
   right: -10px;
   bottom: -8px;
 }
-
 
 @keyframes yellowFade {
   0% {
@@ -435,6 +436,10 @@ img {
 .brass-long-high {
   background-image: url('./../assets/images/bgr/brass-long-high.png');
   color: rgb(55, 42, 32);
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-width: auto;
+  min-height: auto;
 }
 
 .brass-plate {

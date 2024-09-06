@@ -28,13 +28,31 @@ function infoPlayCards() {
 
 function goblinRules() {
   return `
-  <p>Mit einem Kobold kannst du einen Zauber des Gegners stibitzen, wenn er nicht zwischen zwei anderen Zaubern liegt und sich mit einem deiner Zauber verketten lässt. Dies ist leider gerade nicht möglich.</p> 
+  <p>Dies ist leider gerade nicht möglich.</p> 
   `;
 }
 
 function wizzardRules() {
   return `
-  <p>Mit einem Zauberer kannst du einen Zauber oder eine Kette des Gegners mit einem eigenen Zauber oder einer Kette austauschen. Dies ist leider gerade nicht möglich.</p> 
+  <p>Dies ist leider gerade nicht möglich.</p> 
+  `;
+}
+
+function wizzardInfo() {
+  return `
+  <p>Mit dem Magier kannst du einen Zauber oder eine Kette mit dem Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. Oder du drückst 'zurück'.</p> 
+  `;
+}
+
+function goblinInfo() {
+  return `
+  <p>Mit einem Kobold kannst du einen Zauber des Gegners stibitzen, wenn er nicht zwischen zwei anderen Zaubern liegt und sich mit einem deiner Zauber verketten lässt.  Oder du drückst 'zurück'.</p> 
+  `;
+}
+
+function mellotInfo() {
+  return `
+  <p>Mit dem Mellot kannst du eine eigene Karte gegen einen gegnerische Karte eintauschen. Oder du drückst 'zurück'.</p> 
   `;
 }
 
