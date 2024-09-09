@@ -325,10 +325,8 @@ img {
 
 .helper-frame {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  left: 0;
-  top: 8px;
+  left: -24px;
+  top: -8px;
 }
 
 .chain-frame:hover .chain-helper,
@@ -464,9 +462,9 @@ img {
 }
 
 .iron-circle {
-  background-image: url('./../assets/images/bgr/iron-circle.png');
-  background-size: 72px 72px;
-  background-repeat: no-repeat; 
+  padding: 0;
+  background-image: url(./../assets/images/bgr/iron-circle.png);
+  background-repeat: no-repeat;
   background-position: center;
 }
 

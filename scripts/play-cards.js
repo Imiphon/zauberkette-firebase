@@ -16,20 +16,24 @@ function newCardOrder() {
   renderStack("observerCard", "observerStackID");
 }
 
-function stackOpacity1(stack, cardString) { //Kay -- Wieso der Name?
+function stackOpacity1(stack, cardString) {
   for (let i = 0; i < stack.length; i++) {
     let card = document.getElementById(cardString + `${i}`);
-    card.style.opacity = 1;
+    if (card) {
+      card.style.opacity = 1;
+    }
   }
   if (usedSpecials.length != 0 && cardString === 'playerCard') {
-    usedSpecials.forEach(card => {
-      let usedSpecial = stack.find(acc => acc.stackNr === card.stackNr);
-      let element = document.getElementById(cardString + `${usedSpecial.stackNr}`);
-      element.style.opacity = 0.5;
-      element.style.pointerEvents = 'none';
+    usedSpecials.forEach(index => {
+      let element = document.getElementById(cardString + `${index}`);
+      if (element) {
+        element.style.opacity = 0.5;
+        element.style.pointerEvents = 'none';
+      }
     });
   }
 }
+
 
 function toggleCardOpacity(index) {
   if (index != undefined) {
@@ -240,6 +244,7 @@ function threeJoker() {
 
 /**
  * let currentSpecial be the clicked element
+ * set all usedSpecials.pointerEvents to none
  * @param {string} mySpecial 
  */
 function separateSpecial(mySpecial) {
@@ -247,17 +252,23 @@ function separateSpecial(mySpecial) {
     let cardTitle = playerCards[i].title;
     if (cardTitle === mySpecial) {
       currentSpecial = docID(`playerCard${i}`);
-      if (usedSpecials.includes(currentSpecial)) {
+      if (usedSpecials.includes(i)) {
         continue;
       } else {
         currentSpecial.stackNr = i;
         currentSpecial.style.opacity = 0.5;
         currentSpecial.style.pointerEvents = 'none';
-        usedSpecials.push(currentSpecial);
+        usedSpecials.push(i);
         break;
       }
     }
   }
+  usedSpecials.forEach(index => {
+    let specialCard = docID(`playerCard${index}`);
+    if (specialCard) {
+      specialCard.style.pointerEvents = 'none';
+    }
+  });
 }
 
 /**

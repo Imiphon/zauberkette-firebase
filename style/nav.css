@@ -54,8 +54,8 @@ header {
   box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.5);
 }
 
-.screen-btn img {
-width: 24px;
+.nav-btn img {
+width: fit-content;
 height: auto;
 }
 
