@@ -157,6 +157,7 @@ function startRound() {
     btnGroup1();
     disableCardClicks();
     setBackArrays();
+    setBackBooleans();
     setTimeout(() => {
         playSound('success', 'gong-deep', 0.5);
     }, 500);
@@ -200,7 +201,7 @@ function checkForChain(part) {
     });
     secondCircleAccs.forEach(circleNr => {
         addToChainArray(circleNr, part, true);
-    });    
+    });
 
     if (firstCircleAccs.length != 0) {
         checkForWin(part);
@@ -226,7 +227,7 @@ function addToChainArray(circleNr, part, secondCircle) {
         let nextAcc = currentAccords.find(acc => acc.circleNr === nextCircleNr);
         if (nextAcc && !secondCircle && currentChain.length < 12) {
             currentChain.push(nextAcc);
-        } 
+        }
         else if (nextAcc && secondCircle && currentChain.length < 12) {
             currentChain.push(nextAcc);
         } else {
@@ -259,7 +260,11 @@ function setBackArrays() {
     observerChains = [];
     flatPlayerConnection = [];
     sharpPlayerConnection = [];
+}
+
+function setBackBooleans(){
     isChainCheck = false;
+    isAwaitChangeCard = false;
 }
 
 function renderCircles() {

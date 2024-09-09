@@ -421,11 +421,20 @@ function stepBack() {
     tryWizzardStrike = false;
     tryGoblinStrike = false;
   }
+  if(isAwaitChangeCard){
+    if (cardClickHandler) {
+      document.removeEventListener('click', cardClickHandler);
+      cardClickHandler = null; 
+    }
+    btnGroup1();
+  } else {
+  btnGroup2();
+  }
   stackOpacity1(playerCards, 'playerCard');
   setBackArrays();
+  setBackBooleans();
   playSound('failed', 'backMag', 0.5);
   disableCardClicks();
-  btnGroup2();
 }
 
 function enablePlayerCards() {
@@ -494,6 +503,7 @@ function savePosition(accInCircle) {
 }
 
 async function awaitChangeCard() {
+  isAwaitChangeCard = true;
   enablePlayerCards(); // getCardInfo activ
   showInfo(infoChange());
   btnGroup3();
@@ -505,16 +515,17 @@ async function awaitChangeCard() {
 
 function waitForCardClick() {
   return new Promise((resolve, reject) => {
-    const clickHandler = function (event) {
+    cardClickHandler = function (event) {
       const cardIndex = event.target.getAttribute('stackNr');
       if (cardIndex === null) return; // Ignore other clicks
-      clickedCardID = parseInt(cardIndex, 10); // 10 stands for dezimal count system
-      document.removeEventListener('click', clickHandler);
+      clickedCardID = parseInt(cardIndex, 10); // 10 stands for decimal count system
+      document.removeEventListener('click', cardClickHandler);
       resolve(cardIndex);
     };
-    document.addEventListener('click', clickHandler);
+    document.addEventListener('click', cardClickHandler);
   });
 }
+
 
 function showInfo(infoTemplate) {
   let info = docID("infoTextID");
