@@ -36,7 +36,7 @@ let sharpPlayerConnection = [];//    -"-
 let isChainCheck = false;
 let mirrorView = false;
 let isRotated = false; //rotates table-top
-let isAwaitChangeCard = fales //for the time if card is changing before playing the cards
+let isAwaitChangeCard = false //for the time if card is changing before playing the cards
 
 let allTones = [
   { nr: 0, stackNr: -1, title: 'gnom', amount: 3, src: 'assets/images/specials/joker.jpg' },
