@@ -5,8 +5,22 @@ function buildStack(Cards) {
         let newCard = randomStack();
         targetArray.push(newCard); 
     }
-
+   testModus(); 
     Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
+}
+
+const testCards = [
+    { nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
+    { nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
+    { nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
+    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
+    //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
+    { nr: 15, stackNr: -1, title: 'wizzard', amount: 1, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
+  ]
+
+function testModus() {
+    playerCards = testCards; 
+    console.log('testCards activated');
 }
 
 
@@ -14,7 +28,7 @@ function renderStack(player, part) {
     let currCardStack = docID(part);
     currCardStack.innerHTML = '';
     let cards = player === "playerCard" ? playerCards : observerCards;
-
+    
     for (let i = 0; i < cards.length; i++) {
         let card = cards[i];
         let img_id = player === "playerCard" ? `playerCard${i}` : `observerCard${i}`;

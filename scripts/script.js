@@ -16,11 +16,11 @@ async function includeHTML() { //Kay -- template function for header  unnessassa
     let resp = await fetch(file);
 
     if (resp.ok) {
-      element.innerHTML = await resp.text();      
+      element.innerHTML = await resp.text();
     } else {
       element.innerHTML = "Page not found";
     }
-  }  
+  }
 }
 
 function toggleMenu() {
@@ -35,10 +35,10 @@ function toggleMenu() {
 }
 
 // Optional: Close the menu if clicked outside
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
   const menu = document.getElementById('menu');
   const menuToggle = document.getElementById('menuToggle');
-  
+
   if (!menuToggle.contains(event.target) && !menu.contains(event.target)) {
     menu.classList.remove('open');
     menuToggle.classList.remove('open');
@@ -106,7 +106,7 @@ function calculateAvailableHeight() {
 function changeView() {
   mirrorView = !mirrorView;
   let container = document.getElementById('headInfoID');
-  
+
   const availableHeight = calculateAvailableHeight();
 
   if (mirrorView) {
@@ -211,7 +211,7 @@ function noBtns() { // Kay -- set btn-group buttons invisible
 function toggleFullscreen() {
   const fullscreenEnterImg = document.querySelector('.fullscreen-enter');
   const fullscreenExitImg = document.querySelector('.fullscreen-exit');
-  
+
   if (!document.fullscreenElement) {
     // In den Vollbildmodus wechseln
     document.documentElement.requestFullscreen();
@@ -360,7 +360,7 @@ async function renderTable() {
   renderCircles();
   chainHelper();
   currentCardID = -1;
-  await startRound(); 
+  await startRound();
   //HIER STARTROUND DAMIT ALS ERSTES DER AKTUELLE STAND AUF FIREBASE GEPOSTET WERDEN KANN
 }
 
@@ -415,20 +415,23 @@ function changeWinnerCards() { // Kay -- cards combine to magic card.
 
 function stepBack() {
   if (specialInProgress) {
-    usedSpecials.pop(); //last special will be removed
+    debugger
+    let special = usedSpecials.pop(); //last special will be removed    
+    console.log(special);
+    special.card.style.opacity = 1;
     specialInProgress = false;
     mellotArray = [];
     tryWizzardStrike = false;
     tryGoblinStrike = false;
   }
-  if(isAwaitChangeCard){
+  if (isAwaitChangeCard) {
     if (cardClickHandler) {
       document.removeEventListener('click', cardClickHandler);
-      cardClickHandler = null; 
+      cardClickHandler = null;
     }
     btnGroup1();
   } else {
-  btnGroup2();
+    btnGroup2();
   }
   stackOpacity1(playerCards, 'playerCard');
   setBackArrays();
