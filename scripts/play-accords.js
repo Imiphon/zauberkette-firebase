@@ -332,7 +332,7 @@ function choosePlayerAccs() {
 function startExchange(circle, circleNr, part) {
   choosenAcc = playerAccords.find(acc => acc.circleNr === circleNr);
 
-  if ((choosenAcc === flatPlayerConnection) || (choosenAcc === sharpPlayerConnection)) {
+  if (((choosenAcc === flatPlayerConnection) || (choosenAcc === sharpPlayerConnection)) && !(flatPlayerConnection && sharpPlayerConnection)) {
     // if choosenAcc in playerPart the connection for wizzardTakes
     showWithTimeout(needForConnection, 2000); 
     wizzardGives = []; 

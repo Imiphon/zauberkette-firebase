@@ -415,9 +415,7 @@ function changeWinnerCards() { // Kay -- cards combine to magic card.
 
 function stepBack() {
   if (specialInProgress) {
-    debugger
-    let special = usedSpecials.pop(); //last special will be removed    
-    console.log(special);
+    let special = usedSpecials.pop(); 
     special.card.style.opacity = 1;
     specialInProgress = false;
     mellotArray = [];
