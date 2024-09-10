@@ -445,6 +445,10 @@ img {
   color: rgb(55, 42, 32);
 }
 
+.small-font{
+  font-size: 0.8em;
+}
+
 .brass-gear1 {
   background-image: url('./../assets/images/bgr/brass-gear1.png');
   color: rgb(55, 42, 32);

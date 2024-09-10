@@ -24,11 +24,11 @@ function stackOpacity1(stack, cardString) {
     }
   }
   if (usedSpecials.length != 0 && cardString === 'playerCard') {
-    usedSpecials.forEach(index => {
-      let element = document.getElementById(cardString + `${index}`);
-      if (element) {
-        element.style.opacity = 0.5;
-        element.style.pointerEvents = 'none';
+    usedSpecials.forEach(usedSpecial => {
+      let specialCard = document.getElementById(cardString + `${usedSpecial.index}`);
+      if (specialCard) {
+        specialCard.style.opacity = 0.5;
+        specialCard.style.pointerEvents = 'none';
       }
     });
   }
@@ -68,7 +68,7 @@ async function setCardCombi() {
 
 async function clickCardsforCombi() {
   await waitForIndex();
-  let currentCard = playerCards[clickedCardID];
+  let currentCard = playerCards[currentCardID];
   let currentCardNr = currentCard.nr;
   if (cardCombi.includes(currentCard)) {
     showInfo(infoNoSameCards());
@@ -81,7 +81,7 @@ async function clickCardsforCombi() {
     return;
   }
   if (currentCardNr <= 12) {
-    toggleCardOpacity(clickedCardID);
+    toggleCardOpacity(currentCardID);
     cardCombi.push(currentCard);
     clickAccount++;
     return;
@@ -89,8 +89,8 @@ async function clickCardsforCombi() {
 }
 
 async function waitForIndex() {
-  clickedCardID = -1;
-  while (clickedCardID === -1) {
+  currentCardID = -1;
+  while (currentCardID === -1) {
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 }
@@ -252,21 +252,20 @@ function separateSpecial(mySpecial) {
     let cardTitle = playerCards[i].title;
     if (cardTitle === mySpecial) {
       currentSpecial = docID(`playerCard${i}`);
-      if (usedSpecials.includes(i)) {
+      if (usedSpecials.some(special => special.index === i)) {
         continue;
       } else {
         currentSpecial.stackNr = i;
         currentSpecial.style.opacity = 0.5;
         currentSpecial.style.pointerEvents = 'none';
-        usedSpecials.push(i);
+        usedSpecials.push({card: currentSpecial, index:i});
         break;
       }
     }
   }
-  usedSpecials.forEach(index => {
-    let specialCard = docID(`playerCard${index}`);
-    if (specialCard) {
-      specialCard.style.pointerEvents = 'none';
+  usedSpecials.forEach(special => {
+    if (special.element) {
+      special.element.style.pointerEvents = 'none';
     }
   });
 }

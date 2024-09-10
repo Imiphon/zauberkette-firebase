@@ -1,10 +1,14 @@
-function buildStack(Cards) { // Kay -- joined function for player and observer
+function buildStack(Cards) {
+    let targetArray = (Cards === "playerCards") ? playerCards : observerCards;
+    
     for (let i = 0; i < 5; i++) {
-        let newCard = randomStack(); //is given to eval()
-        eval(Cards + ".push(newCard)") // Kay -- could just use randomStack directly
+        let newCard = randomStack();
+        targetArray.push(newCard); 
     }
+
     Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
 }
+
 
 function renderStack(player, part) {
     let currCardStack = docID(part);
@@ -22,7 +26,7 @@ function renderStack(player, part) {
           stackNr="${card.stackNr}"  
           src="${card.src}"
           onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)">
-          <div class="brass-plate no-btn" id="${optAccsPart}${i}"></div>
+          <div class="brass-plate no-btn small-font" id="${optAccsPart}${i}"></div>
         </div>
         `;
         let optAccNr = findOptAccords(card.nr);
@@ -54,15 +58,16 @@ function renderOptAccords(optAcc, stackNr, optAccsPart) {
     }
 }
 
-function changeSpecial() {
-    usedSpecials.forEach(element => {
-        clickedCardID = element.getAttribute('stackNr');
-        element.style.visibility = 'visible';
+function changeSpecials() {
+    usedSpecials.forEach(special => {
+        currentCardID = special.index;
+        special.card.style.visibility = 'visible';
         changeCard();
     });
     usedSpecials = [];
     currentSpecial = null;
 }
+
 /**
  * @param {*} cardNr 
  * @returns 3 options of Accords or name of specialcard for each tonCard in stack
@@ -102,7 +107,7 @@ async function finishRound() {
         specialInProgress = false;
     }
     if (usedSpecials.length != 0) {
-        changeSpecial();
+        changeSpecials();
     }
     checkForChain('player');
     checkForChain('observer');
@@ -240,7 +245,7 @@ function addToChainArray(circleNr, part, secondCircle) {
 }
 
 function setBackArrays() {
-    clickedCardID = -1;
+    currentCardID = -1;
     clickAccount = 0;
     cardCombi = [];
     choosenCards = [];

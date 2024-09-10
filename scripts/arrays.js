@@ -13,13 +13,13 @@ let playerAccords = [];//all Accords in current Array of player Accords
 let observerAccords = [];//all Accords in current Array of observer Accords
 
 // The following var are set back in every startRound()
-let clickedCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
+let currentCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
 let clickAccount = 0; // counts clicks in setCardCombi()
 let cardCombi = []; //sammelt 3 tones oder joker
 let choosenCards = []; // 3 numbers for checkRightCombi()
 let accOffer = []; // acc offer for user open in popup
 let mellotArray = []; //to change card with opponent
-let currentSpecial = null; // current coosed specialCard
+let currentSpecial = null; // current choosed specialCard
 let specialInProgress = false; //if btn for special is clicked in process before end
 let usedSpecials = []; //coming from separateSpecial()
 let choosenAcc = []; //taken from observerAccords to put it into playerAccords and reversed
@@ -52,7 +52,7 @@ let allTones = [
   { nr: 10, stackNr: -1, title: 'A', amount: 3, src: 'assets/images/tones/toneA.png' },
   { nr: 11, stackNr: -1, title: 'Bb', amount: 3, src: 'assets/images/tones/toneBb.png' },
   { nr: 12, stackNr: -1, title: 'B', amount: 3, src: 'assets/images/tones/toneB.png' },
-  { nr: 13, stackNr: -1, title: 'mellot', amount: 2, inUse: false, src: 'assets/images/specials/mellot.jpg' },
+  { nr: 13, stackNr: -1, title: 'mellot', amount: 2000, inUse: false, src: 'assets/images/specials/mellot.jpg' },
   { nr: 14, stackNr: -1, title: 'goblin', amount: 2, inUse: false, src: 'assets/images/specials/goblin.jpg' },
   { nr: 15, stackNr: -1, title: 'wizzard', amount: 1, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
 ];

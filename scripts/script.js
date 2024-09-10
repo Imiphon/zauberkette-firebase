@@ -236,21 +236,21 @@ async function useMellot() {
   btnGroup3();
   await waitForCardClick();
   if (mellotArray.length === 0) {
-    toggleCardOpacity(clickedCardID);
+    toggleCardOpacity(currentCardID);
   }
-  let firstClickedIndex = clickedCardID;
+  let firstClickedIndex = currentCardID;
   if (mellotArray.length === 0) {
-    mellotArray.push(playerCards[clickedCardID]);
+    mellotArray.push(playerCards[currentCardID]);
   }
   showInfo(infoToTakeCard());
   enableObserverCards();
   await waitForCardClick();
-  //in case of a 'step back' after first click and start useMellot() again function jumps to mellotArray.push(observerCards[clickedCardID]); otherwise.
+  //in case of a 'step back' after first click and start useMellot() again function jumps to mellotArray.push(observerCards[currentCardID]); otherwise.
   if (mellotArray.length === 1) {
-    mellotArray.push(observerCards[clickedCardID]);
+    mellotArray.push(observerCards[currentCardID]);
   } else if (mellotArray.length === 0) {
-    mellotArray.push(playerCards[clickedCardID]);
-    firstClickedIndex = clickedCardID;
+    mellotArray.push(playerCards[currentCardID]);
+    firstClickedIndex = currentCardID;
   }
   toggleCardOpacity(firstClickedIndex);
   changeMellotCards();
@@ -359,7 +359,7 @@ async function renderTable() {
   buildStack("observerCards");
   renderCircles();
   chainHelper();
-  clickedCardID = -1;
+  currentCardID = -1;
   await startRound(); 
   //HIER STARTROUND DAMIT ALS ERSTES DER AKTUELLE STAND AUF FIREBASE GEPOSTET WERDEN KANN
 }
@@ -370,13 +370,13 @@ async function renderTable() {
  */
 function changeCard() {
   let newCard = randomStack(); // get randomNewCard with amount:1 --Kay-- or height
-  let oldNr = playerCards[clickedCardID]['nr']; // Kay-- Selected card?
+  let oldNr = playerCards[currentCardID]['nr']; // Kay-- Selected card?
   let allTonesUpdate = allTones.find((card) => card.nr === oldNr); // Kay -- work it correct?
   if (allTonesUpdate) {
     allTonesUpdate.amount++;
   }
-  playerCards[clickedCardID] = newCard; // Kay -- add card to player cards
-  let cardElement = docID(`playerCard${clickedCardID}`);
+  playerCards[currentCardID] = newCard; // Kay -- add card to player cards
+  let cardElement = docID(`playerCard${currentCardID}`);
   cardElement.src = newCard.src; //all infos include
   renderStack("playerCard", "playerStackID"); //Kay --render the player Stack
   disableCardClicks(); //Kay --remove Pointer and Click-eventlistener of 
@@ -402,7 +402,7 @@ function randomStack() {
 
 function changeWinnerCards() { // Kay -- cards combine to magic card. 
   for (i = 0; i < cardCombi.length; i++) {
-    clickedCardID = cardCombi[i].stackNr;
+    currentCardID = cardCombi[i].stackNr;
     changeCard();
     cardCombi[i].stackNr = -1;
   }
@@ -460,8 +460,8 @@ function disableCardClicks() {
 }
 
 async function getCardInfo(i) { //Kay - why async?
-  clickedCardID = i; // Setzt durch cardClick den Kartenindex
-  //console.log("clickedCardID = " + clickedCardID)
+  currentCardID = i; // Setzt durch cardClick den Kartenindex
+  //console.log("currentCardID = " + currentCardID)
 }
 
 function enableObserverAccordClicks() {
@@ -508,9 +508,9 @@ async function awaitChangeCard() {
   showInfo(infoChange());
   btnGroup3();
   // docID('changeClicks(1)').style.display = 'none';
-  clickedCardID = await waitForCardClick();
+  currentCardID = await waitForCardClick();
   changeCard();
-  clickedCardID = -1;
+  currentCardID = -1;
 }
 
 function waitForCardClick() {
@@ -518,7 +518,7 @@ function waitForCardClick() {
     cardClickHandler = function (event) {
       const cardIndex = event.target.getAttribute('stackNr');
       if (cardIndex === null) return; // Ignore other clicks
-      clickedCardID = parseInt(cardIndex, 10); // 10 stands for decimal count system
+      currentCardID = parseInt(cardIndex, 10); // 10 stands for decimal count system
       document.removeEventListener('click', cardClickHandler);
       resolve(cardIndex);
     };
