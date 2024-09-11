@@ -9,6 +9,17 @@ main {
   border-radius: 50%;
 }
 
+
+.name-frame {
+  width: fit-content;
+  height: 8px;
+	display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
 .zone-descr {
   margin: 4px 0px;
 }
@@ -299,15 +310,6 @@ img {
 
 .hide-image {
   visibility: hidden;
-}
-
-.name-frame {
-  background-image: url('./../assets/images/bgr/brass-plate.png');
-  padding: 20px;
-  color: rgb(55, 42, 32);
-  max-height: fit-content;
-  background-size: 100% 100%;
-  background-position: center;
 }
 
 .special {
