@@ -223,22 +223,44 @@ function choiceAcc() {
 
 }
 
+function showEmpty() {
+  let text = document.getElementById('emptyAcc');
+  text.style.display = 'flex';
+  setTimeout(() => {
+    text.style.display = 'none';
+  }, 2000);
+}
+
+/**
+ * sort all Accs in circle
+ * sort in circleNr-direction
+ */
 function threeJoker() {
-  openCardPopup()
+  openCardPopup();
   let popup = document.querySelector('.popup');
   popup.classList.add('allCards');
-  for (let i = 0; i < allMaj.length; i++) {
-    let card = allMaj[i];
+  let sortedMaj = allMaj.slice().sort((a, b) => a.circleNr - b.circleNr);
+
+  let totalCards = sortedMaj.length;
+  sortedMaj.forEach((card, index) => {
+    let angle = (index / totalCards) * 360;
     let isDouble = playerAccords.some(acc => acc.nr === card.nr);
     let isEmptyAmount = card.amount === 0;
     if (isEmptyAmount) {
-      card.style.opacity = 0.3;
-      popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 3000)">`;
+      popup.innerHTML += `
+        <div class="flex-column card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
+          <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 3000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">
+          <span class="empty-acc" id="emptyAcc">vergeben</span>
+        </div>`;
     } else {
-      popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true, false, ${isDouble}); closePopup();">`;
+      popup.innerHTML += `
+        <div class="card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
+          <img class="pop-circle-card" src="${card['src']}" onclick="setAcc(${card.nr}, true, false, ${isDouble}); closePopup();">
+        </div>`;
     }
-  }
+  });
 }
+
 
 /*---------------- SPECIAL-CARD FUNCTIONS -----------------*/
 

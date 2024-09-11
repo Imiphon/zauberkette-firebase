@@ -322,15 +322,6 @@ function openCardPopup() { //Kay -- create Pop-Up Element
   document.body.appendChild(popup);
 }
 
-// for wizzard and goblin NOT IN USE BY NOW
-function openCirclePopup() { // Kay -- create Pop up Element
-  let popup = document.createElement('div');
-  popup.className = 'circle-popup';
-  popup.style.display = 'flex';
-  document.body.appendChild(popup);
-  circleBoard(popup);
-}
-
 function closeEvent() { // Kay -- close Popup element by click on the site
   document.addEventListener('DOMContentLoaded', function () {
     let popup = document.querySelector('.popup');
@@ -536,7 +527,6 @@ function showInfo(infoTemplate) {
   }
   info.innerHTML = '';
   info.innerHTML += infoTemplate;
-
   // Setzt die Animation direkt über JavaScript
   info.style.animation = 'none';
   info.offsetHeight; // Trigger reflow
