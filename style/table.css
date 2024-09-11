@@ -11,6 +11,7 @@ main {
 
 
 .name-frame {
+  position: relative;
   width: fit-content;
   height: 8px;
 	display: flex;
@@ -26,12 +27,9 @@ main {
 
 .empty-acc {
   display: none;
-  position: absolute;
   color: orange;
-  top: 50%;
-  left: 42%;
   animation: fadeInOut 2s;
-  font-size: 80px;
+  font-size: 52px;
 }
 
 .flex-column {

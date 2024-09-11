@@ -243,15 +243,16 @@ function threeJoker() {
 
   let totalCards = sortedMaj.length;
   sortedMaj.forEach((card, index) => {
-    let angle = (index / totalCards) * 360;
+    let angle = card.circleNr * 30 + 270;
     let isDouble = playerAccords.some(acc => acc.nr === card.nr);
     let isEmptyAmount = card.amount === 0;
     if (isEmptyAmount) {
       popup.innerHTML += `
         <div class="flex-column card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
           <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 3000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">
-          <span class="empty-acc" id="emptyAcc">vergeben</span>
-        </div>`;
+          
+        </div>
+        <div style="position: relative; z-index: 1000;"><span class="empty-acc" id="emptyAcc">vergeben</span></div>`;
     } else {
       popup.innerHTML += `
         <div class="card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
