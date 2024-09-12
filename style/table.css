@@ -14,11 +14,11 @@ main {
   position: relative;
   width: fit-content;
   height: 8px;
-	display: flex;
-    flex-direction: row;
-    gap: 8px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
 }
 
 .zone-descr {
@@ -33,13 +33,14 @@ main {
 }
 
 .flex-column {
- display:flex; 
- flex-direction:column;
- justify-content: center;
- align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes fadeOutIn {
+
   0%,
   100% {
     opacity: 1;
@@ -51,6 +52,7 @@ main {
 }
 
 @keyframes fadeInOut {
+
   0%,
   100% {
     opacity: 0;
@@ -351,9 +353,21 @@ img {
 }
 
 .helper-frame {
-  position: absolute;
+  position: relative;
   left: -24px;
   top: -8px;
+}
+
+#mellot-info {
+  display: none;
+}
+
+#goblin-info {
+  display: none;
+}
+
+#wizzard-info {
+  display: none;
 }
 
 .chain-frame:hover .chain-helper,
@@ -477,6 +491,7 @@ img {
 }
 
 .brass-gear1 {
+  position: absolute;
   background-image: url('./../assets/images/bgr/brass-gear1.png');
   color: rgb(55, 42, 32);
   background-size: 24px 24px;

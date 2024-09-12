@@ -104,7 +104,6 @@ h3 {
 	transform-origin: center center;
 	width: 40px;
 	height: auto;
-	pointer-events: none;
 }
 
 .pop-circle-card {

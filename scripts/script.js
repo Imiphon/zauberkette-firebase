@@ -188,11 +188,14 @@ function specialBtn() { // Kay -- check if special Card in deck
     let title = playerCards[i]['title'];
     if (currentCard.style.opacity != 0.5) { //Kay - use docID 
       if (title === 'mellot') { //Kay -- maybe &&-short Version
-        docID("changeClicks(4)").style.display = "inline"; //Mellot 
+        docID("changeClicks(4)").style.display = "block"; //Mellot
+        docID("mellot-info").style.display = "block"; 
       } else if (title === 'goblin') {
-        docID("changeClicks(5)").style.display = "inline"; //Goblin
+        docID("changeClicks(5)").style.display = "block"; //Goblin
+        docID("goblin-info").style.display = "block"; 
       } else if (title === 'wizzard') {
-        docID("changeClicks(6)").style.display = "inline"; //Wizzard
+        docID("changeClicks(6)").style.display = "block"; //Wizzard
+        docID("wizzard-info").style.display = "block "; 
       }
     }
   }

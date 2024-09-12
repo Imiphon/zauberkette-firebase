@@ -14,14 +14,14 @@ function infoStartSite() { // in index.html
 
 function infoStart() {
   return `
-    <p>Drücke Kartentausch, um eine Karte zu tauschen.
-    Oder "Nothing to Change"</p> 
+    <p>Drücke "Kartentausch", um eine Karte zu tauschen
+    oder "Weiter"</p> 
     `;
 }
 
 function infoPlayCards() {
   return `
-    <p>Webe aus 3 Wellenfischen oder Jokern einen Zauber, 
+    <p>Webe aus 3 Wellenfischen oder Gnomen einen Zauber, 
     nutze eine Spezialkarte oder beende deine Runde</p> 
     `;
 }
@@ -62,16 +62,16 @@ function infoChange() {
     `;
 }
 
-function infoSetCombi() {
-  return ` 
-      <p>Klicke drei Wellenfische für einen Zauber an.</p> 
-      `;
-}
+//function infoSetCombi() {
+//  return ` 
+//      <p>Klicke Wellenfische oder Gnome für einen Zauber an.</p> 
+//      `;
+//}
 
 function infoNoCombi() {
   return `   
     <p>Das ergibt leider keinen Zauber. 
-    Versuche eine andere Kombination oder beende diese Runde.</p> 
+    Gehe zurück und versuche etwas anderes oder beende diese Runde.</p> 
     `;
 }
 

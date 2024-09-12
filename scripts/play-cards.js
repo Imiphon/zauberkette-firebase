@@ -50,9 +50,9 @@ async function setCardCombi() {
   enablePlayerCards();
   while (cardCombi.length < 3 && clickAccount < 5) {
     await clickCardsforCombi();
-    setTimeout(() => {
-      showInfo(infoSetCombi());
-    }, 2000);
+  //  setTimeout(() => {
+  //    showInfo(infoPlayCards());
+  //  }, 2000);
   }
   if (cardCombi.length === 3) {
     disableCardClicks();
@@ -249,10 +249,11 @@ function threeJoker() {
     if (isEmptyAmount) {
       popup.innerHTML += `
         <div class="flex-column card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
-          <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 3000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">
-          
+          <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 3000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">          
         </div>
-        <div style="position: relative; z-index: 1000;"><span class="empty-acc" id="emptyAcc">vergeben</span></div>`;
+        <div style="position: absolute; z-index: 1000;">
+        <span class="empty-acc" id="emptyAcc">vergeben</span>
+        </div>`;
     } else {
       popup.innerHTML += `
         <div class="card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
