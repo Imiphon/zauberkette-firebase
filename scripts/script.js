@@ -60,6 +60,12 @@ async function renderIndex() { //Kay -- render the content
 
 function updateGoal() {
   goalValue = document.getElementById('goalInput').value;
+  let value = parseInt(input.value, 10);
+  if (value < 2) {
+    input.value = 2;
+  } else if (value > 12) {
+    input.value = 12;
+  }
 }
 
 function detectTouchDevice() {
@@ -103,15 +109,21 @@ function calculateAvailableHeight() {
   return availableHeight;
 }
 
+const availableHeight = calculateAvailableHeight();
+
 function changeView() {
   mirrorView = !mirrorView;
   let container = document.getElementById('headInfoID');
 
-  const availableHeight = calculateAvailableHeight();
+
 
   if (mirrorView) {
     container.classList.add('sideInfo');
-    document.querySelector('nav').style.width = `${availableHeight}px`;
+    if (!fullscreen) {
+      document.querySelector('nav').style.width = `${availableHeight}px`;
+    } else {
+      document.querySelector('nav').style.width = `100%`;
+    }
   }
   if (!mirrorView) {
     container.classList.remove('sideInfo');
@@ -189,13 +201,13 @@ function specialBtn() { // Kay -- check if special Card in deck
     if (currentCard.style.opacity != 0.5) { //Kay - use docID 
       if (title === 'mellot') { //Kay -- maybe &&-short Version
         docID("changeClicks(4)").style.display = "block"; //Mellot
-        docID("mellot-info").style.display = "block"; 
+        docID("mellot-info").style.display = "block";
       } else if (title === 'goblin') {
         docID("changeClicks(5)").style.display = "block"; //Goblin
-        docID("goblin-info").style.display = "block"; 
+        docID("goblin-info").style.display = "block";
       } else if (title === 'wizzard') {
         docID("changeClicks(6)").style.display = "block"; //Wizzard
-        docID("wizzard-info").style.display = "block "; 
+        docID("wizzard-info").style.display = "block ";
       }
     }
   }
@@ -211,20 +223,27 @@ function noBtns() { // Kay -- set btn-group buttons invisible
 
 /*-------------------- BUTTON FUNCTIONS -------------------*/
 
+let fullscreen = false;
+
 function toggleFullscreen() {
   const fullscreenEnterImg = document.querySelector('.fullscreen-enter');
   const fullscreenExitImg = document.querySelector('.fullscreen-exit');
 
   if (!document.fullscreenElement) {
-    // In den Vollbildmodus wechseln
     document.documentElement.requestFullscreen();
     fullscreenEnterImg.style.display = 'none';
     fullscreenExitImg.style.display = 'block';
+    fullscreen = true;
+    if (mirrorView) {
+      let nav = document.querySelector('nav')
+      nav.style.width = `100%`;
+      nav.style.left= `0`;
+    }
   } else {
-    // Vollbildmodus verlassen
     document.exitFullscreen();
     fullscreenEnterImg.style.display = 'block';
     fullscreenExitImg.style.display = 'none';
+    fullscreen = false;
   }
 }
 
@@ -409,7 +428,7 @@ function changeWinnerCards() { // Kay -- cards combine to magic card.
 
 function stepBack() {
   if (specialInProgress) {
-    let special = usedSpecials.pop(); 
+    let special = usedSpecials.pop();
     special.card.style.opacity = 1;
     specialInProgress = false;
     mellotArray = [];

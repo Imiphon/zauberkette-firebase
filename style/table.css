@@ -100,15 +100,29 @@ main {
 
 .table-frame {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
-  position: absolute;
   top: 40px;
   overflow-y: auto;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+
   padding: 32px 0;
+}
+
+.table-mirror-frame {
+  left: 28px;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.table-frame,
+.table-mirror-frame {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background-image: url('./../assets/images/bgr/bgr.jpeg');
   background-size: cover;
   /* Skaliert das Bild, sodass es den gesamten Bereich ausfüllt */
@@ -120,21 +134,13 @@ main {
   /* Stellt sicher, dass main mindestens die Höhe des Viewports einnimmt */
 }
 
-.table-mirror-frame {
-  position: absolute;
-  left: 120px;
-  width: calc(100% - 120px);
-  height: 100vh;
-  overflow-y: auto;
-}
-
-.table-top {
-  height: 50%;
-  /*background-color: rgb(222, 168, 61);*/
+.table-top,
+.table-bottom {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
+
 
 .rotated-180 {
   transform: rotate(180deg);
@@ -144,7 +150,7 @@ main {
 .table-center {
   width: 100%;
   height: auto;
-  top: 50%;
+  margin: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -169,19 +175,13 @@ main {
   border-radius: 20%;
 }
 
-.table-bottom {
-  /*height: 50%;*/
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
 .accord-zone {
   position: relative;
   width: 40%;
   height: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .circle-img {
@@ -191,6 +191,7 @@ main {
   background-repeat: no-repeat;
   position: relative;
   width: 240px;
+  height: 240px;
 }
 
 /*.chain */

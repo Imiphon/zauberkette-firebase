@@ -9,6 +9,10 @@ header {
   z-index: 1000;
 }
 
+nav {
+  justify-content: flex-start;
+}
+
 .nav-left {
   position: relative;
   left: 0;
@@ -34,6 +38,17 @@ header {
   align-items: center;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: auto;
+  margin: 0;
+}
+
+/* Firefox  
+input[type=number] {
+    -moz-appearance: textfield; 
+}
+*/
 .center-right {
   width: 45%;
   display: flex;
@@ -55,8 +70,9 @@ header {
 }
 
 .nav-btn img {
-width: fit-content;
-height: auto;
+  width: fit-content;
+  height: auto;
+  z-index: 1;
 }
 
 .nav-right {
@@ -178,29 +194,4 @@ height: auto;
   transform-origin: left top;
   width: 100vh;
   z-index: 10;
-}
-
-@media (max-width: 375px) {
-  body {
-    overflow-x: hidden;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 0;
-  }
-
-  nav {
-    justify-content: flex-start;
-  }
-
-  .nav-center {
-
-    padding-left: 80px;
-  }
-
-  #menu {
-    position: absolute;
-    width: 100px;
-    margin: -100px 0 0 160px;
-    /*Top, left, bottom,right mit umgekehrter Wirkung*/
-  }
 }

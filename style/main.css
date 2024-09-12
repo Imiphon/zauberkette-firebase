@@ -13,6 +13,15 @@ body {
 	box-sizing: border-box;
 }
 
+@media (max-width: 375px) {
+	body {
+	  overflow-x: hidden;
+	  margin-left: 0;
+	  margin-right: 0;
+	  padding: 0;
+	}
+}
+
 h1 {
 	color: rgb(220, 220, 220);
 }
