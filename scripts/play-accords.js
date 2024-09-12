@@ -186,7 +186,7 @@ function checkConnection(circle, circleNr, part) {
   let isInPlayerArr = playerAccords.find(acc => acc.circleNr === choosenAcc.circleNr);
   getPlayerConnections(circleNr);
   if ((!flatPlayerConnection && !sharpPlayerConnection) && !isSecondPlayerConnection()) {
-    showWithTimeout(noConnection, 2000, chooseAnotherAcc);
+    showWithTimeout(noConnection, 5000, chooseAnotherAcc);
     return;
   }
   if (isInPlayerArr && isOneSecondPlayerConnection()) {
