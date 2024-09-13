@@ -25,16 +25,12 @@ async function includeHTML() { //Kay -- template function for header  unnessassa
 
 function toggleMenu() {
   const menu = document.getElementById('menu');
-  const menuToggle = document.getElementById('menuToggle');
-
-  // Toggle the 'open' class to show or hide the menu
-  menu.classList.toggle('open');
-
-  // Optionally, toggle the class for hamburger to X transformation
-  menuToggle.classList.toggle('open');
+  const menuToggle = document.getElementById('menuToggle');  
+  menu.classList.toggle('open'); // Toggle the 'open' class to show or hide the menu  
+  menuToggle.classList.toggle('open'); // Optionally, toggle the class for hamburger to X transformation
 }
 
-// Optional: Close the menu if clicked outside
+// Close the menu if clicked outside
 document.addEventListener('click', function (event) {
   const menu = document.getElementById('menu');
   const menuToggle = document.getElementById('menuToggle');
@@ -205,12 +201,15 @@ function specialBtn() { // Kay -- check if special Card in deck
       if (title === 'mellot') { //Kay -- maybe &&-short Version
         docID("changeClicks(4)").style.display = "block"; //Mellot
         docID("mellot-info").style.display = "block";
+        docID("mellotBrass").style.display = "block";
       } else if (title === 'goblin') {
         docID("changeClicks(5)").style.display = "block"; //Goblin
         docID("goblin-info").style.display = "block";
+        docID("goblinBrass").style.display = "block";
       } else if (title === 'wizzard') {
         docID("changeClicks(6)").style.display = "block"; //Wizzard
         docID("wizzard-info").style.display = "block ";
+        docID("wizzardBrass").style.display = "block";
       }
     }
   }
@@ -218,9 +217,12 @@ function specialBtn() { // Kay -- check if special Card in deck
 
 function noBtns() { // Kay -- set btn-group buttons invisible
   let buttons = document.querySelectorAll('.btn-group .btn');
-
   buttons.forEach(function (button) {
     button.style.display = 'none';
+  });
+  let brassGears = document.querySelectorAll('.brass-gear1');
+  brassGears.forEach(function (gear) {
+    gear.style.display = 'none';
   });
 }
 

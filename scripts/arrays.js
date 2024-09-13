@@ -10,7 +10,7 @@ let cardClickHandler = null; //needed in awaitChangeCard and directly stepBack()
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
 let playerAccords = [
-  { nr: 1, circleNr: 1, title: 'C', amount: 2, src: 'assets/images/accords/accC.jpg' },
+  //{ nr: 1, circleNr: 1, title: 'C', amount: 2, src: 'assets/images/accords/accC.jpg' },
   //{ nr: 2, circleNr: 8, title: 'Db', amount: 1, src: 'assets/images/accords/accDb.jpg' },
   //{ nr: 3, circleNr: 3, title: 'D', amount: 1, src: 'assets/images/accords/accD.jpg' },
   //{ nr: 4, circleNr: 10, title: 'Eb', amount: 1, src: 'assets/images/accords/accEb.jpg' },
