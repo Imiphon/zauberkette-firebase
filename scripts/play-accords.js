@@ -12,9 +12,12 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   let circleNr = accInStack.circleNr;
   let accInCircle = getCardElement(circleNr, isObserver, isDouble);
   if (isNew && accInStack.amount <= 0) {
-    showWithTimeout(infoAccEmpty, 3000);
     playSound('failed', 'backMag', 0.5);
-    stepBack();
+    showInfo(infoAccEmpty());
+    setTimeout(() => {
+      stepBack();
+    }, 5000);
+    
     return;
   } else if (isNew && accInStack.amount > 0) {
     let title = accInStack.title;

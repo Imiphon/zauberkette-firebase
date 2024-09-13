@@ -50,9 +50,9 @@ async function setCardCombi() {
   enablePlayerCards();
   while (cardCombi.length < 3 && clickAccount < 5) {
     await clickCardsforCombi();
-  //  setTimeout(() => {
-  //    showInfo(infoPlayCards());
-  //  }, 2000);
+    //  setTimeout(() => {
+    //    showInfo(infoPlayCards());
+    //  }, 2000);
   }
   if (cardCombi.length === 3) {
     disableCardClicks();
@@ -125,17 +125,20 @@ function checkForJoker() {
  */
 function checkRightCombi() {
   let lowestTone = Math.min(...choosenCards);
-  let isDouble = playerAccords.some(acc => acc.nr === lowestTone);
+  let isDouble;
   if (choosenCards.includes(lowestTone + 4) && choosenCards.includes(lowestTone + 7)) {
     let prime = lowestTone; // lowestTone + gr.Terz + Quinte (Grundstellung)
+    isDouble = playerAccords.some(acc => acc.nr === prime);
     setAcc(prime, true, false, isDouble);
   }
   else if (choosenCards.includes(lowestTone + 5) && choosenCards.includes(lowestTone + 9)) {
     let prime = lowestTone + 5; // lowestTone + Quarte + gr.Terz (Quintstellung)
+    isDouble = playerAccords.some(acc => acc.nr === prime);
     setAcc(prime, true, false, isDouble);
   }
   else if (choosenCards.includes(lowestTone + 3) && choosenCards.includes(lowestTone + 8)) {
     let prime = lowestTone + 8;  // lowestTone + gr.Terz + kl.Sexte (Terzstellung)
+    isDouble = playerAccords.some(acc => acc.nr === prime);
     setAcc(prime, true, false, isDouble);
   } else {
     playSound('failed', 'backMag', 0.5);
@@ -282,7 +285,7 @@ function separateSpecial(mySpecial) {
         currentSpecial.stackNr = i;
         currentSpecial.style.opacity = 0.5;
         currentSpecial.style.pointerEvents = 'none';
-        usedSpecials.push({card: currentSpecial, index:i});
+        usedSpecials.push({ card: currentSpecial, index: i });
         break;
       }
     }

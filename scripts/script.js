@@ -550,7 +550,7 @@ function waitForCardClick() {
   });
 }
 
-
+//Parameters with ()
 function showInfo(infoTemplate) {
   let info = docID("infoTextID");
   if (!info) {
@@ -566,6 +566,7 @@ function showInfo(infoTemplate) {
   info.style.animation = 'yellowNameFade 4s forwards';
 }
 
+//Parameters without () 
 function showWithTimeout(func, timeout, optFunc) {
   showInfo(func());
   setTimeout(() => {
