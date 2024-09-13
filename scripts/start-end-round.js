@@ -1,11 +1,11 @@
 function buildStack(Cards) {
     let targetArray = (Cards === "playerCards") ? playerCards : observerCards;
-    
+
     for (let i = 0; i < 5; i++) {
         let newCard = randomStack();
-        targetArray.push(newCard); 
+        targetArray.push(newCard);
     }
-   //testModus(); 
+    //testModus(); 
     Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
 }
 
@@ -17,10 +17,10 @@ const testCards = [
     //{ nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
     //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
     { nr: 15, stackNr: -1, title: 'wizzard', amount: 1, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
-  ]
+]
 
 function testModus() {
-    playerCards = testCards; 
+    playerCards = testCards;
     console.log('testCards activated');
 }
 
@@ -29,7 +29,7 @@ function renderStack(player, part) {
     let currCardStack = docID(part);
     currCardStack.innerHTML = '';
     let cards = player === "playerCard" ? playerCards : observerCards;
-    
+
     for (let i = 0; i < cards.length; i++) {
         let card = cards[i];
         let img_id = player === "playerCard" ? `playerCard${i}` : `observerCard${i}`;
@@ -104,13 +104,13 @@ function findOptAccords(cardNr) {
 }
 
 function handleFinishRoundClick() {
-    const finishButton = document.getElementById('changeClicks(7)');
-    finishButton.disabled = true;  // Deaktiviert den Button
-
-    finishRound().then(() => {
-        // Optional: Reaktiviere den Button nach Abschluss der Funktion
-        finishButton.disabled = false;
-    });
+    if (!finishButton) {
+        finishButton = true; 
+        finishRound();
+    }    
+    setTimeout(() => {
+        finishButton = false;
+    }, 3000);
 }
 
 async function finishRound() {
@@ -281,7 +281,7 @@ function setBackArrays() {
     sharpPlayerConnection = [];
 }
 
-function setBackBooleans(){
+function setBackBooleans() {
     isChainCheck = false;
     isAwaitChangeCard = false;
 }

@@ -525,6 +525,7 @@ async function awaitChangeCard() {
   currentCardID = await waitForCardClick();
   changeCard();
   currentCardID = -1;
+  isAwaitChangeCard = false;
 }
 
 function waitForCardClick() {

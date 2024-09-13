@@ -38,7 +38,6 @@ let observerAccords = [
   //{ nr: 12, circleNr: 6, title: 'B', amount: 1, src: 'assets/images/accords/accB.jpg' },
 ];//all Accords in current Array of observer Accords
 
-// The following var are set back in every startRound()
 let currentCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
 let clickAccount = 0; // counts clicks in setCardCombi()
 let cardCombi = []; //sammelt 3 tones oder joker
@@ -63,6 +62,7 @@ let isChainCheck = false;
 let mirrorView = false;
 let isRotated = false; //rotates table-top
 let isAwaitChangeCard = false //for the time if card is changing before playing the cards
+let finishButton; //to prevent doubleclick
 
 let allTones = [
   { nr: 0, stackNr: -1, title: 'gnom', amount: 3, src: 'assets/images/specials/joker.jpg' },
