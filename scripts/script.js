@@ -113,12 +113,13 @@ const availableHeight = calculateAvailableHeight();
 
 function changeView() {
   mirrorView = !mirrorView;
-  let container = document.getElementById('headInfoID');
-
-
-
+  let navigation = document.getElementById('headInfoID');
+    const turnBtn = document.querySelector('.turn');
+    const turnBackBtn = document.querySelector('.turn-back');
   if (mirrorView) {
-    container.classList.add('sideInfo');
+    navigation.classList.add('sideInfo');
+    turnBackBtn.style.display = 'block';
+    turnBtn.style.display = 'none';
     if (!fullscreen) {
       document.querySelector('nav').style.width = `${availableHeight}px`;
     } else {
@@ -126,7 +127,9 @@ function changeView() {
     }
   }
   if (!mirrorView) {
-    container.classList.remove('sideInfo');
+    navigation.classList.remove('sideInfo');
+    turnBtn.style.display = 'block';
+    turnBackBtn.style.display = 'none';
     document.querySelector('nav').style.width = '100%';
   }
   toggleRotation();
@@ -237,7 +240,7 @@ function toggleFullscreen() {
     if (mirrorView) {
       let nav = document.querySelector('nav')
       nav.style.width = `100%`;
-      nav.style.left= `0`;
+      nav.style.left = `0`;
     }
   } else {
     document.exitFullscreen();
@@ -500,6 +503,10 @@ function disableAccClicks() {
   });
 }
 
+/**
+ * is saving position to find back after hover and grow up
+ * @param {} accInCircle 
+ */
 function savePosition(accInCircle) {
   let originalTransform = window.getComputedStyle(accInCircle).transform;
   let originalZIndex = window.getComputedStyle(accInCircle).zIndex;
@@ -508,7 +515,7 @@ function savePosition(accInCircle) {
 
   accInCircle.addEventListener('mouseenter', function () {
     this.style.transform = `${this.dataset.originalTransform} scale(15)`;
-    this.style.zIndex = '10';
+    this.style.zIndex = '100';
   });
   accInCircle.addEventListener('mouseleave', function () {
     this.style.transform = this.style.transform = this.dataset.originalTransform;
