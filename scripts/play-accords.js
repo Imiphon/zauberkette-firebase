@@ -8,23 +8,22 @@
  * @param {boolean} isDouble is set by renderAccords() due to amount from player- or observer
  */
 function setAcc(prime, isNew, isObserver, isDouble) {  
-  let accInStack = allMaj.find((acc) => acc.nr === prime);
-  let circleNr = accInStack.circleNr;
+  let accInAllMajStack = allMaj.find((acc) => acc.nr === prime);
+  let circleNr = accInAllMajStack.circleNr;
   let accInCircle = getCardElement(circleNr, isObserver, isDouble);
-  if (isNew && accInStack.amount <= 0) {
+  if (isNew && accInAllMajStack.amount <= 0) {
     playSound('failed', 'backMag', 0.5);
     showInfo(infoAccEmpty());
     setTimeout(() => {
       stepBack();
-    }, 5000);
-    
+    }, 5000);    
     return;
-  } else if (isNew && accInStack.amount > 0) {
-    let title = accInStack.title;
+  } else if (isNew && accInAllMajStack.amount > 0) {
+    let title = accInAllMajStack.title;
     playSound('accords-magic', 'Maj-mag-'+ title, 0.5);
-    updateNewCard(accInStack, accInCircle, isDouble);
+    updateNewCard(accInAllMajStack, accInCircle, isDouble);
   } else {
-    accInCircle.src = accInStack.src;
+    accInCircle.src = accInAllMajStack.src;
   }
   savePosition(accInCircle); //to manage zoom position element
 }
@@ -45,16 +44,20 @@ function getCardElement(circleNr, isObserver, isDouble) {
   return document.querySelector(`${circleID} img:nth-child(${circleNr})`);
 }
 
-function updateNewCard(accInStack, accInCircle, isDouble) {
-  if (accInStack.amount != 0) {
+
+function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
+  let currAcc = { ...accInAllMajStack }; 
+  if (accInAllMajStack.amount != 0) {
     if(isDouble){
-      let accInPlayerStack = playerAccords.find((acc) => acc.nr === accInStack.nr);
+      let accInPlayerStack = playerAccords.find((acc) => acc.nr === accInAllMajStack.nr);
       accInPlayerStack.amount++;
+      accInAllMajStack.amount--;
     } else if (!isDouble) {
-      playerAccords.push(accInStack);
-    }
-    accInStack.amount--;
-    accInCircle.src = accInStack.src;
+      currAcc.amount = 1;
+      playerAccords.push(currAcc);
+      accInAllMajStack.amount--;
+    }    
+    accInCircle.src = accInAllMajStack.src;
     changeWinnerCards();
   } else {
     showWithTimeout(infoAccEmpty(), 3000);
@@ -78,7 +81,7 @@ function chooseAccord(circle, circleNr, part) {
   choosenAcc = [];
   if (part === 'observer') {
     if(tryWizzardStrike){
-      observerConnection = choosenAcc; //
+      observerConnection = choosenAcc;
     }
     choosenAcc = observerAccords.find(acc => acc.circleNr === circleNr);
     let choosenAccElement = document.getElementById(`obsCircle(${circle})Acc(${circleNr})`);

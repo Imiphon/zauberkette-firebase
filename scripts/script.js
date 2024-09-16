@@ -425,8 +425,10 @@ function changeWinnerCards() { // Kay -- cards combine to magic card.
     cardCombi[i].stackNr = -1;
   }
   noBtns(); //Kay reset all Button style
-
-  showWithTimeout(infoWinMagic, 2000, finishRound);
+  showInfo(infoWinMagic());
+  setTimeout(() => {
+    finishRound();
+  }, 5000);
 }
 
 /*------------------------------- CLICK CARD STUFF -------------------------------*/
