@@ -23,8 +23,8 @@ function testModus() {
     //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
     //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
     { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
-    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
-    //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
+    //{ nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
+    { nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
     //{ nr: 15, stackNr: -1, title: 'wizzard', amount: 1, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
   ];
   console.log('testCards activated');
@@ -71,12 +71,23 @@ function buildStack(Cards) {
     let newCard = randomStack();
     targetArray.push(newCard);
   }
-  //testModus();
+  testModus();
   Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
 }
 
+function positionAccCards() {
+  const accCards = document.querySelectorAll('.accCard');
+  const radius = -60; // distance from center in px 
+
+  accCards.forEach((card, index) => {
+    const angle = (360 / 12) * (index + 1); // degree / count per circle
+    const transform = `rotate(${angle}deg) translateY(${radius}px) rotate(${-angle}deg)`;
+    card.style.transform = transform;
+  });
+}
+
 function renderCircles() {
-  for (let i = 1; i < 3; i++) {
+  for (let i = 1; i <= 2; i++) {
     let playerCircle = document.getElementById(`playerCircle${i}`);
     let obsCircle = document.getElementById(`obsCircle${i}`);
     playerCircle.innerHTML = '';

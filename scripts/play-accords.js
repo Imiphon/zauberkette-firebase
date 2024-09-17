@@ -1,42 +1,61 @@
-function positionAccCards() {
-  const accCards = document.querySelectorAll('.accCard');
-  const radius = -50; // distance from center
 
-  accCards.forEach((card, index) => {
-    const angle = (360 / 12) * (index + 1); // degree / count per circle
-    const transform = `rotate(${angle}deg) translateY(${radius}px) rotate(${-angle}deg)`;
-    card.style.transform = transform;
+/**
+ * is saving position to find back after hover and grow up
+ * @param {} accInCircle 
+ */
+function savePosition(accInCircle) {
+  let originalTransform = window.getComputedStyle(accInCircle).transform;
+  let originalZIndex = window.getComputedStyle(accInCircle).zIndex;
+  let originalLeft = window.getComputedStyle(accInCircle).left;
+  //let originalTop = window.getComputedStyle(accInCircle).top;
+
+  accInCircle.dataset.originalTransform = originalTransform === 'none' ? '' : originalTransform;
+  accInCircle.dataset.originalZIndex = originalZIndex === 'auto' ? '0' : originalZIndex;
+  accInCircle.dataset.originalLeft = originalLeft;
+  //accInCircle.dataset.originalTop= originalTop;
+
+  accInCircle.addEventListener('mouseenter', function () {
+    this.style.transform = `${this.dataset.originalTransform} scale(15)`;
+    this.style.zIndex = '100';
+    this.style.left = `calc(${this.dataset.originalLeft} + 90%)`;
+    //this.style.top = `calc(${this.dataset.originalTop} - 30%)`;
+  });
+  accInCircle.addEventListener('mouseleave', function () {
+    this.style.transform = this.style.transform = this.dataset.originalTransform;
+    this.style.zIndex = this.dataset.originalZIndex;
+    this.style.left = this.dataset.originalLeft;
+    //this.style.top = this.dataset.originalTop;
   });
 }
 
 /**
- * 
- * @param {number} prime nr of the allMaj-Object
- * @param {boolean} isNew Acc is coming from stack 
- * @param {boolean} isObserver is observer or undefined and then player
- * @param {boolean} isDouble is set by renderAccords() due to amount from player- or observer
- */
-function setAcc(prime, isNew, isObserver, isDouble) {  
+* 
+* @param {number} prime nr of the allMaj-Object
+* @param {boolean} isNew Acc is coming from stack 
+* @param {boolean} isObserver is observer or undefined and then player
+* @param {boolean} isDouble is set by renderAccords() due to amount from player- or observer
+*/
+function setAcc(prime, isNew, isObserver, isDouble) {
   let accInAllMajStack = allMaj.find((acc) => acc.nr === prime);
   let circleNr = accInAllMajStack.circleNr;
   let accInCircle = getCardElement(circleNr, isObserver, isDouble);
-  if (!accInCircle) return; 
+  if (!accInCircle) return;
   positionAccCards();
   if (isNew && accInAllMajStack.amount <= 0) {
     playSound('failed', 'backMag', 0.5);
     showInfo(infoAccEmpty());
     setTimeout(() => {
       stepBack();
-    }, 5000);    
+    }, 5000);
     return;
   } else if (isNew && accInAllMajStack.amount > 0) {
     let title = accInAllMajStack.title;
-    playSound('accords-magic', 'Maj-mag-'+ title, 0.5);
+    playSound('accords-magic', 'Maj-mag-' + title, 0.5);
     updateNewCard(accInAllMajStack, accInCircle, isDouble);
   } else {
     accInCircle.src = accInAllMajStack.src;
   }
-  
+
   savePosition(accInCircle); //to manage zoom position element
 }
 
@@ -57,9 +76,9 @@ function getCardElement(circleNr, isObserver, isDouble) {
 }
 
 function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
-  let currAcc = { ...accInAllMajStack }; 
+  let currAcc = { ...accInAllMajStack };
   if (accInAllMajStack.amount != 0) {
-    if(isDouble){
+    if (isDouble) {
       let accInPlayerStack = playerAccords.find((acc) => acc.nr === accInAllMajStack.nr);
       accInPlayerStack.amount++;
       accInAllMajStack.amount--;
@@ -67,7 +86,7 @@ function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
       currAcc.amount = 1;
       playerAccords.push(currAcc);
       accInAllMajStack.amount--;
-    }    
+    }
     accInCircle.src = accInAllMajStack.src;
     changeWinnerCards();
   } else {
@@ -87,16 +106,16 @@ function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
  */
 function chooseAccord(circle, circleNr, part) {
   let acc = allMaj.find(acc => acc.circleNr === circleNr);
-  playSound('accords-maj', 'Maj-'+acc.title, 0.5);
-  if(!tryWizzardStrike && !tryGoblinStrike) return;
+  playSound('accords-maj', 'Maj-' + acc.title, 0.5);
+  if (!tryWizzardStrike && !tryGoblinStrike) return;
   choosenAcc = [];
   if (part === 'observer') {
-    if(tryWizzardStrike){
+    if (tryWizzardStrike) {
       observerConnection = choosenAcc;
     }
     choosenAcc = observerAccords.find(acc => acc.circleNr === circleNr);
     let choosenAccElement = document.getElementById(`obsCircle(${circle})Acc(${circleNr})`);
-    if(!choosenAccElement.src) return;
+    if (!choosenAccElement.src) return;
     if (choosenAcc && choosenAccElement.classList.contains('accCard')) {
       checkNeighbors(circle, circleNr, part);
     }
@@ -104,7 +123,7 @@ function chooseAccord(circle, circleNr, part) {
   else if (part === 'player') {
     choosenAcc = playerAccords.find(acc => acc.circleNr === circleNr);
     let choosenAccElement = document.getElementById(`playerCircle(${circle})Acc(${circleNr})`);
-    if(!choosenAccElement.src) return;
+    if (!choosenAccElement.src) return;
     if (choosenAcc && choosenAccElement.classList.contains('accCard')) {
       checkNeighbors(circle, circleNr, part);
     }
@@ -183,8 +202,8 @@ function isSecondPlayerConnection() {
 }
 
 function isOneSecondPlayerConnection() {
-  if (((flatPlayerConnection && flatPlayerConnection.amount === 2) && (sharpPlayerConnection && sharpPlayerConnection.amount != 2) )||
-    (sharpPlayerConnection && sharpPlayerConnection.amount === 2) && (flatPlayerConnection && flatPlayerConnection.amount != 2) ) {
+  if (((flatPlayerConnection && flatPlayerConnection.amount === 2) && (sharpPlayerConnection && sharpPlayerConnection.amount != 2)) ||
+    (sharpPlayerConnection && sharpPlayerConnection.amount === 2) && (flatPlayerConnection && flatPlayerConnection.amount != 2)) {
     return true;
   }
   return false;
@@ -244,7 +263,7 @@ function sortAccsinCurrAccArray(currentAccArray) {
  * @returns {Object} - An object containing the currentAccArray, chaineToChange, and currAcc.
  */
 function initializeChain(part) {
-  let currentAccArray = part === 'player' ? playerAccords : observerAccords;  
+  let currentAccArray = part === 'player' ? playerAccords : observerAccords;
   let chaineToChange = part === 'player' ? wizzardGives : wizzardTakes;
   currentAccArray = sortAccsinCurrAccArray(currentAccArray);
   let currAcc = choosenAcc;
@@ -263,21 +282,21 @@ function initializeChain(part) {
  */
 function processDominantChain(circle, currentAccArray, chaineToChange, currAcc) {
   let nextCircleNr = currAcc.circleNr + 1 === 13 ? 1 : currAcc.circleNr + 1;
-  
+
   while (true) {
     let nextAcc = currentAccArray.find(acc => acc.circleNr === nextCircleNr);
     if (!nextAcc) break;
     if ((circle === 1)) {
-      
+
       if (playerAccords.some(a => a.circleNr === nextAcc.circleNr)) {
-        if(!isOneSecondPlayerConnection){
+        if (!isOneSecondPlayerConnection) {
           console.log('You only get the clicked spell because its next chain neighbor is your connecting spell');
           break;
         }
       }
       chaineToChange.push(nextAcc);
     }
-    if(circle === 2 && nextAcc.amount === 2){
+    if (circle === 2 && nextAcc.amount === 2) {
       console.log('circle === 2 && nextAcc.amount === 2');
     }
     nextCircleNr = nextAcc.circleNr + 1 === 13 ? 1 : nextAcc.circleNr + 1;
@@ -351,9 +370,9 @@ function startExchange(circle, circleNr, part) {
 
   if (((choosenAcc === flatPlayerConnection) || (choosenAcc === sharpPlayerConnection)) && !(flatPlayerConnection && sharpPlayerConnection) && choosenAcc.amount != 2) {
     // if choosenAcc in playerPart the connection for wizzardTakes
-    showWithTimeout(needForConnection, 2000); 
-    wizzardGives = []; 
-    return; 
+    showWithTimeout(needForConnection, 2000);
+    wizzardGives = [];
+    return;
   }
   wizzardStrike(observerAccords, playerAccords, wizzardTakes);
   wizzardStrike(playerAccords, observerAccords, wizzardGives);

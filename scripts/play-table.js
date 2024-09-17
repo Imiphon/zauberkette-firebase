@@ -123,36 +123,7 @@
       card.removeEventListener('click', getCardInfo);
     });
   }
-  
-  /**
-   * is saving position to find back after hover and grow up
-   * @param {} accInCircle 
-   */
-  function savePosition(accInCircle) {
-    let originalTransform = window.getComputedStyle(accInCircle).transform;
-    let originalZIndex = window.getComputedStyle(accInCircle).zIndex;
-    let originalLeft = window.getComputedStyle(accInCircle).left;
-    //let originalTop = window.getComputedStyle(accInCircle).top;
-  
-    accInCircle.dataset.originalTransform = originalTransform === 'none' ? '' : originalTransform;
-    accInCircle.dataset.originalZIndex = originalZIndex === 'auto' ? '0' : originalZIndex;
-    accInCircle.dataset.originalLeft = originalLeft;
-    //accInCircle.dataset.originalTop= originalTop;
-  
-    accInCircle.addEventListener('mouseenter', function () {
-      this.style.transform = `${this.dataset.originalTransform} scale(15)`;
-      this.style.zIndex = '100';
-      this.style.left = `calc(${this.dataset.originalLeft} + 90%)`;
-      //this.style.top = `calc(${this.dataset.originalTop} - 30%)`;
-    });
-    accInCircle.addEventListener('mouseleave', function () {
-      this.style.transform = this.style.transform = this.dataset.originalTransform;
-      this.style.zIndex = this.dataset.originalZIndex;
-      this.style.left = this.dataset.originalLeft;
-      //this.style.top = this.dataset.originalTop;
-    });
-  }
-  
+    
   async function awaitChangeCard() {
     isAwaitChangeCard = true;
     enablePlayerCards(); // getCardInfo activ
