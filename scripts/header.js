@@ -1,4 +1,5 @@
-<nav>
+function renderHeaderHTML() {
+    return ` <nav>
   <div class="nav-left">
     <img class="logo" src="assets/images/logo-wheat.png" alt="">
   </div>
@@ -48,4 +49,5 @@
       </ul>
     </div>
 
-</nav>
+</nav>`;
+}

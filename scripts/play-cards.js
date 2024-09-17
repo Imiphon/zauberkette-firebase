@@ -244,7 +244,6 @@ function threeJoker() {
   popup.classList.add('allCards');
   let sortedMaj = allMaj.slice().sort((a, b) => a.circleNr - b.circleNr);
 
-  let totalCards = sortedMaj.length;
   sortedMaj.forEach((card, index) => {
     let angle = card.circleNr * 30 + 270;
     let isDouble = playerAccords.some(acc => acc.nr === card.nr);

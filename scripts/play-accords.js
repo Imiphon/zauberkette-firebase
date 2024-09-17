@@ -1,4 +1,13 @@
-/*------------------------------- SET OR ADD ACCORD(S) -------------------------------*/
+function positionAccCards() {
+  const accCards = document.querySelectorAll('.accCard');
+  const radius = -50; // distance from center
+
+  accCards.forEach((card, index) => {
+    const angle = (360 / 12) * (index + 1); // degree / count per circle
+    const transform = `rotate(${angle}deg) translateY(${radius}px) rotate(${-angle}deg)`;
+    card.style.transform = transform;
+  });
+}
 
 /**
  * 
@@ -11,6 +20,8 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   let accInAllMajStack = allMaj.find((acc) => acc.nr === prime);
   let circleNr = accInAllMajStack.circleNr;
   let accInCircle = getCardElement(circleNr, isObserver, isDouble);
+  if (!accInCircle) return; 
+  positionAccCards();
   if (isNew && accInAllMajStack.amount <= 0) {
     playSound('failed', 'backMag', 0.5);
     showInfo(infoAccEmpty());
@@ -25,6 +36,7 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   } else {
     accInCircle.src = accInAllMajStack.src;
   }
+  
   savePosition(accInCircle); //to manage zoom position element
 }
 

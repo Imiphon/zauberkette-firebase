@@ -1,57 +1,4 @@
-function buildStack(Cards) {
-    let targetArray = (Cards === "playerCards") ? playerCards : observerCards;
 
-    for (let i = 0; i < 5; i++) {
-        let newCard = randomStack();
-        targetArray.push(newCard);
-    }
-    //testModus();
-    Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
-}
-
-const testCards = [
-    { nr: 1, stackNr: -1, title: 'C', amount: 3, src: 'assets/images/tones/toneC.png' },
-    { nr: 5, stackNr: -1, title: 'E', amount: 3, src: 'assets/images/tones/toneE.png' },
-    { nr: 8, stackNr: -1, title: 'G', amount: 3, src: 'assets/images/tones/toneG.png' },
-    //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
-    //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
-    //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
-    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
-    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
-    //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
-    //{ nr: 15, stackNr: -1, title: 'wizzard', amount: 1, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
-]
-
-function testModus() {
-    playerCards = testCards;
-    console.log('testCards activated');
-}
-
-
-function renderStack(player, part) {
-    let currCardStack = docID(part);
-    currCardStack.innerHTML = '';
-    let cards = player === "playerCard" ? playerCards : observerCards;
-
-    for (let i = 0; i < cards.length; i++) {
-        let card = cards[i];
-        let img_id = player === "playerCard" ? `playerCard${i}` : `observerCard${i}`;
-        let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
-        card.stackNr = i;
-        currCardStack.innerHTML += `
-        <div class="pl-card-frame">
-          <img class="card" id="${img_id}" 
-          stackNr="${card.stackNr}"  
-          src="${card.src}"
-          onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)">
-          <div class="brass-plate no-btn small-font" id="${optAccsPart}${i}"></div>
-        </div>
-        `;
-        let optAccNr = findOptAccords(card.nr);
-        renderOptAccords(optAccNr, card.stackNr, optAccsPart);
-    }
-    stackOpacity1(cards, player);
-}
 
 /**
  * shows for wich accords each tone is usefull (as prime, terz and quint)
@@ -187,7 +134,6 @@ function startRound() {
 
 function checkForWin(part) {
     let currChainArr = part === 'player' ? playerChains : observerChains;
-
     let winnerChain = currChainArr.find(chain => chain.length >= goalValue);
     if (winnerChain) youWin(part, winnerChain.length);
 }
@@ -287,25 +233,6 @@ function setBackArrays() {
 function setBackBooleans() {
     isChainCheck = false;
     isAwaitChangeCard = false;
-}
-
-function renderCircles() {
-    for (let i = 1; i < 3; i++) {
-        let playerCircle = document.getElementById(`playerCircle${i}`);
-        let obsCircle = document.getElementById(`obsCircle${i}`);
-        playerCircle.innerHTML = '';
-        obsCircle.innerHTML = '';
-        for (let j = 1; j < 13; j++) {
-            playerCircle.innerHTML += `
-            <img class="accCard" id="playerCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'player')">
-            `;
-            obsCircle.innerHTML += `
-            <img class="accCard" id="obsCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'observer')">   
-            `;
-        }
-    }
-    renderAccords(false);//isPlayerCircle 
-    renderAccords(true); //isObserver
 }
 
 function renderAccords(isObserver) {

@@ -1,31 +1,122 @@
-async function initialize() {
-  await renderTable();
-  detectTouchDevice();
-}
+const availableHeight = calculateAvailableHeight(); //used in calculateAvailableHeight() and changeView()
 
 function docID(id) {
   return document.getElementById(id);
 }
 
-async function includeHTML() { //Kay -- template function for header  unnessassary better js template
-  let includeElements = document.querySelectorAll("[w3-include-html]");
+/* --------------- INDEX.HTML  ------------------------*/
+async function renderIndex() { //Kay -- render the content
+  //await includeHTML(); // Kay -- render the header
+  let mainContent = docID("mainContentID"); //Kay - docID?
+  mainContent.innerHTML = infoStartSite(); //Kay -- render Main Content
+}
 
-  for (let i = 0; i < includeElements.length; i++) {
-    const element = includeElements[i];
-    file = element.getAttribute("w3-include-html"); // "includes/header.html"
-    let resp = await fetch(file);
+/*------------------------------- TABLE FUNCTIONS ---------------------------*/
 
-    if (resp.ok) {
-      element.innerHTML = await resp.text();
-    } else {
-      element.innerHTML = "Page not found";
+//called in buildStack()
+function testModus() {
+  playerCards = [
+    { nr: 1, stackNr: -1, title: 'C', amount: 3, src: 'assets/images/tones/toneC.png' },
+    { nr: 5, stackNr: -1, title: 'E', amount: 3, src: 'assets/images/tones/toneE.png' },
+    { nr: 8, stackNr: -1, title: 'G', amount: 3, src: 'assets/images/tones/toneG.png' },
+    //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
+    //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
+    //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
+    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
+    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
+    //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
+    //{ nr: 15, stackNr: -1, title: 'wizzard', amount: 1, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
+  ];
+  console.log('testCards activated');
+}
+
+function generateCardHTML(card, i, player) {
+  let img_id = player === "playerCard" ? `playerCard${i}` : `observerCard${i}`;
+  let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
+
+  return `
+    <div class="pl-card-frame">
+      <img class="card" id="${img_id}" 
+      stackNr="${card.stackNr}"  
+      src="${card.src}"
+      onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)">
+      <div class="brass-plate no-btn small-font" id="${optAccsPart}${i}"></div>
+    </div>
+  `;
+}
+
+function renderStack(player, part) {
+  let currCardStack = docID(part);
+  currCardStack.innerHTML = '';
+  let cards = player === "playerCard" ? playerCards : observerCards;
+
+  for (let i = 0; i < cards.length; i++) {
+    let card = cards[i];
+    card.stackNr = i;
+
+    currCardStack.innerHTML += generateCardHTML(card, i, player);
+
+    let optAccNr = findOptAccords(card.nr);
+    let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
+    renderOptAccords(optAccNr, card.stackNr, optAccsPart);
+  }
+
+  stackOpacity1(cards, player);
+}
+
+function buildStack(Cards) {
+  let targetArray = (Cards === "playerCards") ? playerCards : observerCards;
+
+  for (let i = 0; i < 5; i++) {
+    let newCard = randomStack();
+    targetArray.push(newCard);
+  }
+  //testModus();
+  Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
+}
+
+function renderCircles() {
+  for (let i = 1; i < 3; i++) {
+    let playerCircle = document.getElementById(`playerCircle${i}`);
+    let obsCircle = document.getElementById(`obsCircle${i}`);
+    playerCircle.innerHTML = '';
+    obsCircle.innerHTML = '';
+    for (let j = 1; j < 13; j++) {
+      playerCircle.innerHTML += `
+          <img class="accCard" id="playerCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'player')">
+          `;
+      obsCircle.innerHTML += `
+          <img class="accCard" id="obsCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'observer')">   
+          `;
     }
   }
+  positionAccCards();
+  renderAccords(false);//isPlayerCircle 
+  renderAccords(true); //isObserver
 }
+
+function renderTable() {
+  const header = document.querySelector('header');
+  header.innerHTML = renderHeaderHTML();
+  showInfo(infoStart());
+  buildStack("playerCards"); // Kay -- render player stack with joined function
+  buildStack("observerCards");
+  renderCircles();
+  chainHelper();
+  currentCardID = -1;
+  startRound();
+}
+
+
+function initialize() {
+  renderTable();
+  detectTouchDevice();
+}
+
 
 function toggleMenu() {
   const menu = document.getElementById('menu');
-  const menuToggle = document.getElementById('menuToggle');  
+  const menuToggle = document.getElementById('menuToggle');
   menu.classList.toggle('open'); // Toggle the 'open' class to show or hide the menu  
   menuToggle.classList.toggle('open'); // Optionally, toggle the class for hamburger to X transformation
 }
@@ -45,15 +136,9 @@ function skipToStart() {
   window.location.reload();
 }
 
-/* --------------- INDEX.HTML  ------------------------*/
-async function renderIndex() { //Kay -- render the content
-  await includeHTML(); // Kay -- render the header
-  let mainContent = docID("mainContentID"); //Kay - docID?
-  mainContent.innerHTML = infoStartSite(); //Kay -- render Main Content
-}
-
-/*------------------------------- TABLE FUNCTIONS ---------------------------*/
-
+/**
+ * to set the goal (length of winner chain)
+ */
 function updateGoal() {
   goalValue = document.getElementById('goalInput').value;
   let value = parseInt(input.value, 10);
@@ -105,13 +190,11 @@ function calculateAvailableHeight() {
   return availableHeight;
 }
 
-const availableHeight = calculateAvailableHeight();
-
 function changeView() {
   mirrorView = !mirrorView;
   let navigation = document.getElementById('headInfoID');
-    const turnBtn = document.querySelector('.turn');
-    const turnBackBtn = document.querySelector('.turn-back');
+  const turnBtn = document.querySelector('.turn');
+  const turnBackBtn = document.querySelector('.turn-back');
   if (mirrorView) {
     navigation.classList.add('sideInfo');
     turnBackBtn.style.display = 'block';
@@ -129,7 +212,7 @@ function changeView() {
     document.querySelector('nav').style.width = '100%';
   }
   toggleRotation();
-  switchtableStyle();
+  switchTableStyle();
 }
 
 function toggleRotation() {
@@ -142,7 +225,7 @@ function toggleRotation() {
   isRotated = !isRotated;
 }
 
-function switchtableStyle() {
+function switchTableStyle() {
   if (mirrorView) {
     let table = document.querySelector('.table-frame'); //with dot cause it's lookin for a selector
     table.classList.remove('table-frame'); //only class-name without dot
@@ -163,160 +246,6 @@ function rotateWebsite() {
     table.style.transform = "rotate(180deg)";
   }
   table.style.transformOrigin = "center";
-}
-
-
-/*-------------------- BUTTONS -------------------*/
-
-
-function btnGroup1() { //Kay -- shows infotext start
-  noBtns(); //Kay reset all Button style
-  docID("changeClicks(1)").style.display = "inline";//change card --Kay-- docID!
-  docID("changeClicks(2)").style.display = "inline";//nothing to change
-  showInfo(infoStart()); //Kay --render text of starting round
-}
-
-function btnGroup2() { // Kay --shows infotext after card change
-  noBtns(); //Kay reset all Button style
-  docID("changeClicks(3)").style.display = "inline"; // check Combi
-  docID("changeClicks(7)").style.display = "inline"; //next Round
-  showInfo(infoPlayCards()); //Kay --render
-  specialBtn(); //Kay render button if special card is in deck ( Mellot, Goblin, Wizzard)
-}
-
-function btnGroup3() {
-  noBtns();
-  document.getElementById("changeClicks(8)").style.display = "inline"; //step back
-  document.getElementById("changeClicks(7)").style.display = "inline"; //next Round
-}
-
-/**
- * Shows special btn if 
- */
-function specialBtn() { // Kay -- check if special Card in deck
-  for (let i = 0; i < playerCards.length; i++) {
-    let currentCard = docID(`playerCard${i}`);
-    let title = playerCards[i]['title'];
-    if (currentCard.style.opacity != 0.5) { //Kay - use docID 
-      if (title === 'mellot') { //Kay -- maybe &&-short Version
-        docID("changeClicks(4)").style.display = "block"; //Mellot
-        docID("mellot-info").style.display = "block";
-        docID("mellotBrass").style.display = "block";
-      } else if (title === 'goblin') {
-        docID("changeClicks(5)").style.display = "block"; //Goblin
-        docID("goblin-info").style.display = "block";
-        docID("goblinBrass").style.display = "block";
-      } else if (title === 'wizzard') {
-        docID("changeClicks(6)").style.display = "block"; //Wizzard
-        docID("wizzard-info").style.display = "block ";
-        docID("wizzardBrass").style.display = "block";
-      }
-    }
-  }
-}
-
-function noBtns() { // Kay -- set btn-group buttons invisible
-  let buttons = document.querySelectorAll('.btn-group .btn');
-  buttons.forEach(function (button) {
-    button.style.display = 'none';
-  });
-  let brassGears = document.querySelectorAll('.brass-gear1');
-  brassGears.forEach(function (gear) {
-    gear.style.display = 'none';
-  });
-}
-
-/*-------------------- BUTTON FUNCTIONS -------------------*/
-
-let fullscreen = false;
-
-function toggleFullscreen() {
-  const fullscreenEnterImg = document.querySelector('.fullscreen-enter');
-  const fullscreenExitImg = document.querySelector('.fullscreen-exit');
-
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-    fullscreenEnterImg.style.display = 'none';
-    fullscreenExitImg.style.display = 'block';
-    fullscreen = true;
-    if (mirrorView) {
-      let nav = document.querySelector('nav')
-      nav.style.width = `100%`;
-      nav.style.left = `0`;
-    }
-  } else {
-    document.exitFullscreen();
-    fullscreenEnterImg.style.display = 'block';
-    fullscreenExitImg.style.display = 'none';
-    fullscreen = false;
-  }
-}
-
-async function useMellot() {
-  playSound('tone', 'mellot', 0.5);
-  disableCardClicks();
-  specialInProgress = true;
-  enablePlayerCards();
-  separateSpecial('mellot');
-  mellotArray = []; //to define the two cards for change  
-  showInfo(infoToGiveCard());
-  btnGroup3();
-  await waitForCardClick();
-  if (mellotArray.length === 0) {
-    toggleCardOpacity(currentCardID);
-  }
-  let firstClickedIndex = currentCardID;
-  if (mellotArray.length === 0) {
-    mellotArray.push(playerCards[currentCardID]);
-  }
-  showInfo(infoToTakeCard());
-  enableObserverCards();
-  await waitForCardClick();
-  //in case of a 'step back' after first click and start useMellot() again function jumps to mellotArray.push(observerCards[currentCardID]); otherwise.
-  if (mellotArray.length === 1) {
-    mellotArray.push(observerCards[currentCardID]);
-  } else if (mellotArray.length === 0) {
-    mellotArray.push(playerCards[currentCardID]);
-    firstClickedIndex = currentCardID;
-  }
-  toggleCardOpacity(firstClickedIndex);
-  changeMellotCards();
-  specialInProgress = false;
-  newCardOrder();
-  btnGroup2();
-}
-
-/**
- * onclick="chooseAccord(${i}, ${j}, 'player') = circle, circleNr, part
- */
-function useGoblin() {
-  if (observerAccords.length === 0) {
-    showWithTimeout(goblinRules, 6000, infoPlayCards);
-    return;
-  }
-  tryGoblinStrike = true;
-  playSound('tone', 'goblin', 0.5);
-  separateSpecial('goblin');
-  disableAccClicks();
-  enableObserverAccordClicks();
-  showInfo(infoUseGoblin());
-  btnGroup3();
-  specialInProgress = true;
-}
-
-function useWizzard() {
-  playSound('tone', 'wizzard', 0.5);
-  if (observerAccords.length === 0) {
-    showWithTimeout(wizzardRules, 6000, infoPlayCards);
-    return;
-  }
-  tryWizzardStrike = true;
-  separateSpecial('wizzard');
-  disableAccClicks();
-  enableObserverAccordClicks();
-  showInfo(infoUseWizzard());
-  btnGroup3();
-  specialInProgress = true;
 }
 
 /*------------------------------- POPUPs  ------------*/
