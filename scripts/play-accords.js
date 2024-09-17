@@ -44,7 +44,6 @@ function getCardElement(circleNr, isObserver, isDouble) {
   return document.querySelector(`${circleID} img:nth-child(${circleNr})`);
 }
 
-
 function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
   let currAcc = { ...accInAllMajStack }; 
   if (accInAllMajStack.amount != 0) {

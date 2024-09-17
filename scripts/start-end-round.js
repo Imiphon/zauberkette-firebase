@@ -5,7 +5,7 @@ function buildStack(Cards) {
         let newCard = randomStack();
         targetArray.push(newCard);
     }
-    testModus();
+    //testModus();
     Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
 }
 
