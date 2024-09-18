@@ -105,8 +105,6 @@ main {
   top: 40px;
   overflow-y: auto;
   flex-grow: 1;
-
-  padding: 32px 0;
 }
 
 .table-mirror-frame {
@@ -155,7 +153,6 @@ main {
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
-  z-index: 20;
 }
 
 .left-center-frame {

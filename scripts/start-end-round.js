@@ -1,27 +1,5 @@
 
 
-/**
- * shows for wich accords each tone is usefull (as prime, terz and quint)
- * @param {array} optAcc opt.accordNr (3) or 1 specialCardNr
- * @param {number} stackNr 
- */
-function renderOptAccords(optAcc, stackNr, optAccsPart) {
-    let optAccs = document.getElementById(`${optAccsPart}${stackNr}`);
-    if (optAcc === 0) optAccs.innerHTML += 'Gnom';
-    else if (optAcc === 13) optAccs.innerHTML += 'Mellot';
-    else if (optAcc === 14) optAccs.innerHTML += 'Goblin';
-    else if (optAcc === 15) optAccs.innerHTML += 'Wizzard';
-    else {
-        for (let i = 0; i < optAcc.length; i++) {
-            let currAcc = allMaj.find(acc => acc.nr === optAcc[i]);
-            if (i === 0) optAccs.innerHTML += 'Prime in ';
-            else if (i === 1) optAccs.innerHTML += 'Terz in ';
-            else if (i === 2) optAccs.innerHTML += 'Quint in ';
-            optAccs.innerHTML += currAcc.title + '<br>';
-        }
-    }
-}
-
 function changeSpecials() {
     usedSpecials.forEach(special => {
         currentCardID = special.index;
@@ -30,27 +8,6 @@ function changeSpecials() {
     });
     usedSpecials = [];
     currentSpecial = null;
-}
-
-/**
- * @param {*} cardNr 
- * @returns 3 options of Accords or name of specialcard for each tonCard in stack
- */
-function findOptAccords(cardNr) {
-    if (cardNr > 12 || cardNr === 0) return cardNr;
-    else {
-        let acc1 = cardNr;
-        let acc2 = cardNr + 5;
-        let acc3 = cardNr + 8;
-        if (acc2 > 12) {
-            acc2 -= 12;
-        }
-        if (acc3 > 12) {
-            acc3 -= 12;
-        }
-        let accNumbers = [acc1, acc3, acc2];
-        return (accNumbers);
-    }
 }
 
 function handleFinishRoundClick() {
@@ -233,22 +190,4 @@ function setBackArrays() {
 function setBackBooleans() {
     isChainCheck = false;
     isAwaitChangeCard = false;
-}
-
-function renderAccords(isObserver) {
-    let array;
-    if (isObserver) {
-        array = observerAccords;
-    } else {
-        array = playerAccords;
-    }
-    if (array.length != 0) {
-        array.forEach(accord => {
-            //accNr,isNew,isObserver,isDouble
-            setAcc(accord.nr, false, isObserver, false);
-            if (accord.amount === 2) {
-                setAcc(accord.nr, false, isObserver, true);
-            }
-        });
-    }
 }
