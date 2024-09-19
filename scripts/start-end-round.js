@@ -85,7 +85,8 @@ function startRound() {
     btnGroup1();
     disableCardClicks();
     setBackArrays();
-    setBackBooleans();
+    setBackBooleans(); 
+    setCardHelper();
     setCardInfo();
 }
 

@@ -294,17 +294,6 @@ img {
   cursor: pointer;
 }
 
-.mellot-info,
-.goblin-info,
-.wizzard-info {
-  width: auto;
-  display: none;
-  position: absolute;
-  top: 80px;
-  left: 50px;
-  z-index: 100;
-}
-
 .info-text {
   display: flex;
   justify-content: center;
@@ -321,7 +310,7 @@ img {
   position: relative;
   left: 32px;
   width: min-content;
-  height: 80px;
+  height: 98px;
   min-height: fit-content;
   min-width: 300px;
   text-align: center;
@@ -333,22 +322,22 @@ img {
   top: -8px;
 }
 
-#mellot-info {
+#infoMellot {
   display: none;
 }
 
-#goblin-info {
+#infoGoblin {
   display: none;
 }
 
-#wizzard-info {
+#infoWizzard {
   display: none;
 }
 
 .chain-frame:hover .chain-helper,
-.helper-frame:hover .mellot-info,
-.helper-frame:hover .goblin-info,
-.helper-frame:hover .wizzard-info {
+.helper-frame:hover .infoMellot,
+.helper-frame:hover .infoGoblin,
+.helper-frame:hover .infoWizzard {
   display: block;
 }
 

@@ -5,18 +5,39 @@ function setCardInfo() {
     let info = document.getElementById('infoTextID');
     let savedText = info.innerHTML;
     cardInfoFrame.addEventListener('mouseenter', function () {
-
-  
       showInfo(optAccInfoText());
     });
-  
+
     cardInfoFrame.addEventListener('mouseleave', function () {
       let info = document.getElementById('infoTextID');
-      info.innerHTML = savedText; // Setzen Sie den gespeicherten Text zurück
-    });    
+      info.innerHTML = savedText; //set back original text
+    });
   });
 }
 
+/**
+ * infoMellotText()
+ * @param {string} special id-name of special container
+ */
+function setSpecialInfo(special) {
+  let info = document.getElementById('infoTextID');
+  let specialInfo = document.getElementById(special);
+  let savedText = info.innerHTML;
+  let funcName = special + 'Text'; 
+
+  specialInfo.addEventListener('mouseenter', function () {
+    if (typeof window[funcName] === 'function') {
+      showInfo(window[funcName]()); 
+    } else {
+      console.error(`Funktion ${funcName} ist nicht definiert.`);
+    }
+  });
+
+  specialInfo.addEventListener('mouseleave', function () {
+    let info = document.getElementById('infoTextID');
+    info.innerHTML = savedText;
+  });
+}
 
 /**
  * add new random card into the playerCards and 

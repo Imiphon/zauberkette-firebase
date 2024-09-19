@@ -1,5 +1,3 @@
-
-
 /*-------------------- BUTTONS -------------------*/
 
 
@@ -34,16 +32,19 @@ function btnGroup1() { //Kay -- shows infotext start
       if (currentCard.style.opacity != 0.5) { //Kay - use docID 
         if (title === 'mellot') { //Kay -- maybe &&-short Version
           docID("changeClicks(4)").style.display = "block"; //Mellot
-          docID("mellot-info").style.display = "block";
+          docID("infoMellot").style.display = "block";
           docID("mellotBrass").style.display = "block";
+          setSpecialInfo('infoMellot');
         } else if (title === 'goblin') {
           docID("changeClicks(5)").style.display = "block"; //Goblin
-          docID("goblin-info").style.display = "block";
+          docID("infoGoblin").style.display = "block";
           docID("goblinBrass").style.display = "block";
+          setSpecialInfo('infoGoblin');
         } else if (title === 'wizzard') {
           docID("changeClicks(6)").style.display = "block"; //Wizzard
-          docID("wizzard-info").style.display = "block ";
+          docID("infoWizzard").style.display = "block";
           docID("wizzardBrass").style.display = "block";
+          setSpecialInfo('infoWizzard');
         }
       }
     }

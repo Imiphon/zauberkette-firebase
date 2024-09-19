@@ -12,6 +12,28 @@ function optAccInfoText() {
   `;
 }
 
+function infoMellotText() {
+return `
+Mit dem Mellot kannst du eine eigene Karte gegen einen
+ gegnerische Karte eintauschen. Oder du drückst 'zurück'.
+`;
+}
+
+function infoGoblinText() {
+  return `
+  Mit dem Kobold kannst du einen Zauber vom Gegner stehlen, wenn er
+   an einen deiner Zauber passt. Oder du drückst 'zurück'.
+  `;
+  }
+
+  function infoWizzardText() {
+    return `
+    Mit dem Magier kannst du einen Zauber oder eine Kette mit dem
+     Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. 
+     Oder du drückst 'zurück'.
+    `;
+    }
+
 /*-------------- INFOS IN .INFO-FRAME  */
 
 function infoStartSite() { // in index.html
@@ -53,19 +75,19 @@ function wizzardRules() {
   `;
 }
 
-function wizzardInfo() {
+function infoWizzard() {
   return `
   <p>Mit dem Magier kannst du einen Zauber oder eine Kette mit dem Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. Oder du drückst 'zurück'.</p> 
   `;
 }
 
-function goblinInfo() {
+function infoGoblin() {
   return `
   <p>Mit einem Kobold kannst du einen Zauber des Gegners stibitzen, wenn er nicht zwischen zwei anderen Zaubern liegt und sich mit einem deiner Zauber verketten lässt.  Oder du drückst 'zurück'.</p> 
   `;
 }
 
-function mellotInfo() {
+function infoMellot() {
   return `
   <p>Mit dem Mellot kannst du eine eigene Karte gegen einen gegnerische Karte eintauschen. Oder du drückst 'zurück'.</p> 
   `;
