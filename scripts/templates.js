@@ -1,4 +1,19 @@
 
+function optAccInfo() {
+  return `<div class="card-info-frame">
+            <div class="card-info-frame brass-gear3 no-btn" alt="Info">
+            </div>
+          </div>`;
+}
+
+function optAccInfoText() {
+  return `
+  <p>Finde für 'Prime in ...', 'Terz in ...'und 'Quint in ...' den gleichen Akkordnamen oder nimm Gnome</p> 
+  `;
+}
+
+/*-------------- INFOS IN .INFO-FRAME  */
+
 function infoStartSite() { // in index.html
   return `
     <h3>Melopoiia presents:</h3>
@@ -130,7 +145,7 @@ function AccStillThere() {
 
 function chooseAnotherAcc() {
   return `
-  <p>Wähle etwas anderes oder drücke "Step Back"</p> 
+  <p>Wähle etwas anderes oder drücke "Zurück"</p> 
   `;
 }
 

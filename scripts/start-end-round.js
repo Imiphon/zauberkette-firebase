@@ -10,6 +10,7 @@ function changeSpecials() {
     currentSpecial = null;
 }
 
+//to prevent double-click and skip other player
 function handleFinishRoundClick() {
     if (!finishButton) {
         finishButton = true;
@@ -23,6 +24,7 @@ function handleFinishRoundClick() {
 async function finishRound() {
     animateTableFrame();
     await new Promise(resolve => setTimeout(resolve, 1500));
+    playSound('success', 'gong-deep', 0.5);
     if (specialInProgress) {
         usedSpecials.pop(); // Last special will be removed
         specialInProgress = false;
@@ -84,9 +86,7 @@ function startRound() {
     disableCardClicks();
     setBackArrays();
     setBackBooleans();
-    setTimeout(() => {
-        playSound('success', 'gong-deep', 0.5);
-    }, 500);
+    setCardInfo();
 }
 
 function checkForWin(part) {

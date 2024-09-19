@@ -53,17 +53,17 @@ function generateCardHTML(card, i, player) {
 function findOptAccords(cardNr) {
   if (cardNr > 12 || cardNr === 0) return cardNr;
   else {
-      let acc1 = cardNr;
-      let acc2 = cardNr + 5;
-      let acc3 = cardNr + 8;
-      if (acc2 > 12) {
-          acc2 -= 12;
-      }
-      if (acc3 > 12) {
-          acc3 -= 12;
-      }
-      let accNumbers = [acc1, acc3, acc2];
-      return (accNumbers);
+    let acc1 = cardNr;
+    let acc2 = cardNr + 5;
+    let acc3 = cardNr + 8;
+    if (acc2 > 12) {
+      acc2 -= 12;
+    }
+    if (acc3 > 12) {
+      acc3 -= 12;
+    }
+    let accNumbers = [acc1, acc3, acc2];
+    return (accNumbers);
   }
 }
 
@@ -79,13 +79,13 @@ function renderOptAccords(optAcc, stackNr, optAccsPart) {
   else if (optAcc === 14) optAccs.innerHTML += 'Goblin';
   else if (optAcc === 15) optAccs.innerHTML += 'Wizzard';
   else {
-      for (let i = 0; i < optAcc.length; i++) {
-          let currAcc = allMaj.find(acc => acc.nr === optAcc[i]);
-          if (i === 0) optAccs.innerHTML += 'Prime in ';
-          else if (i === 1) optAccs.innerHTML += 'Terz in ';
-          else if (i === 2) optAccs.innerHTML += 'Quint in ';
-          optAccs.innerHTML += currAcc.title + '<br>';
-      }
+    for (let i = 0; i < optAcc.length; i++) {
+      let currAcc = allMaj.find(acc => acc.nr === optAcc[i]);
+      if (i === 0) optAccs.innerHTML += 'Prime in ';
+      else if (i === 1) optAccs.innerHTML += 'Terz in ';
+      else if (i === 2) optAccs.innerHTML += 'Quint in ';
+      optAccs.innerHTML += currAcc.title + '<br>';
+    }
   }
 }
 
@@ -106,7 +106,6 @@ function renderStack(player, part) {
     let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
     renderOptAccords(optAccNr, card.stackNr, optAccsPart);
   }
-
   stackOpacity1(cards, player);
 }
 
@@ -119,6 +118,14 @@ function buildStack(Cards) {
   }
   //testModus();
   Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
+  setCardHelper();
+}
+
+function setCardHelper() {
+  let obsStack = document.getElementById('observerStackID');
+  let playStack = document.getElementById('playerStackID');
+  obsStack.innerHTML += optAccInfo();
+  playStack.innerHTML += optAccInfo();
 }
 
 function positionAccCards() {
@@ -135,18 +142,18 @@ function positionAccCards() {
 function renderAccords(isObserver) {
   let array;
   if (isObserver) {
-      array = observerAccords;
+    array = observerAccords;
   } else {
-      array = playerAccords;
+    array = playerAccords;
   }
   if (array.length != 0) {
-      array.forEach(accord => {
-          //accNr,isNew,isObserver,isDouble
-          setAcc(accord.nr, false, isObserver, false);
-          if (accord.amount === 2) {
-              setAcc(accord.nr, false, isObserver, true);
-          }
-      });
+    array.forEach(accord => {
+      //accNr,isNew,isObserver,isDouble
+      setAcc(accord.nr, false, isObserver, false);
+      if (accord.amount === 2) {
+        setAcc(accord.nr, false, isObserver, true);
+      }
+    });
   }
 }
 

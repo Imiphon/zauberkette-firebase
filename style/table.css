@@ -9,7 +9,6 @@ main {
   border-radius: 50%;
 }
 
-
 .name-frame {
   position: relative;
   width: fit-content;
@@ -116,7 +115,7 @@ main {
 
 .table-frame,
 .table-mirror-frame {
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -183,13 +182,33 @@ main {
 }
 
 .circle-img {
-  background-image: url('./../assets/images/bgr/brass-circle.png');
-  background-size: 180px;
+  background-image: url('./../assets/images/bgr/brass-triad.png');
+  background-size: 160px;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   position: relative;
   width: 240px;
   height: 240px;
+}
+
+.bgr-circle-l, 
+.bgr-circle-r {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-color: rgba(255, 217, 0, 0.333);
+  box-shadow: 0px 0px 16px 6px rgba(255, 217, 0, 0.333);
+  border-radius: 100%;
+  z-index: 1;
+}
+
+.bgr-circle-l {
+  left: 18px;
+  top: 38px;
+}
+.bgr-circle-r {
+  right: -18px;
+    top: 38px;
 }
 
 /*.chain */
@@ -271,6 +290,10 @@ img {
   height: 62px !important;
 }
 
+.card-info-frame {
+  cursor: pointer;
+}
+
 .mellot-info,
 .goblin-info,
 .wizzard-info {
@@ -294,12 +317,14 @@ img {
   white-space: wrap;
 }
 
-.info-frame {
+.info-frame {  
   position: relative;
   left: 32px;
   width: min-content;
-  height: min-content;
+  height: 80px;
+  min-height: fit-content;
   min-width: 300px;
+  text-align: center;
 }
 
 .helper-frame {
@@ -425,7 +450,7 @@ img {
 .brass-long-high {
   background-image: url('./../assets/images/bgr/brass-long-high.png');
   color: rgb(55, 42, 32);
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   min-width: auto;
   min-height: auto;
@@ -440,8 +465,9 @@ img {
   font-size: 0.8em;
 }
 
-.brass-gear1 {
-  position: absolute;
+.brass-gear1, 
+.brass-gear2,
+.brass-gear3 {
   background-image: url('./../assets/images/bgr/brass-gear1.png');
   color: rgb(55, 42, 32);
   background-size: 24px 24px;
@@ -449,12 +475,14 @@ img {
   background-position: center;
 }
 
-.brass-gear2 {
-  background-image: url('./../assets/images/bgr/brass-gear2.png');
-  color: rgb(55, 42, 32);
-  background-size: 24px 24px;
-  background-repeat: no-repeat;
-  background-position: center;
+.brass-gear1 {
+  position: absolute;
+}
+
+.brass-gear3 {
+  position: absolute;
+    left: 12px;
+    bottom: 60px;
 }
 
 .iron-circle {
@@ -466,8 +494,9 @@ img {
 
 .iron-long-cross {
   background-image: url('./../assets/images/bgr/iron-long-cross.png');
-  color: #000000;
-  font-weight: 700;
+  color: #1e0f0f;
+  font-weight: 900;
+  font-size: large;
 }
 
 .iron-plate {
