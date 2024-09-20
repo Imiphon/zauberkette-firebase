@@ -295,6 +295,7 @@ img {
 }
 
 .info-text {
+  height: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -459,19 +460,21 @@ img {
 .brass-gear3 {
   background-image: url('./../assets/images/bgr/brass-gear1.png');
   color: rgb(55, 42, 32);
-  background-size: 24px 24px;
+  background-size: 32px 32px;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .brass-gear1 {
   position: absolute;
+  bottom: -16px;
+  right: 12px;
 }
 
 .brass-gear3 {
   position: absolute;
-    left: 12px;
-    bottom: 60px;
+    left: 16px;
+    bottom: 56px;
 }
 
 .iron-circle {

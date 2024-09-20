@@ -141,7 +141,7 @@ function btnGroup1() { //Kay -- shows infotext start
   
   function useWizzard() {
     playSound('tone', 'wizzard', 0.5);
-    if (observerAccords.length === 0) {
+    if (observerAccords.length === 0 || playerAccords.length === 0 ) {
       showWithTimeout(wizzardRules, 6000, infoPlayCards);
       return;
     }

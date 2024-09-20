@@ -8,33 +8,34 @@ function optAccInfo() {
 
 function optAccInfoText() {
   return `
-  <p>Finde für 'Prime in ...', 'Terz in ...'und 'Quint in ...' den gleichen Akkordnamen oder nimm Gnome</p> 
+  <p>Drücke 'Zauber komponieren' und wähle drei verschiedene Wellenfische mit gleichem Zauber in 'Prime', 'Terz' und 'Quint' oder nimm Gnome als Joker.</p> 
   `;
 }
 
 function infoMellotText() {
-return `
-Mit dem Mellot kannst du eine eigene Karte gegen einen
- gegnerische Karte eintauschen. Oder du drückst 'zurück'.
+  return `
+Drücke den Mellot-Knopf und du kannst eine eigene Spielkarte gegen einen
+ gegnerische Karte eintauschen.
 `;
 }
 
 function infoGoblinText() {
   return `
-  Mit dem Kobold kannst du einen Zauber vom Gegner stehlen, wenn er
-   an einen deiner Zauber passt. Oder du drückst 'zurück'.
+  Drücke den Kobold-Knopf und du kannst einen Zauber vom Gegner stehlen, wenn er
+   an einen deiner Zauber passt.
   `;
-  }
+}
 
-  function infoWizzardText() {
-    return `
-    Mit dem Magier kannst du einen Zauber oder eine Kette mit dem
-     Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. 
-     Oder du drückst 'zurück'.
+function infoWizzardText() {
+  return `
+    Drücke den Kobold-Knopf und du kannst einzelne Zauber oder Zauberketten mit dem
+     Gegner austauschen, wenn sie an einen deiner (verbliebenden) Zauber passen.
     `;
-    }
+}
 
-/*-------------- INFOS IN .INFO-FRAME  */
+function noText() {
+  return ``;
+}
 
 function infoStartSite() { // in index.html
   return `
@@ -99,11 +100,17 @@ function infoChange() {
     `;
 }
 
-//function infoSetCombi() {
-//  return ` 
-//      <p>Klicke Wellenfische oder Gnome für einen Zauber an.</p> 
-//      `;
-//}
+function changeSameCard() {
+  return `
+    <p>Du hast die gleiche Karte noch einmal gezogen.</p>
+    `;
+}
+
+function infoSetCombi() {
+  return ` 
+      <p>Klicke drei Wellenfische oder Gnome für einen Zauber an.</p> 
+      `;
+}
 
 function infoNoCombi() {
   return `   
@@ -122,8 +129,7 @@ function infoWinMagic() {
 
 function infoAccEmpty() {
   return `
-    <p>Dieser Zauber ist schon zweimal im Spiel.
-    Du musst ihn deinem Mitspieler entwenden.</p> 
+    <p>Dieser Zauber ist schon zweimal im Spiel.</p> 
     `;
 }
 
@@ -192,7 +198,7 @@ function infoUseWizzard() {
 
 function needForConnection() {
   return `       
-  <p>Du brauchst diesen Zauber zur Verknüpfung.<br> wähle einen anderen.</p> 
+  <p>Du brauchst diesen Zauber zur Verknüpfung. Wähle einen anderen oder drücke 'Zurück'</p> 
   `;
 }
 
@@ -203,8 +209,8 @@ function infoWizzardComplete() {
     `;
 }
 
-function wizzardTookSoloCard() {  
-  return`
+function wizzardTookSoloCard() {
+  return `
   <p>Du hast dich für einen Zauber entschieden. 
   Was möchtest du dafür geben? Du kannst eine einzelnen Zauber 
   wählen oder eine Kette die du bereit bis, deinem Gegner zu geben.</p>

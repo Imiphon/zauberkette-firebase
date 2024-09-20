@@ -43,19 +43,24 @@ function setSpecialInfo(special) {
  * add new random card into the playerCards and 
  * old card is getting amount++ in allTones[]
  */
-function changeCard() {
+async function changeCard() {
   let newCard = randomStack(); // get randomNewCard with amount:1 --Kay-- or height
-  let oldNr = playerCards[currentCardID]['nr']; // Kay-- Selected card?
+  let oldNr = playerCards[currentCardID]['nr']; //  Selected card.nr
   let allTonesUpdate = allTones.find((card) => card.nr === oldNr); // Kay -- work it correct?
   if (allTonesUpdate) {
     allTonesUpdate.amount++;
-  }
+  } 
   playerCards[currentCardID] = newCard; // Kay -- add card to player cards
   let cardElement = docID(`playerCard${currentCardID}`);
   cardElement.src = newCard.src; //all infos include
   renderStack("playerCard", "playerStackID"); //Kay --render the player Stack
   disableCardClicks(); //Kay --remove Pointer and Click-eventlistener of 
-  btnGroup2(); //Kay -- set Btns
+  setCardHelper();
+  setCardInfo();
+  if (newCard.nr === oldNr) {
+    await showWithTimeout(changeSameCard, 3000);
+  } 
+    btnGroup2(); 
 }
 
 function randomStack() {
@@ -168,7 +173,6 @@ async function awaitChangeCard() {
   enablePlayerCards(); // getCardInfo activ
   showInfo(infoChange());
   btnGroup3();
-  // docID('changeClicks(1)').style.display = 'none';
   currentCardID = await waitForCardClick();
   changeCard();
   currentCardID = -1;
@@ -204,17 +208,25 @@ function showInfo(infoTemplate) {
   info.style.animation = 'yellowNameFade 4s forwards';
 }
 
-//Parameters without () 
+/**
+ * takes function references so parameters without () 
+ * @param {*} func 
+ * @param {*} timeout 
+ * @param {*} optFunc 
+ * @returns 
+ */
 function showWithTimeout(func, timeout, optFunc) {
   showInfo(func());
-  setTimeout(() => {
-    if (optFunc) {
-      showInfo(optFunc());
-    } else {
-      return;
-    }
-  }, timeout);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (optFunc) {
+        showInfo(optFunc());
+      }
+      resolve(); 
+    }, timeout);
+  });
 }
+
 
 /**
  * Vergleicht neue 

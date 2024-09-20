@@ -10,7 +10,7 @@ function changeSpecials() {
     currentSpecial = null;
 }
 
-//to prevent double-click and skip other player
+//to prevent double-click on finishRound-btn and skip other player
 function handleFinishRoundClick() {
     if (!finishButton) {
         finishButton = true;
@@ -34,7 +34,7 @@ async function finishRound() {
     }
     checkForChain('player');
     checkForChain('observer');
-    await swapParts();
+    swapParts();
     changeNames();
     if (mirrorView) {
         rotateWebsite();
@@ -59,7 +59,7 @@ function changeNames() {
 }
 
 //starts after first time startRound()
-async function swapParts() { // Kay why async? shorter possible
+    function swapParts() { 
     let tempCards = playerCards;
     playerCards = observerCards;
     observerCards = tempCards;
@@ -85,7 +85,7 @@ function startRound() {
     btnGroup1();
     disableCardClicks();
     setBackArrays();
-    setBackBooleans(); 
+    setBackBooleans();
     setCardHelper();
     setCardInfo();
 }

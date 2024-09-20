@@ -14,6 +14,9 @@ function newCardOrder() {
   }
   renderStack("playerCard", "playerStackID");
   renderStack("observerCard", "observerStackID");
+
+  setCardHelper();
+  setCardInfo();
 }
 
 function stackOpacity1(stack, cardString) {
@@ -49,10 +52,8 @@ async function setCardCombi() {
   btnGroup3();
   enablePlayerCards();
   while (cardCombi.length < 3 && clickAccount < 5) {
+    showInfo(infoSetCombi());
     await clickCardsforCombi();
-    //  setTimeout(() => {
-    //    showInfo(infoPlayCards());
-    //  }, 2000);
   }
   if (cardCombi.length === 3) {
     disableCardClicks();
@@ -142,7 +143,7 @@ function checkRightCombi() {
     setAcc(prime, true, false, isDouble);
   } else {
     playSound('failed', 'backMag', 0.5);
-    showWithTimeout(infoNoCombi, 3000);
+    showWithTimeout(infoNoCombi, 4000);
   }
 }
 
@@ -219,7 +220,7 @@ function choiceAcc() {
     //popup.innerHTML += `<img class="pop-card" src="${card['src']}" onclick="setAcc(${card.nr}, true, false, ${isDouble}); closePopup();">`;
     let cardHTML = `
     <img class="pop-card" src="${card['src']}" 
-    onclick="${isEmptyAmount ? 'showWithTimeout(infoAccEmpty, 3000)' : `setAcc(${card.nr}, true, false, ${isDouble}); closePopup();`}" 
+    onclick="${isEmptyAmount ? 'showWithTimeout(infoAccEmpty, 4000)' : `setAcc(${card.nr}, true, false, ${isDouble}); closePopup();`}" 
     style="opacity: ${isEmptyAmount ? 0.3 : 1};">`;
     popup.innerHTML += cardHTML;
   }
@@ -251,7 +252,7 @@ function threeJoker() {
     if (isEmptyAmount) {
       popup.innerHTML += `
         <div class="flex-column card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
-          <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 3000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">          
+          <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 4000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">          
         </div>
         <div style="position: absolute; z-index: 1000;">
         <span class="empty-acc" id="emptyAcc">vergeben</span>

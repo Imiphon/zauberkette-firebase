@@ -103,7 +103,7 @@ function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
     accInCircle.src = accInAllMajStack.src;
     changeWinnerCards();
   } else {
-    showWithTimeout(infoAccEmpty(), 3000);
+    showWithTimeout(infoAccEmpty(), 4000);
     startRound();
   }
 }
@@ -181,7 +181,7 @@ function checkNeighbors(circle, circleNr, part) {
   flatNeighbor = accords.find(acc => acc.circleNr === prevCircleNr);
   sharpNeighbor = accords.find(acc => acc.circleNr === nextCircleNr);
   if (NeighborsAround(circle)) {
-    showWithTimeout(accIsBetween, 2000, chooseAnotherAcc);
+    showWithTimeout(accIsBetween, 4000, chooseAnotherAcc);
     return;
   }
   else if (!NeighborsAround(circle) || oneNeighbor(circle)) {
@@ -234,7 +234,8 @@ function isOneSecondPlayerConnection() {
 function checkConnection(circle, circleNr, part) {
   let isInPlayerArr = playerAccords.find(acc => acc.circleNr === choosenAcc.circleNr);
   getPlayerConnections(circleNr);
-  if ((!flatPlayerConnection && !sharpPlayerConnection) && !isSecondPlayerConnection()) {
+  if (((!flatPlayerConnection && !sharpPlayerConnection) && !isSecondPlayerConnection()) || 
+  ((flatPlayerConnection || sharpPlayerConnection) && isInPlayerArr && !isSecondPlayerConnection()) ) {
     showWithTimeout(noConnection, 5000, chooseAnotherAcc);
     return;
   }
@@ -383,14 +384,17 @@ function startExchange(circle, circleNr, part) {
 
   if (((choosenAcc === flatPlayerConnection) || (choosenAcc === sharpPlayerConnection)) && !(flatPlayerConnection && sharpPlayerConnection) && choosenAcc.amount != 2) {
     // if choosenAcc in playerPart the connection for wizzardTakes
-    showWithTimeout(needForConnection, 2000);
+    showWithTimeout(needForConnection, 4000);
     wizzardGives = [];
     return;
   }
   wizzardStrike(observerAccords, playerAccords, wizzardTakes);
   wizzardStrike(playerAccords, observerAccords, wizzardGives);
   tryWizzardStrike = false;
-  showWithTimeout(infoWizzardComplete, 2000, finishRound);
+  showWithTimeout(infoWizzardComplete);
+  setTimeout(() => {
+    finishRound();
+  }, 4000);
 }
 
 /**
