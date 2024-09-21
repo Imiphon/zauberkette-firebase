@@ -64,20 +64,20 @@ async function changeCard() {
 }
 
 function randomStack() {
-  let availableCards = allTones.filter(card => card.amount > 0);
-  let randomIndex = Math.floor(Math.random() * availableCards.length);
-  let randomCard = availableCards[randomIndex];
-
-  do { //Kay -- nutzt man noch do 
-    randomIndex = Math.floor(Math.random() * allTones.length);
-    randomCard = allTones[randomIndex];
-
-    if (randomCard.amount >= 1) {
-      let newAmount = 1; // set amount for userCard to 1
-      allTones[randomIndex].amount -= 1; // reduce  amount in allTones - 1
-      return { ...randomCard, amount: newAmount };
-    }   //repeat process 
-  } while (randomCard === null || randomCard.amount === 0);
+  let totalAmount = allTones.reduce((sum, card) => sum + card.amount, 0);
+  if (totalAmount === 0) {
+      return null; 
+  }
+  let random = Math.floor(Math.random() * totalAmount);
+  for (let i = 0; i < allTones.length; i++) {
+      let card = allTones[i];
+      if (random < card.amount) {
+          card.amount -= 1; 
+          return { ...card, amount: 1 };
+      } else {
+          random -= card.amount;
+      }
+  }
 }
 
 function changeWinnerCards() { // Kay -- cards combine to magic card. 
