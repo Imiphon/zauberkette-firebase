@@ -393,6 +393,7 @@ function startExchange(circle, circleNr, part) {
   tryWizzardStrike = false;
   showWithTimeout(infoWizzardComplete);
   setTimeout(() => {
+    specialInProgress = false;
     finishRound();
   }, 4000);
 }
@@ -446,6 +447,7 @@ function goblinStrike() {
   tryGoblinStrike = false;
   showInfo(infoGoblinComplete())
   setTimeout(() => {
+    specialInProgress = false;    
     finishRound();
   }, 2000);
 }

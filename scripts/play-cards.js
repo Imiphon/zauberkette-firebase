@@ -37,12 +37,41 @@ function stackOpacity1(stack, cardString) {
   }
 }
 
-
 function toggleCardOpacity(index) {
   if (index != undefined) {
     let clickedCard = document.getElementById(`playerCard${index}`);
     clickedCard.style.opacity = (clickedCard.style.opacity == 1) ? 0.5 : 1;
   } else return;
+}
+
+//async function waitForIndex() {
+//  currentCardID = -1;
+//  while (currentCardID === -1) {
+//    await new Promise((resolve) => setTimeout(resolve, 100));
+//  }
+//}
+
+async function clickCardsforCombi() {
+  //await waitForIndex();
+  currentCardID = await waitForCardClick();
+  let currentCard = playerCards[currentCardID];
+  let currentCardNr = currentCard.nr;
+  if (cardCombi.includes(currentCard)) {
+    showInfo(infoNoSameCards());
+    return;
+  }
+  if (currentCardNr > 12) {
+    showInfo(infoNoSpecials());
+    playSound('failed', 'buzzer-short', 0.4);
+    clickAccount++;
+    return;
+  }
+  if (currentCardNr <= 12) {
+    toggleCardOpacity(currentCardID);
+    cardCombi.push(currentCard);
+    clickAccount++;
+    return;
+  }
 }
 
 async function setCardCombi() {
@@ -64,35 +93,6 @@ async function setCardCombi() {
     showInfo(infoNothinToChange());
     startRound();
     clickAccount = 0;
-  }
-}
-
-async function clickCardsforCombi() {
-  await waitForIndex();
-  let currentCard = playerCards[currentCardID];
-  let currentCardNr = currentCard.nr;
-  if (cardCombi.includes(currentCard)) {
-    showInfo(infoNoSameCards());
-    return;
-  }
-  if (currentCardNr > 12) {
-    showInfo(infoNoSpecials());
-    playSound('failed', 'buzzer-short', 0.4);
-    clickAccount++;
-    return;
-  }
-  if (currentCardNr <= 12) {
-    toggleCardOpacity(currentCardID);
-    cardCombi.push(currentCard);
-    clickAccount++;
-    return;
-  }
-}
-
-async function waitForIndex() {
-  currentCardID = -1;
-  while (currentCardID === -1) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
   }
 }
 
@@ -177,7 +177,7 @@ function oneJoker() {
     showInfo(infoNoCombi());
     setTimeout(() => {
       setCardCombi()
-    }, 2000);
+    }, 4000);
   }
 }
 

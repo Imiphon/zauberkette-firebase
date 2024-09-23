@@ -104,11 +104,11 @@ function stepBack() {
     tryWizzardStrike = false;
     tryGoblinStrike = false;
   }
+  if (cardClickHandler) {
+    document.removeEventListener('click', cardClickHandler);
+    cardClickHandler = null;
+  }
   if (isAwaitChangeCard) {
-    if (cardClickHandler) {
-      document.removeEventListener('click', cardClickHandler);
-      cardClickHandler = null;
-    }
     btnGroup1();
   } else {
     btnGroup2();

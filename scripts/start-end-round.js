@@ -77,6 +77,7 @@ function changeNames() {
 // ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
 function startRound() {
     let name = document.getElementById('playNameID');
+    let isStartRound = true;
     name.style.animation = 'none';
     //a minimal delay to get sure for full animation
     requestAnimationFrame(() => {
@@ -84,7 +85,7 @@ function startRound() {
     });
     btnGroup1();
     disableCardClicks();
-    setBackArrays();
+    setBackArrays(isStartRound);
     setBackBooleans();
     setCardHelper();
     setCardInfo();
@@ -165,7 +166,7 @@ function addToChainArray(circleNr, part, secondCircle) {
     }
 }
 
-function setBackArrays() {
+function setBackArrays(isStartRound) {
     currentCardID = -1;
     clickAccount = 0;
     cardCombi = [];
@@ -174,7 +175,10 @@ function setBackArrays() {
     mellotArray = [];
     currentSpecial = null;
     specialInProgress = false;
-    usedSpecials = [];
+    if(isStartRound){
+        usedSpecials = [];
+    }
+    
     choosenAcc = [];
     tryGoblinStrike = false;
     tryWizzardStrike = false;

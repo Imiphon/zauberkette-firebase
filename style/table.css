@@ -191,7 +191,7 @@ main {
   height: 240px;
 }
 
-.bgr-circle-l, 
+.bgr-circle-l,
 .bgr-circle-r {
   position: absolute;
   width: 200px;
@@ -206,9 +206,10 @@ main {
   left: 18px;
   top: 38px;
 }
+
 .bgr-circle-r {
   right: -18px;
-    top: 38px;
+  top: 38px;
 }
 
 /*.chain */
@@ -230,7 +231,8 @@ main {
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  padding: 20px; /* Unsichtbares Padding für größeren Hover-Bereich */
+  padding: 20px;
+  /* Unsichtbares Padding für größeren Hover-Bereich */
   box-sizing: content-box;
 }
 
@@ -240,7 +242,7 @@ main {
 .top-zone {
   position: relative;
   right: 0;
-  width: 70%;
+  /* width: 70%;*/
   height: 100%;
   display: flex;
   justify-content: center;
@@ -307,7 +309,7 @@ img {
   white-space: wrap;
 }
 
-.info-frame {  
+.info-frame {
   position: relative;
   left: 32px;
   width: min-content;
@@ -455,7 +457,7 @@ img {
   font-size: 0.8em;
 }
 
-.brass-gear1, 
+.brass-gear1,
 .brass-gear2,
 .brass-gear3 {
   background-image: url('./../assets/images/bgr/brass-gear1.png');
@@ -473,8 +475,8 @@ img {
 
 .brass-gear3 {
   position: absolute;
-    left: 16px;
-    bottom: 56px;
+  left: 0px;
+  bottom: -12px;
 }
 
 .iron-circle {
