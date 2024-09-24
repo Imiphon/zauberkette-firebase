@@ -6,6 +6,8 @@ let goalValue = 5;
 let isWinner = false;
 let languages = ['de', 'en', 'fr'];
 let currentLangIndex = 0;
+let language = 'de';
+let currentInfoFunction = null; 
 
 let cardClickHandler = null; 
 

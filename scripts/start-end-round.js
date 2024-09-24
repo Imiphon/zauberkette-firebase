@@ -24,7 +24,7 @@ function handleFinishRoundClick() {
 async function finishRound() {
     animateTableFrame();
     await new Promise(resolve => setTimeout(resolve, 1500));
-    playSound('success', 'gong-deep', 0.5);
+    
     if (specialInProgress) {
         usedSpecials.pop(); // Last special will be removed
         specialInProgress = false;
@@ -40,11 +40,13 @@ async function finishRound() {
         rotateWebsite();
     }
     if(isWinner){
+        playSound('success', 'fanfare2', 0.3);
         setTimeout(() => {
             startRound();
-        }, 4000);
+        }, 10000);
         isWinner =false;
     } else {
+        playSound('success', 'gong-deep', 0.5);
         startRound();
     }
     

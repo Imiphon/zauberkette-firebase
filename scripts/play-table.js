@@ -5,7 +5,8 @@ function setCardInfo() {
     let info = document.getElementById('infoTextID');
     let savedText = info.innerHTML;
     cardInfoFrame.addEventListener('mouseenter', function () {
-      showInfo(optAccInfoText());
+      currentInfoFunction = optAccInfoText();
+      showInfo(currentInfoFunction);
     });
 
     cardInfoFrame.addEventListener('mouseleave', function () {
@@ -23,11 +24,13 @@ function setSpecialInfo(special) {
   let info = document.getElementById('infoTextID');
   let specialInfo = document.getElementById(special);
   let savedText = info.innerHTML;
-  let funcName = special + 'Text'; 
+  let funcName = special + 'Text';
 
   specialInfo.addEventListener('mouseenter', function () {
     if (typeof window[funcName] === 'function') {
-      showInfo(window[funcName]()); 
+      currentInfoFunction = window[funcName]();
+      showInfo(currentInfoFunction);
+      //showInfo(window[funcName]()); 
     } else {
       console.error(`Funktion ${funcName} ist nicht definiert.`);
     }
@@ -49,7 +52,7 @@ async function changeCard() {
   let allTonesUpdate = allTones.find((card) => card.nr === oldNr); // Kay -- work it correct?
   if (allTonesUpdate) {
     allTonesUpdate.amount++;
-  } 
+  }
   playerCards[currentCardID] = newCard; // Kay -- add card to player cards
   let cardElement = docID(`playerCard${currentCardID}`);
   cardElement.src = newCard.src; //all infos include
@@ -59,24 +62,24 @@ async function changeCard() {
   setCardInfo();
   if (newCard.nr === oldNr) {
     await showWithTimeout(changeSameCard, 3000);
-  } 
-    btnGroup2(); 
+  }
+  btnGroup2();
 }
 
 function randomStack() {
   let totalAmount = allTones.reduce((sum, card) => sum + card.amount, 0);
   if (totalAmount === 0) {
-      return null; 
+    return null;
   }
   let random = Math.floor(Math.random() * totalAmount);
   for (let i = 0; i < allTones.length; i++) {
-      let card = allTones[i];
-      if (random < card.amount) {
-          card.amount -= 1; 
-          return { ...card, amount: 1 };
-      } else {
-          random -= card.amount;
-      }
+    let card = allTones[i];
+    if (random < card.amount) {
+      card.amount -= 1;
+      return { ...card, amount: 1 };
+    } else {
+      random -= card.amount;
+    }
   }
 }
 
@@ -87,7 +90,8 @@ function changeWinnerCards() { // Kay -- cards combine to magic card.
     cardCombi[i].stackNr = -1;
   }
   noBtns(); //Kay reset all Button style
-  showInfo(infoWinMagic());
+  currentInfoFunction = infoWinMagic();
+  showInfo(currentInfoFunction);
   setTimeout(() => {
     finishRound();
   }, 7000);
@@ -171,7 +175,8 @@ function disableAccClicks() {
 async function awaitChangeCard() {
   isAwaitChangeCard = true;
   enablePlayerCards(); // getCardInfo activ
-  showInfo(infoChange());
+  currentInfoFunction = infoChange();
+  showInfo(currentInfoFunction);
   btnGroup3();
   currentCardID = await waitForCardClick();
   changeCard();
@@ -193,14 +198,18 @@ function waitForCardClick() {
 }
 
 //Parameters with ()
-function showInfo(infoTemplate) {
+function showInfo(infoContent) {
   let info = docID("infoTextID");
   if (!info) {
     console.log('found not the info div');
     return;
   }
   info.innerHTML = '';
-  info.innerHTML += infoTemplate;
+  if (typeof infoContent === 'function') {
+    infoContent = infoContent();
+  }
+  info.innerHTML += infoContent;
+  //info.innerHTML += infoTemplate;
   // Setzt die Animation direkt über JavaScript
   info.style.animation = 'none';
   info.offsetHeight; // Trigger reflow
@@ -216,13 +225,17 @@ function showInfo(infoTemplate) {
  * @returns 
  */
 function showWithTimeout(func, timeout, optFunc) {
-  showInfo(func());
+  currentInfoFunction = func;
+  showInfo(currentInfoFunction());
+  //showInfo(func());
   return new Promise((resolve) => {
     setTimeout(() => {
       if (optFunc) {
-        showInfo(optFunc());
+        currentInfoFunction = optFunc;
+        showInfo(currentInfoFunction());
+        //showInfo(optFunc());
       }
-      resolve(); 
+      resolve();
     }, timeout);
   });
 }
@@ -236,8 +249,10 @@ function youWin(part, length) {
   let element = document.getElementById(idName);
   if (element) {
     let name = element.textContent;
-    showInfo(playerWin(name, length));
-    isWinner =true;
+    currentInfoFunction = playerWin;
+    showInfo(currentInfoFunction(name, length));
+    //showInfo(playerWin(name, length));
+    isWinner = true;
     //alert(name + ' gewinnt mit einer Kettenzahl von: ' + length);
   } else {
     console.error('Element with ID "' + idName + '" not found.');

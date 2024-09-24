@@ -49,11 +49,13 @@ async function clickCardsforCombi() {
   let currentCard = playerCards[currentCardID];
   let currentCardNr = currentCard.nr;
   if (cardCombi.includes(currentCard)) {
-    showInfo(infoNoSameCards());
+    currentInfoFunction = infoNoSameCards(); 
+    showInfo(currentInfoFunction);
     return;
   }
   if (currentCardNr > 12) {
-    showInfo(infoNoSpecials());
+    currentInfoFunction = infoNoSpecials(); 
+    showInfo(currentInfoFunction);
     playSound('failed', 'buzzer-short', 0.4);
     clickAccount++;
     return;
@@ -73,7 +75,8 @@ async function setCardCombi() {
   btnGroup3();
   enablePlayerCards();
   while (cardCombi.length < 3 && clickAccount < 5) {
-    showInfo(infoSetCombi());
+    currentInfoFunction = infoSetCombi(); 
+    showInfo(currentInfoFunction);
     await clickCardsforCombi();
   }
   if (cardCombi.length === 3) {
@@ -82,7 +85,8 @@ async function setCardCombi() {
     clickAccount = 0;
   }
   if (clickAccount === 5) {
-    showInfo(infoNothinToChange());
+    currentInfoFunction = infoNothinToChange(); 
+    showInfo(currentInfoFunction);
     startRound();
     clickAccount = 0;
   }
@@ -166,7 +170,8 @@ function oneJoker() {
     let isDouble = playerAccords.some(acc => acc.nr === prime);
     setAcc(prime, true, false, isDouble);
   } else {
-    showInfo(infoNoCombi());
+    currentInfoFunction = infoNoCombi(); 
+    showInfo(currentInfoFunction);
     setTimeout(() => {
       setCardCombi()
     }, 4000);

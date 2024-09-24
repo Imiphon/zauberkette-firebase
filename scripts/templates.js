@@ -1,304 +1,383 @@
-
-function optAccInfo() {
-  return `<div class="card-info-frame">
+const texts = {
+  optAccInfo: {
+    de: `<div class="card-info-frame">
             <div class="card-info-frame brass-gear3 no-btn" alt="Info">
             </div>
-          </div>`;
+          </div>`,
+    en: `<div class="card-info-frame">
+            <div class="card-info-frame brass-gear3 no-btn" alt="Info">
+            </div>
+          </div>`,
+    fr: `<div class="card-info-frame">
+            <div class="card-info-frame brass-gear3 no-btn" alt="Info">
+            </div>
+          </div>`,
+  },
+  optAccInfoText: {
+    de: `<p>Drücke 'Zauber komponieren' und wähle drei verschiedene Wellenfische mit gleichem Zauber in 'Prime', 'Terz' und 'Quint' oder nimm Gnome als Joker.</p>`,
+    en: `<p>Press 'Compose Spell' and choose three different Wave Fish with the same spell in 'Prime', 'Third', and 'Fifth' or use Gnomes as jokers.</p>`,
+    fr: `<p>Appuyez sur 'Composer un sort' et choisissez trois Poissons Vague différents avec le même sort en 'Prime', 'Tierce', et 'Quinte' ou utilisez des Gnomes comme jokers.</p>`,
+  },
+  infoMellotText: {
+    de: `Drücke den Mellot-Knopf und du kannst eine eigene Spielkarte gegen eine gegnerische Karte eintauschen.`,
+    en: `Press the Mellot button and you can exchange one of your own playing cards for an opponent's card.`,
+    fr: `Appuyez sur le bouton Mellot et vous pouvez échanger une de vos propres cartes contre une carte de l'adversaire.`,
+  },
+  infoGoblinText: {
+    de: `Drücke den Kobold-Knopf und du kannst einen Zauber vom Gegner stehlen, wenn er an einen deiner Zauber passt.`,
+    en: `Press the Goblin button and you can steal a spell from the opponent if it connects to one of your spells.`,
+    fr: `Appuyez sur le bouton Gobelin et vous pouvez voler un sort à l'adversaire s'il se connecte à l'un de vos sorts.`,
+  },
+  infoWizzardText: {
+    de: `Drücke den Magier-Knopf und du kannst einzelne Zauber oder Zauberketten mit dem Gegner austauschen, wenn sie an einen deiner (verbliebenen) Zauber passen.`,
+    en: `Press the Wizard button and you can exchange individual spells or spell chains with the opponent if they connect to one of your (remaining) spells.`,
+    fr: `Appuyez sur le bouton Magicien et vous pouvez échanger des sorts individuels ou des chaînes de sorts avec l'adversaire s'ils se connectent à l'un de vos sorts (restants).`,
+  },
+  noText: {
+    de: ``,
+    en: ``,
+    fr: ``,
+  },
+  infoStartSite: {
+    de: `
+      <h3>Melopoiia präsentiert:</h3>
+      <h1>Zauberkette</h1>
+      <div class="opener-frame">
+        <p class="opener">
+          In der Welt von Ionoï herrscht die Magie der Musik. Ein jeder Ton kann hier zu einem großen Zauber werden – wenn man ihn denn nur richtig verkettet. Und so kommt es, dass sich die hiesigen Magier nur allzu gern darin messen, wer die längste Zauberkette zu erschaffen vermag. Beweise deine Zauberkräfte und zeige es ihnen allen!
+        </p>
+      </div>
+      <a href="table.html">Zauberkette auf einem Display spielen</a>
+    `,
+    en: `
+      <h3>Melopoiia presents:</h3>
+      <h1>Zauberkette</h1>
+      <div class="opener-frame">
+        <p class="opener">
+          In the world of Ionoï, the magic of music prevails. Every tone here can become a great spell – if you chain it correctly. And so it happens that the local magicians are eager to compete to create the longest spell chain. Prove your magical powers and show them all!
+        </p>
+      </div>
+      <a href="table.html">Play Zauberkette on a display</a>
+    `,
+    fr: `
+      <h3>Melopoiia présente :</h3>
+      <h1>Zauberkette</h1>
+      <div class="opener-frame">
+        <p class="opener">
+          Dans le monde d'Ionoï, la magie de la musique règne. Chaque ton peut ici devenir un grand sort – si vous le chaînez correctement. Ainsi, les magiciens locaux sont impatients de rivaliser pour créer la plus longue chaîne de sorts. Prouvez vos pouvoirs magiques et montrez-leur à tous !
+        </p>
+      </div>
+      <a href="table.html">Jouer à Zauberkette sur un écran</a>
+    `,
+  },
+  infoStart: {
+    de: `<p>Drücke "Kartentausch", um eine Karte zu tauschen oder "Weiter"</p>`,
+    en: `<p>Press "Swap Card" to exchange a card or "Continue"</p>`,
+    fr: `<p>Appuyez sur "Échanger une carte" pour échanger une carte ou "Continuer"</p>`,
+  },
+  infoPlayCards: {
+    de: `<p>Webe aus 3 Wellenfischen oder Gnomen einen Zauber, nutze eine Spezialkarte oder beende deine Runde</p>`,
+    en: `<p>Weave a spell from 3 Wave Fish or Gnomes, use a special card, or end your turn</p>`,
+    fr: `<p>Tissez un sort à partir de 3 Poissons Vague ou Gnomes, utilisez une carte spéciale, ou terminez votre tour</p>`,
+  },
+  goblinRules: {
+    de: `<p>Dies ist leider gerade nicht möglich.</p>`,
+    en: `<p>Unfortunately, this is not possible at the moment.</p>`,
+    fr: `<p>Malheureusement, cela n'est pas possible pour le moment.</p>`,
+  },
+  wizzardRules: {
+    de: `<p>Dies ist leider gerade nicht möglich.</p>`,
+    en: `<p>Unfortunately, this is not possible at the moment.</p>`,
+    fr: `<p>Malheureusement, cela n'est pas possible pour le moment.</p>`,
+  },
+  infoWizzard: {
+    de: `<p>Mit dem Magier kannst du einen Zauber oder eine Kette mit dem Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. Oder du drückst 'zurück'.</p>`,
+    en: `<p>With the Wizard, you can exchange a spell or a chain with the opponent, as long as you still have a spell for chaining. Or press 'back'.</p>`,
+    fr: `<p>Avec le Magicien, vous pouvez échanger un sort ou une chaîne avec l'adversaire, tant que vous avez encore un sort pour la liaison. Ou appuyez sur 'retour'.</p>`,
+  },
+  infoGoblin: {
+    de: `<p>Mit einem Kobold kannst du einen Zauber des Gegners stibitzen, wenn er nicht zwischen zwei anderen Zaubern liegt und sich mit einem deiner Zauber verketten lässt. Oder du drückst 'zurück'.</p>`,
+    en: `<p>With a Goblin, you can snatch a spell from the opponent if it is not between two other spells and can be chained with one of your spells. Or press 'back'.</p>`,
+    fr: `<p>Avec un Gobelin, vous pouvez dérober un sort à l'adversaire s'il n'est pas entre deux autres sorts et peut être enchaîné avec l'un de vos sorts. Ou appuyez sur 'retour'.</p>`,
+  },
+  infoMellot: {
+    de: `<p>Mit dem Mellot kannst du eine eigene Karte gegen eine gegnerische Karte eintauschen. Oder du drückst 'zurück'.</p>`,
+    en: `<p>With the Mellot, you can exchange one of your own cards for an opponent's card. Or press 'back'.</p>`,
+    fr: `<p>Avec le Mellot, vous pouvez échanger une de vos propres cartes contre une carte de l'adversaire. Ou appuyez sur 'retour'.</p>`,
+  },
+  infoChange: {
+    de: `<p>Klicke eine Karte an zum Tauschen.</p>`,
+    en: `<p>Click a card to exchange.</p>`,
+    fr: `<p>Cliquez sur une carte pour échanger.</p>`,
+  },
+  changeSameCard: {
+    de: `<p>Du hast die gleiche Karte noch einmal gezogen.</p>`,
+    en: `<p>You have drawn the same card again.</p>`,
+    fr: `<p>Vous avez tiré la même carte à nouveau.</p>`,
+  },
+  infoSetCombi: {
+    de: `<p>Klicke drei Wellenfische oder Gnome für einen Zauber an.</p>`,
+    en: `<p>Click three Wave Fish or Gnomes for a spell.</p>`,
+    fr: `<p>Cliquez sur trois Poissons Vague ou Gnomes pour un sort.</p>`,
+  },
+  infoNoCombi: {
+    de: `<p>Das ergibt leider keinen Zauber. Gehe zurück und versuche etwas anderes oder beende diese Runde.</p>`,
+    en: `<p>Unfortunately, that doesn't result in a spell. Go back and try something else or end this round.</p>`,
+    fr: `<p>Malheureusement, cela ne donne pas de sort. Revenez en arrière et essayez autre chose ou terminez ce tour.</p>`,
+  },
+  infoWinMagic: {
+    de: `<p><b>Bravo!</b> Du hast einen Zauber erlangt. Die benutzten Wellenfische werden ausgetauscht. Und es geht weiter!</p>`,
+    en: `<p><b>Bravo!</b> You have gained a spell. The used Wave Fish are exchanged. And it continues!</p>`,
+    fr: `<p><b>Bravo!</b> Vous avez obtenu un sort. Les Poissons Vague utilisés sont échangés. Et ça continue!</p>`,
+  },
+  infoAccEmpty: {
+    de: `<p>Dieser Zauber ist schon zweimal im Spiel.</p>`,
+    en: `<p>This spell is already in play twice.</p>`,
+    fr: `<p>Ce sort est déjà en jeu deux fois.</p>`,
+  },
+  infoToGiveCard: {
+    de: `<p>Klicke die Karte, welche du deinem Gegner zum Tausch geben möchtest.</p>`,
+    en: `<p>Click the card you want to give to your opponent for exchange.</p>`,
+    fr: `<p>Cliquez sur la carte que vous souhaitez donner à votre adversaire pour l'échange.</p>`,
+  },
+  infoToTakeCard: {
+    de: `<p>Klicke die Karte beim Gegner, welche du haben möchtest.</p>`,
+    en: `<p>Click the opponent's card you want to have.</p>`,
+    fr: `<p>Cliquez sur la carte de l'adversaire que vous souhaitez avoir.</p>`,
+  },
+  infoNoSameCards: {
+    de: `<p>Nicht zweimal die selbe Karte!</p>`,
+    en: `<p>Not the same card twice!</p>`,
+    fr: `<p>Pas deux fois la même carte !</p>`,
+  },
+  infoNothinToChange: {
+    de: `<p>Du hast offenbar keine passenden Wellenfische für einen Zauber.</p>`,
+    en: `<p>You apparently have no suitable Wave Fish for a spell.</p>`,
+    fr: `<p>Vous n'avez apparemment pas de Poissons Vague adaptés pour un sort.</p>`,
+  },
+  infoNoSpecials: {
+    de: `<p>Bitte wähle nur Wellenfische oder Gnome für einen Zauber.</p>`,
+    en: `<p>Please choose only Wave Fish or Gnomes for a spell.</p>`,
+    fr: `<p>Veuillez choisir uniquement des Poissons Vague ou des Gnomes pour un sort.</p>`,
+  },
+  AccStillThere: {
+    de: `<p>Diesen Zauber besitzt du bereits oder er lässt sich nicht verketten.</p>`,
+    en: `<p>You already possess this spell or it cannot be chained.</p>`,
+    fr: `<p>Vous possédez déjà ce sort ou il ne peut pas être enchaîné.</p>`,
+  },
+  chooseAnotherAcc: {
+    de: `<p>Wähle etwas anderes oder drücke "Zurück"</p>`,
+    en: `<p>Choose something else or press "Back"</p>`,
+    fr: `<p>Choisissez autre chose ou appuyez sur "Retour"</p>`,
+  },
+  accIsBetween: {
+    de: `<p>Dieser Zauber liegt zwischen zwei anderen und kann nicht genommen werden.</p>`,
+    en: `<p>This spell is between two others and cannot be taken.</p>`,
+    fr: `<p>Ce sort est entre deux autres et ne peut pas être pris.</p>`,
+  },
+  noConnection: {
+    de: `<p>Dieser Zauber kann sich mit keinem der deinen verbinden.</p>`,
+    en: `<p>This spell cannot connect with any of yours.</p>`,
+    fr: `<p>Ce sort ne peut se connecter à aucun des vôtres.</p>`,
+  },
+  infoUseWizzard: {
+    de: `<p>Klicke auf den Zauber, der sich mit einem deiner Zauber verbinden lässt, egal, ob es eine Kette oder ein einzelner Zauber ist.</p>`,
+    en: `<p>Click on the spell that can connect with one of your spells, whether it's a chain or a single spell.</p>`,
+    fr: `<p>Cliquez sur le sort qui peut se connecter avec l'un de vos sorts, qu'il s'agisse d'une chaîne ou d'un sort unique.</p>`,
+  },
+  needForConnection: {
+    de: `<p>Du brauchst diesen Zauber zur Verknüpfung. Wähle einen anderen oder drücke 'Zurück'</p>`,
+    en: `<p>You need this spell for linking. Choose another or press 'Back'</p>`,
+    fr: `<p>Vous avez besoin de ce sort pour la liaison. Choisissez-en un autre ou appuyez sur 'Retour'</p>`,
+  },
+  infoWizzardComplete: {
+    de: `<p>Bravo! Du hast den Magier eingesetzt. Deine Runde ist zu Ende.</p>`,
+    en: `<p>Bravo! You have used the Wizard. Your turn is over.</p>`,
+    fr: `<p>Bravo! Vous avez utilisé le Magicien. Votre tour est terminé.</p>`,
+  },
+  wizzardTookSoloCard: {
+    de: `<p>Du hast dich für einen Zauber entschieden. Was möchtest du dafür geben? Du kannst einen einzelnen Zauber wählen oder eine Kette, die du bereit bist, deinem Gegner zu geben.</p>`,
+    en: `<p>You have chosen a spell. What would you like to give in return? You can choose a single spell or a chain that you're willing to give to your opponent.</p>`,
+    fr: `<p>Vous avez choisi un sort. Que souhaitez-vous donner en retour ? Vous pouvez choisir un sort unique ou une chaîne que vous êtes prêt à donner à votre adversaire.</p>`,
+  },
+  wizzardTookChain: {
+    de: `<p>Du hast dich für eine ganze Zauberkette entschieden. Was möchtest du dafür geben? Du kannst einen einzelnen Zauber wählen oder eine Kette, die du bereit bist, deinem Gegner zu geben.</p>`,
+    en: `<p>You have chosen a whole spell chain. What would you like to give in return? You can choose a single spell or a chain that you're willing to give to your opponent.</p>`,
+    fr: `<p>Vous avez choisi une chaîne de sorts entière. Que souhaitez-vous donner en retour ? Vous pouvez choisir un sort unique ou une chaîne que vous êtes prêt à donner à votre adversaire.</p>`,
+  },
+  infoUseGoblin: {
+    de: `<p>Wähle einen Zauber, der sich mit einem deiner verbinden lässt.</p>`,
+    en: `<p>Choose a spell that can connect with one of yours.</p>`,
+    fr: `<p>Choisissez un sort qui peut se connecter avec l'un des vôtres.</p>`,
+  },
+  infoGoblinComplete: {
+    de: `<p>Bravo! Du hast einen Kobold eingesetzt. Deine Runde ist zu Ende.</p>`,
+    en: `<p>Bravo! You have used a Goblin. Your turn is over.</p>`,
+    fr: `<p>Bravo! Vous avez utilisé un Gobelin. Votre tour est terminé.</p>`,
+  },
+  playerWin: {
+    de: (name, length) => `${name} gewinnt mit einer Kettenzahl von ${length} Zaubern. <br> Wenn ihr weiterspielen wollt, erhöht die Zahl der Gewinnerkette.`,
+    en: (name, length) => `${name} wins with a chain of ${length} spells. <br> If you want to keep playing, increase the number of spells needed to win.`,
+    fr: (name, length) => `${name} gagne avec une chaîne de ${length} sorts. <br> Si vous voulez continuer à jouer, augmentez le nombre de sorts nécessaires pour gagner.`,
+  },
+  gameRules: {
+    de: `...`, // Include the German game rules here
+    en: `...`, // Include the English translation of the game rules here
+    fr: `...`, // Include the French translation of the game rules here
+  },
+  // Add other translations similarly...
+};
+
+// Modified functions to return content based on the current language
+
+function optAccInfo() {
+  return texts.optAccInfo[language];
 }
 
 function optAccInfoText() {
-  return `
-  <p>Drücke 'Zauber komponieren' und wähle drei verschiedene Wellenfische mit gleichem Zauber in 'Prime', 'Terz' und 'Quint' oder nimm Gnome als Joker.</p> 
-  `;
+  return texts.optAccInfoText[language];
 }
 
 function infoMellotText() {
-  return `
-Drücke den Mellot-Knopf und du kannst eine eigene Spielkarte gegen einen
- gegnerische Karte eintauschen.
-`;
+  return texts.infoMellotText[language];
 }
 
 function infoGoblinText() {
-  return `
-  Drücke den Kobold-Knopf und du kannst einen Zauber vom Gegner stehlen, wenn er
-   an einen deiner Zauber passt.
-  `;
+  return texts.infoGoblinText[language];
 }
 
 function infoWizzardText() {
-  return `
-    Drücke den Kobold-Knopf und du kannst einzelne Zauber oder Zauberketten mit dem
-     Gegner austauschen, wenn sie an einen deiner (verbliebenden) Zauber passen.
-    `;
+  return texts.infoWizzardText[language];
 }
 
 function noText() {
-  return ``;
+  return texts.noText[language];
 }
 
-function infoStartSite() { // in index.html
-  return `
-    <h3>Melopoiia presents:</h3>
-    <h1>Zauberkette</h1>
-    <div class="opener-frame">
-      <p class="opener">
-        In der Welt von Ionoï herrscht die Magie der Musik. Ein jeder Ton kann hier zu einem großen Zauber werden - wenn man ihn denn nur richtig verkettet. Und so kommt es, dass sich die hiesigen Magier nur allzu gern darin messen, wer die längste Zauberkette zu erschaffen vermag. Beweise deine Zauberkräfte und zeige es ihnen allen!
-      </p>
-    </div>
-    <a href="table.html">Zauberkette auf einem Display spielen</a>
-    `;
+function infoStartSite() {
+  return texts.infoStartSite[language];
 }
 
 function infoStart() {
-  return `
-    <p>Drücke "Kartentausch", um eine Karte zu tauschen
-    oder "Weiter"</p> 
-    `;
+  return texts.infoStart[language];
 }
 
 function infoPlayCards() {
-  return `
-    <p>Webe aus 3 Wellenfischen oder Gnomen einen Zauber, 
-    nutze eine Spezialkarte oder beende deine Runde</p> 
-    `;
+  return texts.infoPlayCards[language];
 }
 
 function goblinRules() {
-  return `
-  <p>Dies ist leider gerade nicht möglich.</p> 
-  `;
+  return texts.goblinRules[language];
 }
 
 function wizzardRules() {
-  return `
-  <p>Dies ist leider gerade nicht möglich.</p> 
-  `;
+  return texts.wizzardRules[language];
 }
 
 function infoWizzard() {
-  return `
-  <p>Mit dem Magier kannst du einen Zauber oder eine Kette mit dem Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. Oder du drückst 'zurück'.</p> 
-  `;
+  return texts.infoWizzard[language];
 }
 
 function infoGoblin() {
-  return `
-  <p>Mit einem Kobold kannst du einen Zauber des Gegners stibitzen, wenn er nicht zwischen zwei anderen Zaubern liegt und sich mit einem deiner Zauber verketten lässt.  Oder du drückst 'zurück'.</p> 
-  `;
+  return texts.infoGoblin[language];
 }
 
 function infoMellot() {
-  return `
-  <p>Mit dem Mellot kannst du eine eigene Karte gegen einen gegnerische Karte eintauschen. Oder du drückst 'zurück'.</p> 
-  `;
+  return texts.infoMellot[language];
 }
 
 function infoChange() {
-  return `
-    <p>Klicke eine Karte an zum Tauschen.</p>
-    `;
+  return texts.infoChange[language];
 }
 
 function changeSameCard() {
-  return `
-    <p>Du hast die gleiche Karte noch einmal gezogen.</p>
-    `;
+  return texts.changeSameCard[language];
 }
 
 function infoSetCombi() {
-  return ` 
-      <p>Klicke drei Wellenfische oder Gnome für einen Zauber an.</p> 
-      `;
+  return texts.infoSetCombi[language];
 }
 
 function infoNoCombi() {
-  return `   
-    <p>Das ergibt leider keinen Zauber. 
-    Gehe zurück und versuche etwas anderes oder beende diese Runde.</p> 
-    `;
+  return texts.infoNoCombi[language];
 }
 
 function infoWinMagic() {
-  return `
-    <p><b>Bravo! </b>Du hast einen Zauber erlangt. 
-    Die benutzten Wellenfische werden ausgetauscht. 
-    Und es geht weiter!</p> 
-    `;
+  return texts.infoWinMagic[language];
 }
 
 function infoAccEmpty() {
-  return `
-    <p>Dieser Zauber ist schon zweimal im Spiel.</p> 
-    `;
+  return texts.infoAccEmpty[language];
 }
 
 function infoToGiveCard() {
-  return ` 
-    <p>Klicke die Karte, 
-    welche du deinem Gegner zum Tausch geben möchtest.</p> 
-    `;
+  return texts.infoToGiveCard[language];
 }
 
 function infoToTakeCard() {
-  return `
-    <p>Klicke die Karte beim Gegner, welche du haben möchtest.</p> 
-    `;
+  return texts.infoToTakeCard[language];
 }
 
 function infoNoSameCards() {
-  return `
-  <p>Nicht zweimal die selbe Karte!.</p> 
-  `;
+  return texts.infoNoSameCards[language];
 }
 
 function infoNothinToChange() {
-  return `
-  <p>Du hast offenbar keine passenden Wellenfische für einen Zauber.</p> 
-  `;
+  return texts.infoNothinToChange[language];
 }
 
 function infoNoSpecials() {
-  return `
-  <p>Bitte wähle nur Wellenfische oder Gnome für einen Zauber.</p> 
-  `;
+  return texts.infoNoSpecials[language];
 }
-/*------------------------------- INFOS FOR ACCORD CHANGES -------------------------------*/
 
 function AccStillThere() {
-  return `
-  <p>Diesen Zauber besitzt du bereits oder er lässt sich nicht verketten.</p> 
-  `;
+  return texts.AccStillThere[language];
 }
 
 function chooseAnotherAcc() {
-  return `
-  <p>Wähle etwas anderes oder drücke "Zurück"</p> 
-  `;
+  return texts.chooseAnotherAcc[language];
 }
 
 function accIsBetween() {
-  return `
-  <p>Dieser Zauber liegt zwischen zwei anderen und kann nicht genommen werden.</p> 
-  `;
+  return texts.accIsBetween[language];
 }
 
 function noConnection() {
-  return `
-  <p>Dieser Zauber kann sich mit keinem der deinen verbinden.</p> 
-  `;
+  return texts.noConnection[language];
 }
 
-
 function infoUseWizzard() {
-  return `       
-    <p>Klicke auf den Zauber, der sich mit einem deiner Zauber verbinden lässt, egal, ob es eine Kette oder ein einzelner Zauber ist.</p> 
-    `;
+  return texts.infoUseWizzard[language];
 }
 
 function needForConnection() {
-  return `       
-  <p>Du brauchst diesen Zauber zur Verknüpfung. Wähle einen anderen oder drücke 'Zurück'</p> 
-  `;
+  return texts.needForConnection[language];
 }
 
 function infoWizzardComplete() {
-  return `       
-    <p>Bravo! Du hast den Magier eingesetzt. 
-    Deine Runde ist zu Ende.</p> 
-    `;
+  return texts.infoWizzardComplete[language];
 }
 
 function wizzardTookSoloCard() {
-  return `
-  <p>Du hast dich für einen Zauber entschieden. 
-  Was möchtest du dafür geben? Du kannst eine einzelnen Zauber 
-  wählen oder eine Kette die du bereit bis, deinem Gegner zu geben.</p>
-  `;
+  return texts.wizzardTookSoloCard[language];
 }
+
 function wizzardTookChain() {
-  return `
-  <p>Du hast dich für eine ganze Zauberkette entschieden. 
-  Was möchtest du dafür geben? Du kannst eine einzelnen Zauber wählen 
-  oder eine Kette die du bereit bis, deinem Gegner zu geben.</p>
-  `;
+  return texts.wizzardTookChain[language];
 }
 
 function infoUseGoblin() {
-  return `       
-    <p>Wähle einen Zauber, der sich mit einem deiner verbinden lässt.</p> 
-    `;
+  return texts.infoUseGoblin[language];
 }
 
 function infoGoblinComplete() {
-  return `       
-    <p>Bravo! Du hast einen Goblin eingesetzt. 
-    Deine Runde ist zu Ende.</p> 
-    `;
+  return texts.infoGoblinComplete[language];
 }
 
 function playerWin(name, length) {
-  return `${name} + ' gewinnt mit einer Kettenzahl von: ' + ${length} Zaubern. Wenn ihr weiterspielen wollt, erhöt die Zahl der Gewinnerkette.`;
+  return texts.playerWin[language](name, length);
 }
 
 function gameRules() {
-  return `
-	<div class="popup-info">
-        <img class="close-box" onclick="closePopup()" src="assets/images/btn/close.png">
-        <div>
-            <h3>Zauberkette - Spielbeschreibung</h3>
-            <p>Ein Spiel für 2-4 Spieler, ab 5 Jahre. Musikalische Vorkenntnisse sind nicht nötig!<br>
-                Das Kartenspiel „Zauberkette“ spielt man auf ZWEI Spielebenen.<br>
-                Auf der 1. Ebene muss man 3 Wellenfische (Töne) so kombinierendes sie einen Zauber (Akkorde)
-                ergeben.<br>
-                Auf der 2. Ebene muss man die erlangten Zauber miteinander zu einer Kette verbinden.<br>
-                Die Länge der KeGe, die zum Sieg führt, kann vor einem Spiel vereinbart werden.<br>
-            </p>
-        </div>
-        <div>
-            <h3> Spielablauf: </h3>
-            <p>
-                Die Länge der zu erreichenden Zauberkette wird vereinbart, dann bekommen alle Spieler 5
-                Spielkarten offen auf den Tisch gelegt. Der Rest ergibt einen verdeckten Stapel mit Spielkarten. Die im
-                Laufe des Spiels abgelegten Karten kommen zunächst auf einen extra Stapel, werden letztlich gemischt und
-                ergeben dann wieder den Spielkarten-Stapel.<br>
-            </p>
-
-            <h3>1. Ziel einen Zauber komponieren.</h3>
-            <p> Ist man am Zug, legt man (optional) zunächst eine Spielkarte ab und zieht eine neue.<br>
-                Daraufhin werden die 5 Karten in beliebiger Reihenfolge genutzt und abgelegt, bis man die Runde beendet,
-                einen Zauber erlangt (egal wie!) oder mit den Karten nichts mehr anfangen kann.<br>
-                Ein Zug lässt sich jederzeit beenden, spätestens jedoch wenn man durch 3 passende Wellenfische*, den
-                Kobold** oder den Magier** einen Zauber oder eine Zauberkette erhalten hat.<br>
-                Ist der Zug beendet, werden alle abgelegten Spielkarten durch neue ersetzt. Erst danach ist die nächste
-                Person am Zug.<br>
-            </p>
-
-            <h3>2. Ziel eine Zauberkette bilden.</h3>
-            <p>Jeder Zauber verbindet sich mit zwei anderen Zaubern.* Ab zwei verbundenen Zaubern hat man eine
-                Zauberkette.<br>
-                Wenn Zauber sich „verketten“ lassen, müssen(!) sie dies tun.<br>
-                Gewonnen hat die erste Person mit der zuvor vereinbarte Kettenlänge.
-            </p>
-        </div>
-
-        <div>
-            <h3>Spielkarten:</h3>
-            3 X 12 Wellenfische.<br>
-            3 X Gnom: Joker für alle Wellenfische. Man darf auch mehrere nutzen.<br>
-            2 X Mellot: lege ihn ab und tausche eine beliebige Spielkarte mit dem Gegner.<br>
-            2 X Kobold: lege ihn ab und klaue einen Zauber beim Gegner, der frei oder am Anfang oder Ende einer Kette
-            ist.*<br>
-            1 X Magier: lege ihn ab und tausche einen Zauber oder Zauberkette mit dem Gegner. Auch der Tausch eines
-            einzelnen Zaubers gegen eine Kette und umgekehrt ist möglich(!).*<br>
-
-            *Magier und Kobold funktionieren nur(!), wenn sich die gegnerische(n) Karte(n) mit einer eigenen Zauberkarte
-            oder Kette verbinden lassen.<br>
-
-            <h3>Zauberkarten:</h3>
-            2 x 12 Zauber.<br>
-        </div>
-    </div>
-
-`;
+  return texts.gameRules[language];
 }

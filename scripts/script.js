@@ -180,7 +180,8 @@ function renderCircles() {
 function renderTable() {
   const header = document.querySelector('header');
   header.innerHTML = renderHeaderHTML();
-  showInfo(infoStart());
+  currentInfoFunction = infoStart(); 
+  showInfo(currentInfoFunction);
   buildStack("playerCards"); // Kay -- render player stack with joined function
   buildStack("observerCards");
   renderCircles();
@@ -220,16 +221,19 @@ function skipToStart() {
 
 /**
  * Update the index to the next language, wrapping around if necessary
- * Update the image source in btn and alt attribute
+ * Update the image source in btn and alt attribute 
+ *  updatePageLanguage(newLang);
+ *  Update the displayed info to the new language
  */
 function toggleLang() {
   currentLangIndex = (currentLangIndex + 1) % languages.length;
   let newLang = languages[currentLangIndex];
   document.getElementById('langImg').src = `assets/images/btn/${newLang}.svg`;
   document.getElementById('langImg').alt = newLang;
-
-  // Optional:  function to update the page language
-  // updatePageLanguage(newLang);
+  language = newLang;
+  if(currentInfoFunction){
+  showInfo(currentInfoFunction); 
+  }
 }
 
 /**
