@@ -5,7 +5,7 @@ function setCardInfo() {
     let info = document.getElementById('infoTextID');
     let savedText = info.innerHTML;
     cardInfoFrame.addEventListener('mouseenter', function () {
-      currentInfoFunction = optAccInfoText();
+      currentInfoFunction = optAccInfoText;
       showInfo(currentInfoFunction);
     });
 
@@ -28,7 +28,7 @@ function setSpecialInfo(special) {
 
   specialInfo.addEventListener('mouseenter', function () {
     if (typeof window[funcName] === 'function') {
-      currentInfoFunction = window[funcName]();
+      currentInfoFunction = window[funcName];
       showInfo(currentInfoFunction);
       //showInfo(window[funcName]()); 
     } else {
@@ -90,7 +90,7 @@ function changeWinnerCards() { // Kay -- cards combine to magic card.
     cardCombi[i].stackNr = -1;
   }
   noBtns(); //Kay reset all Button style
-  currentInfoFunction = infoWinMagic();
+  currentInfoFunction = infoWinMagic;
   showInfo(currentInfoFunction);
   setTimeout(() => {
     finishRound();
@@ -175,7 +175,7 @@ function disableAccClicks() {
 async function awaitChangeCard() {
   isAwaitChangeCard = true;
   enablePlayerCards(); // getCardInfo activ
-  currentInfoFunction = infoChange();
+  currentInfoFunction = infoChange;
   showInfo(currentInfoFunction);
   btnGroup3();
   currentCardID = await waitForCardClick();
@@ -198,7 +198,7 @@ function waitForCardClick() {
 }
 
 //Parameters with ()
-function showInfo(infoContent) {
+function showInfo(infoContent) { 
   let info = docID("infoTextID");
   if (!info) {
     console.log('found not the info div');
@@ -209,8 +209,7 @@ function showInfo(infoContent) {
     infoContent = infoContent();
   }
   info.innerHTML += infoContent;
-  //info.innerHTML += infoTemplate;
-  // Setzt die Animation direkt über JavaScript
+  // Set the animation directly via JavaScript
   info.style.animation = 'none';
   info.offsetHeight; // Trigger reflow
   info.style.animation = null; // Reset die Animation
@@ -226,13 +225,13 @@ function showInfo(infoContent) {
  */
 function showWithTimeout(func, timeout, optFunc) {
   currentInfoFunction = func;
-  showInfo(currentInfoFunction());
+  showInfo(currentInfoFunction);
   //showInfo(func());
   return new Promise((resolve) => {
     setTimeout(() => {
       if (optFunc) {
         currentInfoFunction = optFunc;
-        showInfo(currentInfoFunction());
+        showInfo(currentInfoFunction);
         //showInfo(optFunc());
       }
       resolve();

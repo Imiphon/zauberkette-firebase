@@ -5,7 +5,7 @@ function btnGroup1() { //Kay -- shows infotext start
     noBtns(); //Kay reset all Button style
     docID("changeClicks(1)").style.display = "inline";//change card --Kay-- docID!
     docID("changeClicks(2)").style.display = "inline";//nothing to change
-    currentInfoFunction = infoStart(); 
+    currentInfoFunction = infoStart; 
     showInfo(currentInfoFunction); //Kay --render text of starting round
   }
   
@@ -13,7 +13,7 @@ function btnGroup1() { //Kay -- shows infotext start
     noBtns(); //Kay reset all Button style
     docID("changeClicks(3)").style.display = "inline"; // check Combi
     docID("changeClicks(7)").style.display = "inline"; //next Round
-    currentInfoFunction = infoPlayCards(); 
+    currentInfoFunction = infoPlayCards; 
     showInfo(currentInfoFunction); //Kay --render
     specialBtn(); //Kay render button if special card is in deck ( Mellot, Goblin, Wizzard)
   }
@@ -96,7 +96,7 @@ function btnGroup1() { //Kay -- shows infotext start
     enablePlayerCards();
     separateSpecial('mellot');
     mellotArray = []; //to define the two cards for change  
-    currentInfoFunction = infoToGiveCard(); 
+    currentInfoFunction = infoToGiveCard; 
     showInfo(currentInfoFunction);
     btnGroup3();
     await waitForCardClick();
@@ -107,7 +107,7 @@ function btnGroup1() { //Kay -- shows infotext start
     if (mellotArray.length === 0) {
       mellotArray.push(playerCards[currentCardID]);
     }
-    currentInfoFunction = infoToTakeCard(); 
+    currentInfoFunction = infoToTakeCard; 
     showInfo(currentInfoFunction);
     enableObserverCards();
     await waitForCardClick();
@@ -138,7 +138,7 @@ function btnGroup1() { //Kay -- shows infotext start
     separateSpecial('goblin');
     disableAccClicks();
     enableObserverAccordClicks();
-    currentInfoFunction = infoUseGoblin(); 
+    currentInfoFunction = infoUseGoblin; 
     showInfo(currentInfoFunction);
     btnGroup3();
     specialInProgress = true;
@@ -154,7 +154,7 @@ function btnGroup1() { //Kay -- shows infotext start
     separateSpecial('wizzard');
     disableAccClicks();
     enableObserverAccordClicks();
-    currentInfoFunction = infoUseWizzard(); 
+    currentInfoFunction = infoUseWizzard; 
     showInfo(currentInfoFunction);
     btnGroup3();
     specialInProgress = true;

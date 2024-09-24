@@ -57,7 +57,7 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   positionAccCards();
   if (isNew && accInAllMajStack.amount <= 0) {
     playSound('failed', 'backMag', 0.5);
-    currentInfoFunction = infoAccEmpty(); 
+    currentInfoFunction = infoAccEmpty; 
     showInfo(currentInfoFunction);
     setTimeout(() => {
       stepBack();
@@ -365,10 +365,10 @@ function addToChain(circle, circleNr, part) {
  */
 function choosePlayerAccs() {
   if (wizzardTakes.length === 1) {
-    currentInfoFunction = wizzardTookSoloCard(); 
+    currentInfoFunction = wizzardTookSoloCard; 
     showInfo(currentInfoFunction);
   } else if (wizzardTakes.length > 1) {
-    currentInfoFunction = wizzardTookChain(); 
+    currentInfoFunction = wizzardTookChain; 
     showInfo(currentInfoFunction);
   }
   choosenAcc = [];
@@ -448,7 +448,7 @@ function goblinStrike() {
   }
   specialInProgress = false;
   tryGoblinStrike = false;
-  currentInfoFunction = infoGoblinComplete(); 
+  currentInfoFunction = infoGoblinComplete; 
   showInfo(currentInfoFunction);
   setTimeout(() => {
     specialInProgress = false;    

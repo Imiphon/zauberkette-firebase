@@ -180,7 +180,7 @@ function renderCircles() {
 function renderTable() {
   const header = document.querySelector('header');
   header.innerHTML = renderHeaderHTML();
-  currentInfoFunction = infoStart(); 
+  currentInfoFunction = infoStart; 
   showInfo(currentInfoFunction);
   buildStack("playerCards"); // Kay -- render player stack with joined function
   buildStack("observerCards");
