@@ -39,7 +39,15 @@ async function finishRound() {
     if (mirrorView) {
         rotateWebsite();
     }
-    startRound();
+    if(isWinner){
+        setTimeout(() => {
+            startRound();
+        }, 4000);
+        isWinner =false;
+    } else {
+        startRound();
+    }
+    
 }
 
 function animateTableFrame() {
@@ -59,7 +67,7 @@ function changeNames() {
 }
 
 //starts after first time startRound()
-    function swapParts() { 
+function swapParts() {
     let tempCards = playerCards;
     playerCards = observerCards;
     observerCards = tempCards;
@@ -94,7 +102,12 @@ function startRound() {
 function checkForWin(part) {
     let currChainArr = part === 'player' ? playerChains : observerChains;
     let winnerChain = currChainArr.find(chain => chain.length >= goalValue);
-    if (winnerChain) youWin(part, winnerChain.length);
+    if (winnerChain) {
+        youWin(part, winnerChain.length);
+        setTimeout(() => {
+            return;
+        }, 4000);
+    };
 }
 
 /**
@@ -118,7 +131,7 @@ function checkForChain(part) {
             if (isNext && (!isPrev || currentAccArray.length === 12)) {
                 firstCircleAccs.push(accord.circleNr);
             }
-            if (isNext && isNext.amount === 2 && accord.amount === 2 && isPrev.amount != 2) {
+            if (isNext && isNext.amount === 2 && accord.amount === 2 && isPrev && isPrev.amount != 2) {
                 secondCircleAccs.push(accord.circleNr);
             }
         }
@@ -175,10 +188,10 @@ function setBackArrays(isStartRound) {
     mellotArray = [];
     currentSpecial = null;
     specialInProgress = false;
-    if(isStartRound){
+    if (isStartRound) {
         usedSpecials = [];
     }
-    
+
     choosenAcc = [];
     tryGoblinStrike = false;
     tryWizzardStrike = false;

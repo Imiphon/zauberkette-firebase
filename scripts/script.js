@@ -219,17 +219,45 @@ function skipToStart() {
 }
 
 /**
+ * Update the index to the next language, wrapping around if necessary
+ * Update the image source in btn and alt attribute
+ */
+function toggleLang() {
+  currentLangIndex = (currentLangIndex + 1) % languages.length;
+  let newLang = languages[currentLangIndex];
+  document.getElementById('langImg').src = `assets/images/btn/${newLang}.svg`;
+  document.getElementById('langImg').alt = newLang;
+
+  // Optional:  function to update the page language
+  // updatePageLanguage(newLang);
+}
+
+/**
  * to set the goal (length of winner chain)
  */
-function updateGoal() {
-  goalValue = document.getElementById('goalInput').value;
-  let value = parseInt(input.value, 10);
-  if (value < 2) {
-    input.value = 2;
-  } else if (value > 12) {
-    input.value = 12;
+function decreaseValue() {
+  let value = parseInt(document.getElementById('currentValue').textContent, 10);
+  if (value > 2) {
+      value--;
+      document.getElementById('currentValue').textContent = value;
+      updateGoal(value);
   }
 }
+
+function increaseValue() {
+  let value = parseInt(document.getElementById('currentValue').textContent, 10);
+  if (value < 12) {
+      value++;
+      document.getElementById('currentValue').textContent = value;
+      updateGoal(value);
+  }
+}
+
+function updateGoal(value) {
+  goalValue = value;
+  console.log('Goal value updated to:', goalValue);
+}
+
 
 function detectTouchDevice() {
   if ('ontouchstart' in window || navigator.maxTouchPoints) {

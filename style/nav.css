@@ -39,17 +39,22 @@ nav {
   align-items: center;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: auto;
-  margin: 0;
+.game-goal {
+display: flex;
+flex-direction: column;
+}
+.num-picker {
+  display: flex;
+  margin: 0 8px;
+  gap: 8px;
 }
 
-/* Firefox  
-input[type=number] {
-    -moz-appearance: textfield; 
+.num-picker button {
+  color: #f5deb3;
+  background-color: rgb(84, 83, 83);
+  cursor: pointer;;
 }
-*/
+
 .nav-btns {
   width: 45%;
   display: flex;
@@ -106,6 +111,11 @@ input[type=number] {
 .game-goal input {
   margin: 4px;
   width: auto;
+}
+
+.lang {
+  width: 32px !important;
+  height: 32px !important;
 }
 
 #menu {

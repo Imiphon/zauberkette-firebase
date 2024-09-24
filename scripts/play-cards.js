@@ -44,15 +44,7 @@ function toggleCardOpacity(index) {
   } else return;
 }
 
-//async function waitForIndex() {
-//  currentCardID = -1;
-//  while (currentCardID === -1) {
-//    await new Promise((resolve) => setTimeout(resolve, 100));
-//  }
-//}
-
 async function clickCardsforCombi() {
-  //await waitForIndex();
   currentCardID = await waitForCardClick();
   let currentCard = playerCards[currentCardID];
   let currentCardNr = currentCard.nr;
@@ -181,7 +173,6 @@ function oneJoker() {
   }
 }
 
-
 function twoJoker() {
   let thisNr = choosenCards.find((nr) => nr !== 0); //the only real tone
   let nrToThird;
@@ -224,7 +215,6 @@ function choiceAcc() {
     style="opacity: ${isEmptyAmount ? 0.3 : 1};">`;
     popup.innerHTML += cardHTML;
   }
-
 }
 
 function showEmpty() {
@@ -255,7 +245,7 @@ function threeJoker() {
           <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 4000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">          
         </div>
         <div style="position: absolute; z-index: 1000;">
-        <span class="empty-acc" id="emptyAcc">vergeben</span>
+        <span class="empty-acc" id="emptyAcc">empty</span>
         </div>`;
     } else {
       popup.innerHTML += `

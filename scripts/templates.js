@@ -237,6 +237,10 @@ function infoGoblinComplete() {
     `;
 }
 
+function playerWin(name, length) {
+  return `${name} + ' gewinnt mit einer Kettenzahl von: ' + ${length} Zaubern. Wenn ihr weiterspielen wollt, erhöt die Zahl der Gewinnerkette.`;
+}
+
 function gameRules() {
   return `
 	<div class="popup-info">

@@ -232,5 +232,14 @@ function showWithTimeout(func, timeout, optFunc) {
  * Vergleicht neue 
  */
 function youWin(part, length) {
-  alert(part + ' gewinnt mit einer Kettenzahl von: ' + length);
+  let idName = part === 'player' ? 'playNameID' : 'obsNameID';
+  let element = document.getElementById(idName);
+  if (element) {
+    let name = element.textContent;
+    showInfo(playerWin(name, length));
+    isWinner =true;
+    //alert(name + ' gewinnt mit einer Kettenzahl von: ' + length);
+  } else {
+    console.error('Element with ID "' + idName + '" not found.');
+  }
 }
