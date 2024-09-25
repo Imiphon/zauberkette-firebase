@@ -81,6 +81,10 @@ flex-direction: column;
   z-index: 1;
 }
 
+#fullscreenBtn {
+  z-index: 2;
+}
+
 .turn {
   display: block;
   width: 32px !important;
