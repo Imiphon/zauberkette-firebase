@@ -13,7 +13,8 @@
 
     <script src="scripts/arrays.js"></script>
     <script src="scripts/header.js"></script>
-    <script src="scripts/templates.js"></script>
+    <script src="scripts/variable-texts.js"></script>
+    <script src="scripts/static-texts.js"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/play-buttons.js"></script>
     <script src="scripts/play-cards.js"></script>
@@ -27,8 +28,8 @@
 <body onload="initialize();" id="body">
 
     <main>
-        <div id="headInfoID">
-            <header w3-include-html="./templates/header.html"></header>
+        <div ></div>
+            <header id="headInfoID"></header>
         </div>
         <div class="table-frame">
             <!-------------OBSERVER PART-------------------->
@@ -50,7 +51,7 @@
 
                 <div class="top-zone" id="topZoneID">
                     <div class="brass-long btn name-frame">
-                        <h5 class="zone-descr">Beobachter</h5>
+                        <h5 class="zone-descr" data-key="observer">Beobachter</h5>
                         <h2 class="name" id="obsNameID">Alfa</h2>
                     </div>
                     <div class="card-group" id="observerStackID">
@@ -74,11 +75,11 @@
 
                 <div class="btn-group">
                     <div class="iron-long-cross btn" onclick="awaitChangeCard()" id="changeClicks(1)"
-                        style="display: inline;">Kartentausch</div>
+                        style="display: inline;" data-key="swapCard">Kartentausch</div>
                     <div class="iron-long-cross btn" onclick="noChanges()" id="changeClicks(2)"
-                        style="display: inline;">Weiter</div>
+                        style="display: inline;" data-key="continue">Weiter</div>
                     <div class="iron-long-cross btn" onclick="setCardCombi()" id="changeClicks(3)"
-                        style="display: none;">Zauber komponieren</div>
+                        style="display: none;" data-key="composeSpell">Zauber komponieren</div>
                     <div class="special-frame">
                         <div class="iron-circle btn special" onclick="useMellot()" id="changeClicks(4)"
                             style="display: none;"><img src="assets/images/btn/mel-stand.png" alt="icon">
@@ -98,19 +99,19 @@
                         </div>
                     </div>
                     <div class="special-frame">
-                        <div class="iron-circle btn special" onclick="useWizzard()" id="changeClicks(6)"
+                        <div class="iron-circle btn special" onclick="useWizard()" id="changeClicks(6)"
                             style="display: none;"><img src="assets/images/btn/wiz-stand.png" alt="icon">
                         </div>
-                        <div class="helper-frame" id="infoWizzard">
-                            <div class="brass-gear1 no-btn" id="wizzardBrass" alt="Info"> </div>
+                        <div class="helper-frame" id="infoWizard">
+                            <div class="brass-gear1 no-btn" id="wizardBrass" alt="Info"> </div>
                            
                         </div>
                     </div>
-                    <div class="iron-long-cross btn" onclick="stepBack()" id="changeClicks(8)" style="display: none;">
+                    <div class="iron-long-cross btn" onclick="stepBack()" id="changeClicks(8)" data-key="back" style="display: none;">
                         Zurück</div>
                     <!--actually nextPlayer() insted of changeCard()-->
                     <div class="iron-long-cross btn" onclick="handleFinishRoundClick()" id="changeClicks(7)"
-                        style="display: none;">Runde beenden</div>
+                        style="display: none;" data-key="endTurn">Runde beenden</div>
                 </div>
             </div>
 
@@ -131,7 +132,7 @@
                 </div>
                 <div class="bottom-zone" id="">
                     <div class="name-frame brass-long no-btn">
-                        <h5 class="zone-descr">Spieler</h5>
+                        <h5 class="zone-descr" data-key="player">Spieler</h5>
                         <h2 class="name" id="playNameID">Beta</h2>
                     </div>
                     <div class="card-group" id="playerStackID">                        

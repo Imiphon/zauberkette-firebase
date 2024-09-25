@@ -105,7 +105,7 @@ function stepBack() {
     special.card.style.opacity = 1;
     specialInProgress = false;
     mellotArray = [];
-    tryWizzardStrike = false;
+    tryWizardStrike = false;
     tryGoblinStrike = false;
   }
   if (cardClickHandler) {

@@ -15,7 +15,7 @@ function btnGroup1() { //Kay -- shows infotext start
     docID("changeClicks(7)").style.display = "inline"; //next Round
     currentInfoFunction = infoPlayCards; 
     showInfo(currentInfoFunction); //Kay --render
-    specialBtn(); //Kay render button if special card is in deck ( Mellot, Goblin, Wizzard)
+    specialBtn(); //Kay render button if special card is in deck ( Mellot, Goblin, Wizard)
   }
   
   function btnGroup3() {
@@ -42,11 +42,11 @@ function btnGroup1() { //Kay -- shows infotext start
           docID("infoGoblin").style.display = "block";
           docID("goblinBrass").style.display = "block";
           setSpecialInfo('infoGoblin');
-        } else if (title === 'wizzard') {
-          docID("changeClicks(6)").style.display = "block"; //Wizzard
-          docID("infoWizzard").style.display = "block";
-          docID("wizzardBrass").style.display = "block";
-          setSpecialInfo('infoWizzard');
+        } else if (title === 'wizard') {
+          docID("changeClicks(6)").style.display = "block"; //Wizard
+          docID("infoWizard").style.display = "block";
+          docID("wizardBrass").style.display = "block";
+          setSpecialInfo('infoWizard');
         }
       }
     }
@@ -144,17 +144,17 @@ function btnGroup1() { //Kay -- shows infotext start
     specialInProgress = true;
   }
   
-  function useWizzard() {
-    playSound('tone', 'wizzard', 0.5);
+  function useWizard() {
+    playSound('tone', 'wizard', 0.5);
     if (observerAccords.length === 0 || playerAccords.length === 0 ) {
-      showWithTimeout(wizzardRules, 6000, infoPlayCards);
+      showWithTimeout(wizardRules, 6000, infoPlayCards);
       return;
     }
-    tryWizzardStrike = true;
-    separateSpecial('wizzard');
+    tryWizardStrike = true;
+    separateSpecial('wizard');
     disableAccClicks();
     enableObserverAccordClicks();
-    currentInfoFunction = infoUseWizzard; 
+    currentInfoFunction = infoUseWizard; 
     showInfo(currentInfoFunction);
     btnGroup3();
     specialInProgress = true;

@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="style/nav.css">
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/table.css">
-    <script src="scripts/templates.js"></script>
+    <script src="scripts/variable-texts.js"></script>
+    <script src="scripts/static-texts.js"></script>
     <script src="scripts/arrays.js"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/play.js"></script>
@@ -18,10 +19,32 @@
 </head>
 
 <body onload="renderIndex()" id="body">
-    <!-------------------- NAVBAR -------------------->
-    <header w3-include-html="./templates/header.html"></header>
-    <!-------------------- MAIN STUFF -------------------->
-    <main id="mainContentID">
+    <nav>
+        <div class="nav-left">
+            <img class="logo" src="assets/images/logo-wheat.png" alt="">
+        </div>
+        <div class="nav-center">
+            <h3>Zauberkette</h3>
+    
+        </div>
+        <div class="nav-right">
+            <div class="nav-btns">
+                <button class="nav-btn" onclick="toggleLang()">
+                    <img class="lang" id="langImg" src="assets/images/btn/de.svg" alt="">
+                </button>
+            </div>
+            <div class="menuToggle" id="menuToggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <a href="#">
+                    <a href="javascript:void(0);" onclick="openRulesPopup()">Game Rules</a><br>
+                    <a href="">More</a>
+                </ul>
+            </div>
+    </nav>
+    <main id="startSideContent">
 
     </main>
     <footer></footer>

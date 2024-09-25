@@ -28,7 +28,7 @@ const texts = {
     en: `Press the Goblin button and you can steal a spell from the opponent if it connects to one of your spells.`,
     fr: `Appuyez sur le bouton Gobelin et vous pouvez voler un sort à l'adversaire s'il se connecte à l'un de vos sorts.`,
   },
-  infoWizzardText: {
+  infoWizardText: {
     de: `Drücke den Magier-Knopf und du kannst einzelne Zauber oder Zauberketten mit dem Gegner austauschen, wenn sie an einen deiner (verbliebenen) Zauber passen.`,
     en: `Press the Wizard button and you can exchange individual spells or spell chains with the opponent if they connect to one of your (remaining) spells.`,
     fr: `Appuyez sur le bouton Magicien et vous pouvez échanger des sorts individuels ou des chaînes de sorts avec l'adversaire s'ils se connectent à l'un de vos sorts (restants).`,
@@ -38,40 +38,8 @@ const texts = {
     en: ``,
     fr: ``,
   },
-  infoStartSite: {
-    de: `
-      <h3>Melopoiia präsentiert:</h3>
-      <h1>Zauberkette</h1>
-      <div class="opener-frame">
-        <p class="opener">
-          In der Welt von Ionoï herrscht die Magie der Musik. Ein jeder Ton kann hier zu einem großen Zauber werden – wenn man ihn denn nur richtig verkettet. Und so kommt es, dass sich die hiesigen Magier nur allzu gern darin messen, wer die längste Zauberkette zu erschaffen vermag. Beweise deine Zauberkräfte und zeige es ihnen allen!
-        </p>
-      </div>
-      <a href="table.html">Zauberkette auf einem Display spielen</a>
-    `,
-    en: `
-      <h3>Melopoiia presents:</h3>
-      <h1>Zauberkette</h1>
-      <div class="opener-frame">
-        <p class="opener">
-          In the world of Ionoï, the magic of music prevails. Every tone here can become a great spell – if you chain it correctly. And so it happens that the local magicians are eager to compete to create the longest spell chain. Prove your magical powers and show them all!
-        </p>
-      </div>
-      <a href="table.html">Play Zauberkette on a display</a>
-    `,
-    fr: `
-      <h3>Melopoiia présente :</h3>
-      <h1>Zauberkette</h1>
-      <div class="opener-frame">
-        <p class="opener">
-          Dans le monde d'Ionoï, la magie de la musique règne. Chaque ton peut ici devenir un grand sort – si vous le chaînez correctement. Ainsi, les magiciens locaux sont impatients de rivaliser pour créer la plus longue chaîne de sorts. Prouvez vos pouvoirs magiques et montrez-leur à tous !
-        </p>
-      </div>
-      <a href="table.html">Jouer à Zauberkette sur un écran</a>
-    `,
-  },
   infoStart: {
-    de: `<p>Drücke "Kartentausch", um eine Karte zu tauschen oder "Weiter"</p>`,
+    de: `<p>Drücke "Kartentausch" um eine deiner Karten zu tauschen oder direkt "Weiter"</p>`,
     en: `<p>Press "Swap Card" to exchange a card or "Continue"</p>`,
     fr: `<p>Appuyez sur "Échanger une carte" pour échanger une carte ou "Continuer"</p>`,
   },
@@ -85,12 +53,12 @@ const texts = {
     en: `<p>Unfortunately, this is not possible at the moment.</p>`,
     fr: `<p>Malheureusement, cela n'est pas possible pour le moment.</p>`,
   },
-  wizzardRules: {
+  wizardRules: {
     de: `<p>Dies ist leider gerade nicht möglich.</p>`,
     en: `<p>Unfortunately, this is not possible at the moment.</p>`,
     fr: `<p>Malheureusement, cela n'est pas possible pour le moment.</p>`,
   },
-  infoWizzard: {
+  infoWizard: {
     de: `<p>Mit dem Magier kannst du einen Zauber oder eine Kette mit dem Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. Oder du drückst 'zurück'.</p>`,
     en: `<p>With the Wizard, you can exchange a spell or a chain with the opponent, as long as you still have a spell for chaining. Or press 'back'.</p>`,
     fr: `<p>Avec le Magicien, vous pouvez échanger un sort ou une chaîne avec l'adversaire, tant que vous avez encore un sort pour la liaison. Ou appuyez sur 'retour'.</p>`,
@@ -180,7 +148,7 @@ const texts = {
     en: `<p>This spell cannot connect with any of yours.</p>`,
     fr: `<p>Ce sort ne peut se connecter à aucun des vôtres.</p>`,
   },
-  infoUseWizzard: {
+  infoUseWizard: {
     de: `<p>Klicke auf den Zauber, der sich mit einem deiner Zauber verbinden lässt, egal, ob es eine Kette oder ein einzelner Zauber ist.</p>`,
     en: `<p>Click on the spell that can connect with one of your spells, whether it's a chain or a single spell.</p>`,
     fr: `<p>Cliquez sur le sort qui peut se connecter avec l'un de vos sorts, qu'il s'agisse d'une chaîne ou d'un sort unique.</p>`,
@@ -190,17 +158,17 @@ const texts = {
     en: `<p>You need this spell for linking. Choose another or press 'Back'</p>`,
     fr: `<p>Vous avez besoin de ce sort pour la liaison. Choisissez-en un autre ou appuyez sur 'Retour'</p>`,
   },
-  infoWizzardComplete: {
+  infoWizardComplete: {
     de: `<p>Bravo! Du hast den Magier eingesetzt. Deine Runde ist zu Ende.</p>`,
     en: `<p>Bravo! You have used the Wizard. Your turn is over.</p>`,
     fr: `<p>Bravo! Vous avez utilisé le Magicien. Votre tour est terminé.</p>`,
   },
-  wizzardTookSoloCard: {
+  wizardTookSoloCard: {
     de: `<p>Du hast dich für einen Zauber entschieden. Was möchtest du dafür geben? Du kannst einen einzelnen Zauber wählen oder eine Kette, die du bereit bist, deinem Gegner zu geben.</p>`,
     en: `<p>You have chosen a spell. What would you like to give in return? You can choose a single spell or a chain that you're willing to give to your opponent.</p>`,
     fr: `<p>Vous avez choisi un sort. Que souhaitez-vous donner en retour ? Vous pouvez choisir un sort unique ou une chaîne que vous êtes prêt à donner à votre adversaire.</p>`,
   },
-  wizzardTookChain: {
+  wizardTookChain: {
     de: `<p>Du hast dich für eine ganze Zauberkette entschieden. Was möchtest du dafür geben? Du kannst einen einzelnen Zauber wählen oder eine Kette, die du bereit bist, deinem Gegner zu geben.</p>`,
     en: `<p>You have chosen a whole spell chain. What would you like to give in return? You can choose a single spell or a chain that you're willing to give to your opponent.</p>`,
     fr: `<p>Vous avez choisi une chaîne de sorts entière. Que souhaitez-vous donner en retour ? Vous pouvez choisir un sort unique ou une chaîne que vous êtes prêt à donner à votre adversaire.</p>`,
@@ -220,11 +188,44 @@ const texts = {
     en: (name, length) => `${name} wins with a chain of ${length} spells. <br> If you want to keep playing, increase the number of spells needed to win.`,
     fr: (name, length) => `${name} gagne avec une chaîne de ${length} sorts. <br> Si vous voulez continuer à jouer, augmentez le nombre de sorts nécessaires pour gagner.`,
   },
-  gameRules: {
-    de: `...`, // Include the German game rules here
-    en: `...`, // Include the English translation of the game rules here
-    fr: `...`, // Include the French translation of the game rules here
+  gnom: {
+    de: 'Gnom',
+    en: 'Gnome',
+    fr: 'Gnome',
   },
+  mellot: {
+    de: 'Mellot',
+    en: 'Mellot',
+    fr: 'Mellot',
+  },
+  goblin: {
+    de: 'Kobold',
+    en: 'Goblin',
+    fr: 'Gobelin',
+  },
+  wizard: { // Note: Correct spelling is "wizard" in English, but maintaining as per your code
+    de: 'Magier',
+    en: 'Wizard',
+    fr: 'Magicien',
+  },
+  
+  // Translations for musical terms if needed
+  prime: {
+    de: 'Prime',
+    en: 'Prime',
+    fr: 'Prime',
+  },
+  terz: {
+    de: 'Terz',
+    en: 'Third',
+    fr: 'Tierce',
+  },
+  quint: {
+    de: 'Quint',
+    en: 'Fifth',
+    fr: 'Quinte',
+  },
+
   // Add other translations similarly...
 };
 
@@ -246,16 +247,12 @@ function infoGoblinText() {
   return texts.infoGoblinText[language];
 }
 
-function infoWizzardText() {
-  return texts.infoWizzardText[language];
+function infoWizardText() {
+  return texts.infoWizardText[language];
 }
 
 function noText() {
   return texts.noText[language];
-}
-
-function infoStartSite() {
-  return texts.infoStartSite[language];
 }
 
 function infoStart() {
@@ -270,12 +267,12 @@ function goblinRules() {
   return texts.goblinRules[language];
 }
 
-function wizzardRules() {
-  return texts.wizzardRules[language];
+function wizardRules() {
+  return texts.wizardRules[language];
 }
 
-function infoWizzard() {
-  return texts.infoWizzard[language];
+function infoWizard() {
+  return texts.infoWizard[language];
 }
 
 function infoGoblin() {
@@ -346,24 +343,24 @@ function noConnection() {
   return texts.noConnection[language];
 }
 
-function infoUseWizzard() {
-  return texts.infoUseWizzard[language];
+function infoUseWizard() {
+  return texts.infoUseWizard[language];
 }
 
 function needForConnection() {
   return texts.needForConnection[language];
 }
 
-function infoWizzardComplete() {
-  return texts.infoWizzardComplete[language];
+function infoWizardComplete() {
+  return texts.infoWizardComplete[language];
 }
 
-function wizzardTookSoloCard() {
-  return texts.wizzardTookSoloCard[language];
+function wizardTookSoloCard() {
+  return texts.wizardTookSoloCard[language];
 }
 
-function wizzardTookChain() {
-  return texts.wizzardTookChain[language];
+function wizardTookChain() {
+  return texts.wizardTookChain[language];
 }
 
 function infoUseGoblin() {
@@ -378,6 +375,3 @@ function playerWin(name, length) {
   return texts.playerWin[language](name, length);
 }
 
-function gameRules() {
-  return texts.gameRules[language];
-}

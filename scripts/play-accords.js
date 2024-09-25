@@ -113,7 +113,7 @@ function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
 
 /**
  * gets param from div click in observer Circle
- * (and for playing wizzard in a second round in player Circle)
+ * (and for playing wizard in a second round in player Circle)
  * @param {number} circle first or second circle
  * @param {number} circleNr of clicked Accord
  * @param {string} part is clicked part in 'observer' or 'player'
@@ -121,10 +121,10 @@ function updateNewCard(accInAllMajStack, accInCircle, isDouble) {
 function chooseAccord(circle, circleNr, part) {
   let acc = allMaj.find(acc => acc.circleNr === circleNr);
   playSound('accords-maj', 'Maj-' + acc.title, 0.5);
-  if (!tryWizzardStrike && !tryGoblinStrike) return;
+  if (!tryWizardStrike && !tryGoblinStrike) return;
   choosenAcc = [];
   if (part === 'observer') {
-    if (tryWizzardStrike) {
+    if (tryWizardStrike) {
       observerConnection = choosenAcc;
     }
     choosenAcc = observerAccords.find(acc => acc.circleNr === circleNr);
@@ -190,7 +190,7 @@ function checkNeighbors(circle, circleNr, part) {
       checkConnection(circle, circleNr, part);
     }
     else if (part === 'player') {
-      //checkConnection() from wizzardGives with Accs in observer not neccassary
+      //checkConnection() from wizardGives with Accs in observer not neccassary
       addToChain(circle, circleNr, part);
     }
   }
@@ -248,14 +248,14 @@ function checkConnection(circle, circleNr, part) {
   ) {
     if (tryGoblinStrike) {
       goblinStrike();
-    } else if (tryWizzardStrike) {
+    } else if (tryWizardStrike) {
       addToChain(circle, circleNr, part);
     }
   }
   else if (isInPlayerArr && isSecondPlayerConnection()) {
     if (tryGoblinStrike) {
       goblinStrike();
-    } else if (tryWizzardStrike) {
+    } else if (tryWizardStrike) {
       addToChain(circle, circleNr, part);
     }
   }
@@ -279,7 +279,7 @@ function sortAccsinCurrAccArray(currentAccArray) {
  */
 function initializeChain(part) {
   let currentAccArray = part === 'player' ? playerAccords : observerAccords;
-  let chaineToChange = part === 'player' ? wizzardGives : wizzardTakes;
+  let chaineToChange = part === 'player' ? wizardGives : wizardTakes;
   currentAccArray = sortAccsinCurrAccArray(currentAccArray);
   let currAcc = choosenAcc;
   chaineToChange.push(choosenAcc);
@@ -364,11 +364,11 @@ function addToChain(circle, circleNr, part) {
  * called by addToChain()
  */
 function choosePlayerAccs() {
-  if (wizzardTakes.length === 1) {
-    currentInfoFunction = wizzardTookSoloCard; 
+  if (wizardTakes.length === 1) {
+    currentInfoFunction = wizardTookSoloCard; 
     showInfo(currentInfoFunction);
-  } else if (wizzardTakes.length > 1) {
-    currentInfoFunction = wizzardTookChain; 
+  } else if (wizardTakes.length > 1) {
+    currentInfoFunction = wizardTookChain; 
     showInfo(currentInfoFunction);
   }
   choosenAcc = [];
@@ -377,7 +377,7 @@ function choosePlayerAccs() {
 }
 
 /**
- * Player choose own card(s) to exchange and finish wizzardstrike
+ * Player choose own card(s) to exchange and finish wizardstrike
  * @param {*} circle
  * @param {*} circleNr 
  * @param {*} part 
@@ -386,15 +386,15 @@ function startExchange(circle, circleNr, part) {
   choosenAcc = playerAccords.find(acc => acc.circleNr === circleNr);
 
   if (((choosenAcc === flatPlayerConnection) || (choosenAcc === sharpPlayerConnection)) && !(flatPlayerConnection && sharpPlayerConnection) && choosenAcc.amount != 2) {
-    // if choosenAcc in playerPart the connection for wizzardTakes
+    // if choosenAcc in playerPart the connection for wizardTakes
     showWithTimeout(needForConnection, 4000);
-    wizzardGives = [];
+    wizardGives = [];
     return;
   }
-  wizzardStrike(observerAccords, playerAccords, wizzardTakes);
-  wizzardStrike(playerAccords, observerAccords, wizzardGives);
-  tryWizzardStrike = false;
-  showWithTimeout(infoWizzardComplete);
+  wizardStrike(observerAccords, playerAccords, wizardTakes);
+  wizardStrike(playerAccords, observerAccords, wizardGives);
+  tryWizardStrike = false;
+  showWithTimeout(infoWizardComplete);
   setTimeout(() => {
     specialInProgress = false;
     finishRound();
@@ -406,9 +406,9 @@ function startExchange(circle, circleNr, part) {
  * get correct order of parameters from startExchange()
  * @param {Array} source is observerAccords or playerAccords
  * @param {Array} target is playerAccords or observerAccords
- * @param {Array} items is wizzardTakes or wizzardGives
+ * @param {Array} items is wizardTakes or wizardGives
  */
-function wizzardStrike(source, target, items) {
+function wizardStrike(source, target, items) {
   items.forEach(item => {
     let targetItem = target.find(acc => acc.nr === item.nr);
     if (targetItem) {// if source-acc still exist in target-array

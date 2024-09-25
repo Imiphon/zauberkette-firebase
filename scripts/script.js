@@ -7,8 +7,8 @@ function docID(id) {
 /* --------------- INDEX.HTML  ------------------------*/
 //called for landingpage
 function renderIndex() { 
-  let mainContent = docID("mainContentID"); 
-  mainContent.innerHTML = infoStartSite(); 
+  let mainContent = docID("startSideContent"); 
+  if(mainContent) mainContent.innerHTML = infoStartSite(); 
 }
 
 /*------------------------------- TABLE FUNCTIONS ---------------------------*/
@@ -26,7 +26,7 @@ function testModus() {
     { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
     //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
     //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
-    { nr: 15, stackNr: -1, title: 'wizzard', amount: 1, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
+    { nr: 15, stackNr: -1, title: 'wizard', amount: 1, inUse: false, src: 'assets/images/specials/wizard.jpg' }
   ];
   console.log('testCards activated');
 }
@@ -68,25 +68,96 @@ function findOptAccords(cardNr) {
   }
 }
 
+// Helper Function to Append Translated Text
+function appendTranslatedText(key, text, parentElement) {
+  const span = document.createElement('span');
+  span.setAttribute('data-key', key);
+  span.innerHTML = text;
+  parentElement.appendChild(span);
+  parentElement.appendChild(document.createElement('br'));
+}
+
+// Function to Render Single Accord
+function renderSingleAccord(optAcc, parentElement) {
+  const keyMap = {
+    0: 'gnom',
+    13: 'mellot',
+    14: 'goblin',
+    15: 'wizard',
+  };
+
+  const key = keyMap[optAcc];
+  if (key && texts[key] && texts[key][language]) {
+    const text = texts[key][language];
+    appendTranslatedText(key, text, parentElement);
+  } else {
+    console.warn(`No translation found for optAcc ${optAcc}`);
+  }
+}
+
+// Function to Get Musical Term Key Based on Index
+function getMusicalTermKey(index) {
+  const termKeys = ['prime', 'terz', 'quint'];
+  return termKeys[index] || '';
+}
+
+// Function to Render Accord List with Musical Terms
+function renderAccordList(optAccArray, parentElement) {
+  optAccArray.forEach((accNr, index) => {
+    const currAcc = allMaj.find(acc => acc.nr === accNr);
+    if (currAcc) {
+      // Get the musical term key
+      const termKey = getMusicalTermKey(index);
+      if (!termKey) {
+        console.warn(`No musical term defined for index ${index}`);
+        return;
+      }
+
+      // Get the translated musical term
+      const term = texts[termKey] && texts[termKey][language] ? `${texts[termKey][language]} in ` : '';
+
+      // Get the translated title
+      const translatedTitle = texts[currAcc.title] && texts[currAcc.title][language] ? texts[currAcc.title][language] : currAcc.title;
+
+      // Create a composite key for translation (optional, if needed)
+      const compositeKey = `${termKey}_${currAcc.title}`; // e.g., 'prime_gnom'
+
+      // Combine term and title
+      const combinedText = term + translatedTitle;
+
+      // Append the translated text
+      appendTranslatedText(compositeKey, combinedText, parentElement);
+    } else {
+      console.warn(`Accord with nr "${accNr}" not found in allMaj.`);
+    }
+  });
+}
+
 /**
- * shows for wich accords each tone is usefull (as prime, terz and quint)
- * @param {array} optAcc opt.accordNr (3) or 1 specialCardNr
+ *  Main Function to Render Optional Accords
+ * Shows for which accords each tone is useful (as prime, terz, and quint)
+ * @param {array|number} optAcc - opt.accordNr (3) or 1 specialCardNr
  * @param {number} stackNr 
+ * @param {string} optAccsPart 
  */
 function renderOptAccords(optAcc, stackNr, optAccsPart) {
-  let optAccs = document.getElementById(`${optAccsPart}${stackNr}`);
-  if (optAcc === 0) optAccs.innerHTML += 'Gnom';
-  else if (optAcc === 13) optAccs.innerHTML += 'Mellot';
-  else if (optAcc === 14) optAccs.innerHTML += 'Goblin';
-  else if (optAcc === 15) optAccs.innerHTML += 'Wizzard';
-  else {
-    for (let i = 0; i < optAcc.length; i++) {
-      let currAcc = allMaj.find(acc => acc.nr === optAcc[i]);
-      if (i === 0) optAccs.innerHTML += 'Prime in ';
-      else if (i === 1) optAccs.innerHTML += 'Terz in ';
-      else if (i === 2) optAccs.innerHTML += 'Quint in ';
-      optAccs.innerHTML += currAcc.title + '<br>';
-    }
+  const optAccs = document.getElementById(`${optAccsPart}${stackNr}`);
+  if (!optAccs) {
+    console.warn(`Element with id "${optAccsPart}${stackNr}" not found.`);
+    return;
+  }
+
+  // Clear existing content
+  optAccs.innerHTML = '';
+
+  if ([0, 13, 14, 15].includes(optAcc)) {
+    // Render single accord
+    renderSingleAccord(optAcc, optAccs);
+  } else if (Array.isArray(optAcc)) {
+    // Render list of accords with musical terms
+    renderAccordList(optAcc, optAccs);
+  } else {
+    console.warn(`Unhandled optAcc value: ${optAcc}`);
   }
 }
 
@@ -220,6 +291,31 @@ function skipToStart() {
 }
 
 /**
+ * update of static texts like btns or header-tags
+ */
+function updateStaticTexts() {
+  const elements = document.querySelectorAll('[data-key]');
+  elements.forEach((element) => {
+    const key = element.getAttribute('data-key');
+    if (staticTexts[key] && staticTexts[key][language]) {
+      element.textContent = staticTexts[key][language];
+    } 
+  });
+}
+
+function updateDynamicTitles() {
+  // Select all span elements with data-key attributes related to dynamic titles
+  const dynamicElements = document.querySelectorAll('[data-key="gnom"], [data-key="mellot"], [data-key="goblin"], [data-key="wizard"], [data-key^="prime_"], [data-key^="terz_"], [data-key^="quint_"]');
+
+  dynamicElements.forEach((element) => {
+    const key = element.getAttribute('data-key');
+    if (texts[key] && texts[key][language]) {
+      element.innerHTML = texts[key][language];
+    }
+  });
+}
+
+/**
  * Update the index to the next language, wrapping around if necessary
  * Update the image source in btn and alt attribute 
  *  updatePageLanguage(newLang);
@@ -234,6 +330,9 @@ function toggleLang() {
   if(currentInfoFunction){
   showInfo(currentInfoFunction); 
   }
+  updateStaticTexts();
+  updateDynamicTitles();
+  renderIndex();
 }
 
 /**

@@ -53,10 +53,10 @@ let specialInProgress = false; //if btn for special is clicked in process before
 let usedSpecials = []; //coming from separateSpecial()
 let choosenAcc = []; //taken from observerAccords to put it into playerAccords and reversed
 let tryGoblinStrike = false; //if player clicks goblin btn 
-let tryWizzardStrike = false;//if player clicks wizzard btn 
-let wizzardTakes = []; // is storing all neighbors in observer circle(higher OR lower) of choosenAcc, or only single Accords
-let wizzardGives = []; //     -"-   in player circle     -"-
-let flatNeighbor = []; //neighbor of choosenAcc (for observer (or also player in wizzardGives)
+let tryWizardStrike = false;//if player clicks wizard btn 
+let wizardTakes = []; // is storing all neighbors in observer circle(higher OR lower) of choosenAcc, or only single Accords
+let wizardGives = []; //     -"-   in player circle     -"-
+let flatNeighbor = []; //neighbor of choosenAcc (for observer (or also player in wizardGives)
 let sharpNeighbor = [];//    -"-
 let playerChains = []; //Array of accord chains after every round
 let observerChains = [];//    -"-
@@ -84,7 +84,7 @@ let allTones = [
   { nr: 12, stackNr: -1, title: 'B', amount: 3, src: 'assets/images/tones/toneB.png' },
   { nr: 13, stackNr: -1, title: 'mellot', amount: 0, inUse: false, src: 'assets/images/specials/mellot.jpg' },
   { nr: 14, stackNr: -1, title: 'goblin', amount: 2, inUse: false, src: 'assets/images/specials/goblin.jpg' },
-  { nr: 15, stackNr: -1, title: 'wizzard', amount: 0, inUse: false, src: 'assets/images/specials/wizzard.jpg' }
+  { nr: 15, stackNr: -1, title: 'wizard', amount: 0, inUse: false, src: 'assets/images/specials/wizard.jpg' }
 ];
 
 let allMaj = [

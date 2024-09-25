@@ -333,14 +333,14 @@ img {
   display: none;
 }
 
-#infoWizzard {
+#infoWizard {
   display: none;
 }
 
 .chain-frame:hover .chain-helper,
 .helper-frame:hover .infoMellot,
 .helper-frame:hover .infoGoblin,
-.helper-frame:hover .infoWizzard {
+.helper-frame:hover .infoWizard {
   display: block;
 }
 
@@ -437,6 +437,7 @@ img {
 .brass-long {
   background-image: url('./../assets/images/bgr/brass-long.png');
   color: rgb(55, 42, 32);
+  background-repeat: no-repeat;
 }
 
 .brass-long-high {

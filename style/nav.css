@@ -94,7 +94,7 @@ flex-direction: column;
 }
 
 .nav-right {
-  width: 100%;
+  width: fit-content;
   margin-right: 80px;
   display: flex;
   align-items: center;
