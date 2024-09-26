@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style/nav.css">
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/table.css">
+    <script src="scripts/header.js"></script>
     <script src="scripts/variable-texts.js"></script>
     <script src="scripts/static-texts.js"></script>
     <script src="scripts/arrays.js"></script>
@@ -19,32 +20,9 @@
 </head>
 
 <body onload="renderIndex()" id="body">
-    <nav>
-        <div class="nav-left">
-            <img class="logo" src="assets/images/logo-wheat.png" alt="">
-        </div>
-        <div class="nav-center">
-            <h3>Zauberkette</h3>
-    
-        </div>
-        <div class="nav-right">
-            <div class="nav-btns">
-                <button class="nav-btn" onclick="toggleLang()">
-                    <img class="lang" id="langImg" src="assets/images/btn/de.svg" alt="">
-                </button>
-            </div>
-            <div class="menuToggle" id="menuToggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-                <ul id="menu">
-                    <a href="#">
-                    <a href="javascript:void(0);" onclick="openRulesPopup()">Game Rules</a><br>
-                    <a href="">More</a>
-                </ul>
-            </div>
-    </nav>
-    <main id="startSideContent">
+        <header id="headInfoID"></header>
+    <main id="startSideContent"></main>
+        
 
     </main>
     <footer></footer>

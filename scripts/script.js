@@ -6,9 +6,12 @@ function docID(id) {
 
 /* --------------- INDEX.HTML  ------------------------*/
 //called for landingpage
-function renderIndex() { 
-  let mainContent = docID("startSideContent"); 
-  if(mainContent) mainContent.innerHTML = infoStartSite(); 
+function renderIndex() {
+  let mainContent = docID("startSideContent");
+  if (mainContent) mainContent.innerHTML = infoStartSite();
+
+  const header = document.querySelector('header');
+  header.innerHTML = renderHeaderHTML();
 }
 
 /*------------------------------- TABLE FUNCTIONS ---------------------------*/
@@ -147,7 +150,6 @@ function renderOptAccords(optAcc, stackNr, optAccsPart) {
     return;
   }
 
-  // Clear existing content
   optAccs.innerHTML = '';
 
   if ([0, 13, 14, 15].includes(optAcc)) {
@@ -248,63 +250,21 @@ function renderCircles() {
   renderAccords(true); //isObserver
 }
 
-function renderTable() {
-  const header = document.querySelector('header');
-  header.innerHTML = renderHeaderHTML();
-  currentInfoFunction = infoStart; 
-  showInfo(currentInfoFunction);
-  buildStack("playerCards"); // Kay -- render player stack with joined function
-  buildStack("observerCards");
-  renderCircles();
-  chainHelper();
-  currentCardID = -1;
-  startRound();
-}
-
-
-function initialize() {
-  renderTable();
-  detectTouchDevice();
-}
-
-
-function toggleMenu() {
-  const menu = document.getElementById('menu');
-  const menuToggle = document.getElementById('menuToggle');
-  menu.classList.toggle('open'); // Toggle the 'open' class to show or hide the menu  
-  menuToggle.classList.toggle('open'); // Optionally, toggle the class for hamburger to X transformation
-}
-
-// Close the menu if clicked outside
-document.addEventListener('click', function (event) {
-  const menu = document.getElementById('menu');
-  const menuToggle = document.getElementById('menuToggle');
-
-  if (!menuToggle.contains(event.target) && !menu.contains(event.target)) {
-    menu.classList.remove('open');
-    menuToggle.classList.remove('open');
-  }
-});
-
-function skipToStart() {
-  window.location.reload();
-}
-
 /**
  * update of static texts like btns or header-tags
  */
 function updateStaticTexts() {
   const elements = document.querySelectorAll('[data-key]');
   elements.forEach((element) => {
-    const key = element.getAttribute('data-key');
+    const key = element.getAttribute('data-key');  
+
     if (staticTexts[key] && staticTexts[key][language]) {
       element.textContent = staticTexts[key][language];
-    } 
+    }
   });
 }
 
 function updateDynamicTitles() {
-  // Select all span elements with data-key attributes related to dynamic titles
   const dynamicElements = document.querySelectorAll('[data-key="gnom"], [data-key="mellot"], [data-key="goblin"], [data-key="wizard"], [data-key^="prime_"], [data-key^="terz_"], [data-key^="quint_"]');
 
   dynamicElements.forEach((element) => {
@@ -318,49 +278,33 @@ function updateDynamicTitles() {
 /**
  * Update the index to the next language, wrapping around if necessary
  * Update the image source in btn and alt attribute 
- *  updatePageLanguage(newLang);
+ *  updatePageLanguage(currLang);
  *  Update the displayed info to the new language
  */
+currLang = 'de';
 function toggleLang() {
   currentLangIndex = (currentLangIndex + 1) % languages.length;
-  let newLang = languages[currentLangIndex];
-  document.getElementById('langImg').src = `assets/images/btn/${newLang}.svg`;
-  document.getElementById('langImg').alt = newLang;
-  language = newLang;
-  if(currentInfoFunction){
-  showInfo(currentInfoFunction); 
+  currLang = languages[currentLangIndex];
+  language = currLang;
+  if (currentInfoFunction) {
+    showInfo(currentInfoFunction);
   }
+
+  renderIndex();
   updateStaticTexts();
   updateDynamicTitles();
-  renderIndex();
+  localStorage.setItem('currentLangIndex', currentLangIndex);
 }
 
-/**
- * to set the goal (length of winner chain)
- */
-function decreaseValue() {
-  let value = parseInt(document.getElementById('currentValue').textContent, 10);
-  if (value > 2) {
-      value--;
-      document.getElementById('currentValue').textContent = value;
-      updateGoal(value);
+document.addEventListener('DOMContentLoaded', () => {
+  const savedIndex = localStorage.getItem('currentLangIndex');
+  if (savedIndex !== null) {
+    currentLangIndex = savedIndex - 1; //
+  } else {
+    currentLangIndex = 0;
   }
-}
-
-function increaseValue() {
-  let value = parseInt(document.getElementById('currentValue').textContent, 10);
-  if (value < 12) {
-      value++;
-      document.getElementById('currentValue').textContent = value;
-      updateGoal(value);
-  }
-}
-
-function updateGoal(value) {
-  goalValue = value;
-  console.log('Goal value updated to:', goalValue);
-}
-
+  toggleLang();
+});
 
 function detectTouchDevice() {
   if ('ontouchstart' in window || navigator.maxTouchPoints) {
@@ -390,86 +334,35 @@ function detectTouchDevice() {
   }
 }
 
+// Höhe der Tableiste ermitteln (Differenz zwischen Viewport und Dokumenthöhe)
 function calculateAvailableHeight() {
   const viewportHeight = window.innerHeight;
   const documentHeight = document.documentElement.clientHeight;
-
-  // Höhe der Tableiste ermitteln (Differenz zwischen Viewport und Dokumenthöhe)
   const toolbarHeight = viewportHeight - documentHeight;
-
-  // Verfügbare Höhe abzüglich der Tableiste
   const availableHeight = viewportHeight - toolbarHeight;
-
   return availableHeight;
 }
 
-function changeView() {
-  mirrorView = !mirrorView;
-  let navigation = document.getElementById('headInfoID');
-  const turnBtn = document.querySelector('.turn');
-  const turnBackBtn = document.querySelector('.turn-back');
-  if (mirrorView) {
-    navigation.classList.add('sideInfo');
-    turnBackBtn.style.display = 'block';
-    turnBtn.style.display = 'none';
-    if (!fullscreen) {
-      document.querySelector('nav').style.width = `${availableHeight}px`;
-    } else {
-      document.querySelector('nav').style.width = `100%`;
-    }
-  }
-  if (!mirrorView) {
-    navigation.classList.remove('sideInfo');
-    turnBtn.style.display = 'block';
-    turnBackBtn.style.display = 'none';
-    document.querySelector('nav').style.width = '100%';
-  }
-  toggleRotation();
-  switchTableStyle();
+function renderTable() {
+  const header = document.querySelector('header');
+  header.innerHTML = renderHeaderHTML();
+  currentInfoFunction = infoStart;
+  showInfo(currentInfoFunction);
+  buildStack("playerCards"); // Kay -- render player stack with joined function
+  buildStack("observerCards");
+  renderCircles();
+  chainHelper();
+  currentCardID = -1;
+  startRound();
+  updateStaticTexts()
 }
 
-function toggleRotation() {
-  const container = document.getElementById('observerPartID');
-  if (isRotated) {
-    container.classList.remove('rotated-180');
-  } else {
-    container.classList.add('rotated-180');
-  }
-  isRotated = !isRotated;
-}
-
-function switchTableStyle() {
-  if (mirrorView) {
-    let table = document.querySelector('.table-frame'); //with dot cause it's lookin for a selector
-    table.classList.remove('table-frame'); //only class-name without dot
-    table.classList.add('table-mirror-frame');
-  } else {
-    let table = document.querySelector('.table-mirror-frame');
-    table.classList.remove('table-mirror-frame');
-    table.classList.add('table-frame');
-  }
-}
-
-function rotateWebsite() {
-  let table = document.getElementsByClassName('table-mirror-frame')[0];
-  let currentRotation = table.style.transform;
-  if (currentRotation === "rotate(180deg)") {
-    table.style.transform = "rotate(0deg)";
-  } else {
-    table.style.transform = "rotate(180deg)";
-  }
-  table.style.transformOrigin = "center";
+function initialize() {
+  renderTable();
+  detectTouchDevice();
 }
 
 /*------------------------------- POPUPs  ------------*/
-function openRulesPopup() { //Kay --create the Game rule Pop up -- is that a good style?
-  let popup = document.createElement('div');
-  popup.className = 'popup';
-  popup.style.display = 'flex';
-  body.style.overflow = 'auto';
-  document.body.appendChild(popup);
-  popup.innerHTML = gameRules();
-}
 
 function chainHelper() { //Kay --handle the cheat sheet for the accords. Z-Index higher!
   let chainHelper = document.querySelector('.chain-helper');
