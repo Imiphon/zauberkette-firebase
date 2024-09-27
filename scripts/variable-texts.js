@@ -1,9 +1,9 @@
 const texts = {
 
   optAccInfoText: {
-    de: `<p>Drücke 'Zauber komponieren' und wähle drei verschiedene Wellenfische mit gleichem Zauber in 'Prime', 'Terz' und 'Quint' oder nimm Gnome als Joker.</p>`,
-    en: `<p>Press 'Compose Spell' and choose three different Wave Fish with the same spell in 'Prime', 'Third', and 'Fifth' or use Gnomes as jokers.</p>`,
-    fr: `<p>Appuyez sur 'Composer un sort' et choisissez trois Poissons Vague différents avec le même sort en 'Prime', 'Tierce', et 'Quinte' ou utilisez des Gnomes comme jokers.</p>`,
+    de: `<p>Drücke nach (opt.) 'Kartentausch' 'Zauber komponieren' und wähle drei verschiedene Wellenfische mit gleichem Zauber in 'Prime', 'Terz' und 'Quint' oder nimm Gnome als Joker.</p>`,
+    en: `<p>Press after (opt.) 'Swap Card' 'Compose Spell' and choose three different Wave Fish with the same spell in 'Prime', 'Third', and 'Fifth' or use Gnomes as jokers.</p>`,
+    fr: `<p>Appuyez apré 'Échanger' sur 'Composer un sort' et choisissez trois Poissons Vague différents avec le même sort en 'Prime', 'Tierce', et 'Quinte' ou utilisez des Gnomes comme jokers.</p>`,
   },
   infoMellotText: {
     de: `Drücke den Mellot-Knopf und du kannst eine eigene Spielkarte gegen eine gegnerische Karte eintauschen.`,
