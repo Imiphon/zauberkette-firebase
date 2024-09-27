@@ -19,17 +19,18 @@ function renderIndex() {
 //called in buildStack()
 function testModus() {
   playerCards = [
-    //{ nr: 1, stackNr: -1, title: 'C', amount: 3, src: 'assets/images/tones/toneC.png' },
-    //{ nr: 5, stackNr: -1, title: 'E', amount: 3, src: 'assets/images/tones/toneE.png' },
+    { nr: 1, stackNr: -1, title: 'C', amount: 3, src: 'assets/images/tones/toneC.png' },
+    { nr: 5, stackNr: -1, title: 'E', amount: 3, src: 'assets/images/tones/toneE.png' },
     //{ nr: 8, stackNr: -1, title: 'G', amount: 3, src: 'assets/images/tones/toneG.png' },
-    //{ nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
     { nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
     { nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
-    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
-    { nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
+    { nr: 0, stackNr: -1, title: 'gnom', amount: 1, src: 'assets/images/specials/joker.jpg' },
+    //{ nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
+    //{ nr: 5, stackNr: -1, title: 'E', amount: 3, src: 'assets/images/tones/toneE.png' },
+    //{ nr: 13, stackNr: -1, title: 'mellot', amount: 1, inUse: false, src: 'assets/images/specials/mellot.jpg' },
     //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
     //{ nr: 14, stackNr: -1, title: 'goblin', amount: 1, inUse: false, src: 'assets/images/specials/goblin.jpg' },
-    { nr: 15, stackNr: -1, title: 'wizard', amount: 1, inUse: false, src: 'assets/images/specials/wizard.jpg' }
+    //{ nr: 15, stackNr: -1, title: 'wizard', amount: 1, inUse: false, src: 'assets/images/specials/wizard.jpg' }
   ];
   console.log('testCards activated');
 }
@@ -195,11 +196,12 @@ function buildStack(Cards) {
 }
 
 function setCardHelper() {
-  let obsStack = document.getElementById('observerStackID');
-  let playStack = document.getElementById('playerStackID');
-  obsStack.innerHTML += optAccInfo();
-  playStack.innerHTML += optAccInfo();
+  let cardHelpers = document.querySelectorAll('.name-frame');
+    cardHelpers[1].innerHTML += `
+      <div class="card-info-frame brass-gear3 no-btn" alt="Info"></div>
+    `;
 }
+
 
 function positionAccCards() {
   const accCards = document.querySelectorAll('.accCard');
@@ -236,12 +238,16 @@ function renderCircles() {
     let obsCircle = document.getElementById(`obsCircle${i}`);
     playerCircle.innerHTML = '';
     obsCircle.innerHTML = '';
+    playerCircle.innerHTML = `<div class="bgr-circle"></div>`;
+    obsCircle.innerHTML = `<div class="bgr-circle"></div>`;
     for (let j = 1; j < 13; j++) {
       playerCircle.innerHTML += `
-          <img class="accCard" id="playerCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'player')">
+          <img class="accCard" id="playerCircle(${i})Acc(${j})" 
+          onclick="chooseAccord(${i}, ${j}, 'player')">
           `;
       obsCircle.innerHTML += `
-          <img class="accCard" id="obsCircle(${i})Acc(${j})" onclick="chooseAccord(${i}, ${j}, 'observer')">   
+          <img class="accCard" id="obsCircle(${i})Acc(${j})" 
+          onclick="chooseAccord(${i}, ${j}, 'observer')">   
           `;
     }
   }

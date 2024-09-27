@@ -1,18 +1,5 @@
 const texts = {
-  optAccInfo: {
-    de: `<div class="card-info-frame">
-            <div class="card-info-frame brass-gear3 no-btn" alt="Info">
-            </div>
-          </div>`,
-    en: `<div class="card-info-frame">
-            <div class="card-info-frame brass-gear3 no-btn" alt="Info">
-            </div>
-          </div>`,
-    fr: `<div class="card-info-frame">
-            <div class="card-info-frame brass-gear3 no-btn" alt="Info">
-            </div>
-          </div>`,
-  },
+
   optAccInfoText: {
     de: `<p>Drücke 'Zauber komponieren' und wähle drei verschiedene Wellenfische mit gleichem Zauber in 'Prime', 'Terz' und 'Quint' oder nimm Gnome als Joker.</p>`,
     en: `<p>Press 'Compose Spell' and choose three different Wave Fish with the same spell in 'Prime', 'Third', and 'Fifth' or use Gnomes as jokers.</p>`,
@@ -231,9 +218,9 @@ const texts = {
 
 // Modified functions to return content based on the current language
 
-function optAccInfo() {
-  return texts.optAccInfo[language];
-}
+//function optAccInfo() {
+//  return texts.optAccInfo[language];
+//}
 
 function optAccInfoText() {
   return texts.optAccInfoText[language];

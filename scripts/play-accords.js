@@ -4,7 +4,8 @@
  * handle click and touch events 
  * @param {} accInCircle is src of 
  */
-function savePosition(accInCircle) {
+function savePosition(accInCircle, isObserver) {
+  
   let originalTransform = window.getComputedStyle(accInCircle).transform;
   let originalZIndex = window.getComputedStyle(accInCircle).zIndex;
 
@@ -12,15 +13,27 @@ function savePosition(accInCircle) {
   accInCircle.dataset.originalZIndex = originalZIndex === 'auto' ? '0' : originalZIndex;
 
   accInCircle.addEventListener('mouseenter', function () {
-    this.style.transform = `${this.dataset.originalTransform} scale(15) translate(60%, 0%)`;
+    this.style.transform = `${this.dataset.originalTransform} `;
+    if (isObserver){
+      this.style.transform += `scale(12) translate(60%, 20%)`;
+    } else {
+      this.style.transform += `scale(12) translate(60%, -20%)`;
+    }
     this.style.zIndex = '100';
   });
 
   accInCircle.addEventListener('touchstart', function (e) {
     e.preventDefault(); //prevents direcly retransform
-    this.style.transform = `${this.dataset.originalTransform} scale(15) translate(60%, 0%)`;
+    this.style.transform = `${this.dataset.originalTransform} `;
+    if (isObserver){
+      this.style.transform += `scale(12) translate(60%, 20%)`;
+    } else {
+      this.style.transform += `scale(12) translate(60%, -20%)`;
+    }
     this.style.zIndex = '100';
   });
+
+
 
   accInCircle.addEventListener('touchend', function (e) {
     e.preventDefault();
@@ -70,7 +83,7 @@ function setAcc(prime, isNew, isObserver, isDouble) {
   } else {
     accInCircle.src = accInAllMajStack.src;
   }
-  savePosition(accInCircle); //to manage zoom position element
+  savePosition(accInCircle, isObserver); //to manage zoom position element
 }
 
 /** * 
@@ -86,7 +99,7 @@ function getCardElement(circleNr, isObserver, isDouble) {
   } else {
     circleID = isObserver ? "#obsCircle1" : "#playerCircle1";
   }
-  return document.querySelector(`${circleID} img:nth-child(${circleNr})`);
+  return document.querySelector(`${circleID} img:nth-of-type(${circleNr})`);
 }
 
 function updateNewCard(accInAllMajStack, accInCircle, isDouble) {

@@ -127,6 +127,7 @@ function changeView() {
     const turnBackBtn = document.querySelector('.turn-back');
     const navRight = document.querySelector('.nav-right');
     if (mirrorView) {
+        document.body.classList.add('mirror-view'); //important for body.mirror-view .table-top
         navigation.classList.add('sideInfo');
         turnBackBtn.style.display = 'block';
         turnBtn.style.display = 'none';
@@ -138,6 +139,7 @@ function changeView() {
         }
     }
     if (!mirrorView) {
+        document.body.classList.remove('mirror-view'); 
         navigation.classList.remove('sideInfo');
         turnBtn.style.display = 'block';
         turnBackBtn.style.display = 'none';

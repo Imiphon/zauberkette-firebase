@@ -165,7 +165,6 @@ const ruleTexts = {
 
     fr: /*html*/`
        <div class="game-description">
-       <div class="game-description">
     <h2>Description du jeu</h2>
     <p><strong>Cartes dans le jeu :</strong><br>
     2x12 sorts pour tisser des chaînes de sorts.<br>
