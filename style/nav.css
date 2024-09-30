@@ -137,20 +137,30 @@ nav {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+.menu-frame {
+  position: relative;
+}
+
 .menu {
   display: none;
   position: absolute;
   top: 60px;
-  right: 32px;
+  right: 12px;
   background-color: #f5deb3;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   flex-direction: column;
-  width: 120px;
+  width: fit-content;
   height: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.3s ease;
+  text-align: left;
 }
 
 .menu.show {
   display: flex; /* Show the menu when 'show' class is added */
+  opacity: 1;
+  visibility: visible;
 }
 
 .menu a {
@@ -163,16 +173,4 @@ nav {
 .menu a:hover {
   background-color: #555;
   color:  #f5deb3;
-}
-
-/* Optional: Transition for smoothness */
-.menu {
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.menu.show {
-  opacity: 1;
-  visibility: visible;
 }

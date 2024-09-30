@@ -37,21 +37,25 @@ function renderHeaderHTML() {
             <button class="nav-btn" onclick="toggleLang()">
                 <img class="lang" id="langImg" src="assets/images/btn/${currLang}.svg" alt="toggle language">
             </button>
+            <div class ="menu-frame">
+
             <button class="nav-btn" onclick="openMenu()" id="menuButton" aria-haspopup="true" aria-expanded="false">
                 <img class="lang" src="assets/images/btn/burger-black-50kb.png" alt="">
             </button>
+
+            <div class="menu" id="menuContainer" aria-hidden="true">
+                <a href="#" class="menu-item" onclick="handleMenuItemClick(event, 'mirror-view')" data-key="mirrorView">${staticTexts.mirrorView.currLang}</a>
+                <a href="index.html" class="menu-item">Home</a>
+                <a href="javascript:void(0);" class="menu-item" onclick="openRulesPopup()" data-key="gameRules">${staticTexts.gameRules.currLang}</a>
+                <a href="#" class="menu-item">More</a>              
+            </div>
+            </div>
         </div>
     </div>
-          <!-- Menu Container -->
-          <div class="menu" id="menuContainer" aria-hidden="true">
-              <a href="#" class="menu-item" onclick="handleMenuItemClick(event, 'mirror-view')">Mirror View</a>
-              <a href="index.html" class="menu-item">Home</a>
-              <a href="javascript:void(0);" class="menu-item" onclick="openRulesPopup()">Game Rules</a>
-              <a href="#" class="menu-item">More</a>
-          </div>
 </nav>
 `;
 }
+// data-key="chainLength">${staticTexts.chainLength.currLang} 
 
 function openRulesPopup() {
     let popup = createPopup();

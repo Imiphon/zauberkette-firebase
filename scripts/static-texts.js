@@ -64,7 +64,7 @@ const startSide = {
   }
 }
 
-//actually it has to be in static-texts
+//gives back landingpage infos
 function infoStartSite() {
   return startSide.infoStartSite[language];
 }
@@ -215,11 +215,22 @@ function gameRules() {
   return ruleTexts.gameRules[language];
 }
 
+//texts in menu and on btns
 const staticTexts = {
   chainLength: {
     de: 'Gewinnerkette',
     en: 'Winning Chain',
     fr: 'Chaîne gagnantes',
+  },
+  mirrorView: {
+    de: 'Spiegelansicht',
+    en: 'mirror view',
+    fr: 'Vue miroir',
+  },
+  gameRules: {
+    de: 'Spielbeschreibung',
+    en: 'Game Rules',
+    fr: 'Description du jeu',
   },
   observer: {
     de: 'Beobachter',
