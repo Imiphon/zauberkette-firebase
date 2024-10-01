@@ -434,7 +434,7 @@ img {
 }
 
 .no-btn {
-  padding: 20px;
+  padding: 12px;
   max-height: fit-content;
   background-size: 100% 100%;
   background-position: center;
@@ -448,13 +448,13 @@ img {
 
 .brass-long {
   background-image: url('./../assets/images/bgr/brass-long.png');
-  color: rgb(55, 42, 32);
+  color: rgb(0 0 0);
   background-repeat: no-repeat;
 }
 
 .brass-long-high {
   background-image: url('./../assets/images/bgr/brass-long-high.png');
-  color: rgb(55, 42, 32);
+  color: rgb(0 0 0);
   background-size: cover;
   background-repeat: no-repeat;
   min-width: auto;
@@ -462,9 +462,9 @@ img {
 }
 
 .brass-plate {
-  background-image: url('./../assets/images/bgr/brass-plate.png');
-  color: rgb(55, 42, 32);
-  min-width: 60px;
+  background-image: url(./../assets/images/bgr/brass-plate.png);
+  color: rgb(0 0 0);
+  min-width: 80px;
 }
 
 .small-font {
@@ -559,21 +559,12 @@ img {
 @media (max-width: 1400px) {
   .small-font {
     font-size: 12px;
+    font-weight: 600;
   }
 
   .table-top,
 .table-bottom {
   width: 90%;
-
-  /*
-  
-  height: 40%;
-  display: flex;
-  flex: 0 0 40%;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  */
 }
 
 body.mirror-view .table-top {

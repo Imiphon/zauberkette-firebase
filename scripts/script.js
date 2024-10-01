@@ -112,22 +112,16 @@ function renderAccordList(optAccArray, parentElement) {
     if (currAcc) {
       // Get the musical term key
       const termKey = getMusicalTermKey(index);
-      if (!termKey) {
-        console.warn(`No musical term defined for index ${index}`);
-        return;
-      }
-
-      // Get the translated musical term
-      const term = texts[termKey] && texts[termKey][language] ? `${texts[termKey][language]} in ` : '';
-
+      // Get the translated musical term e.g."Prime in "
+      const term = texts[termKey] && texts[termKey][language] ? texts[termKey][language] : '';
       // Get the translated title
-      const translatedTitle = texts[currAcc.title] && texts[currAcc.title][language] ? texts[currAcc.title][language] : currAcc.title;
+      const titleKey = currAcc.title;
+      const translatedTitle = texts[titleKey] && texts[titleKey][language] ? texts[titleKey][language] : titleKey;
 
-      // Create a composite key for translation (optional, if needed)
-      const compositeKey = `${termKey}_${currAcc.title}`; // e.g., 'prime_gnom'
-
+      // Create a composite key for translation  e.g., 'prime_C' term = "
+      const compositeKey = termKey + titleKey;
       // Combine term and title
-      const combinedText = term + translatedTitle;
+      const combinedText = term + translatedTitle; //e.g. "prime in C"
 
       // Append the translated text
       appendTranslatedText(compositeKey, combinedText, parentElement);
@@ -141,8 +135,8 @@ function renderAccordList(optAccArray, parentElement) {
  *  Main Function to Render Optional Accords
  * Shows for which accords each tone is useful (as prime, terz, and quint)
  * @param {array|number} optAcc - opt.accordNr (3) or 1 specialCardNr
- * @param {number} stackNr 
- * @param {string} optAccsPart 
+ * @param {number} stackNr is nr of current acc
+ * @param {string} optAccsPart isPlayer or Observer
  */
 function renderOptAccords(optAcc, stackNr, optAccsPart) {
   const optAccs = document.getElementById(`${optAccsPart}${stackNr}`);
@@ -270,17 +264,6 @@ function updateStaticTexts() {
   });
 }
 
-function updateDynamicTitles() {
-  const dynamicElements = document.querySelectorAll('[data-key="gnom"], [data-key="mellot"], [data-key="goblin"], [data-key="wizard"], [data-key^="prime_"], [data-key^="terz_"], [data-key^="quint_"]');
-
-  dynamicElements.forEach((element) => {
-    const key = element.getAttribute('data-key');
-    if (texts[key] && texts[key][language]) {
-      element.innerHTML = texts[key][language];
-    }
-  });
-}
-
 /**
  * Update the index to the next language, wrapping around if necessary
  * Update the image source in btn and alt attribute 
@@ -298,7 +281,9 @@ function toggleLang() {
 
   renderIndex();
   updateStaticTexts();
-  updateDynamicTitles();
+  //just to update optAcc
+  renderStack("playerCard", "playerStackID");
+  renderStack("observerCard", "observerStackID");
   localStorage.setItem('currentLangIndex', currentLangIndex);
 }
 

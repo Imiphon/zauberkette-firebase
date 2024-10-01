@@ -190,30 +190,116 @@ const texts = {
     en: 'Goblin',
     fr: 'Gobelin',
   },
-  wizard: { // Note: Correct spelling is "wizard" in English, but maintaining as per your code
+  wizard: {
     de: 'Magier',
     en: 'Wizard',
     fr: 'Magicien',
   },
-  
-  // Translations for musical terms if needed
+
   prime: {
-    de: 'Prime',
-    en: 'Prime',
-    fr: 'Prime',
+    de: 'Prime in ',
+    en: 'Prime in ',
+    fr: 'Prime à ',
   },
   terz: {
-    de: 'Terz',
-    en: 'Third',
-    fr: 'Tierce',
+    de: 'Terz in ',
+    en: 'Third in ',
+    fr: 'Tierce à ',
   },
   quint: {
-    de: 'Quint',
-    en: 'Fifth',
-    fr: 'Quinte',
+    de: 'Quint in ',
+    en: 'Fifth in ',
+    fr: 'Quinte à ',
   },
 
-  // Add other translations similarly...
+  C: {
+    de: 'C',
+    en: 'C',
+    fr: 'Do',
+  },
+  D: {
+    de: 'D',
+    en: 'D',
+    fr: 'Ré',
+  },
+  E: {
+    de: 'E',
+    en: 'E',
+    fr: 'Mi',
+  },
+  F: {
+    de: 'F',
+    en: 'F',
+    fr: 'Fa',
+  },
+  G: {
+    de: 'G',
+    en: 'G',
+    fr: 'Sol',
+  },
+  A: {
+    de: 'A',
+    en: 'A',
+    fr: 'La',
+  },
+  B: {
+    de: 'H',    // Im Deutschen wird das 'B' als 'H' bezeichnet
+    en: 'B',
+    fr: 'Si',
+  },
+  Db: {
+    de: 'Des',
+    en: 'Db',
+    fr: 'Ré♭',
+  },
+  Eb: {
+    de: 'Es',
+    en: 'Eb',
+    fr: 'Mi♭',
+  },
+  Gb: {
+    de: 'Ges',
+    en: 'Gb',
+    fr: 'Sol♭',
+  },
+  Ab: {
+    de: 'As',
+    en: 'Ab',
+    fr: 'La♭',
+  },
+  Bb: {
+    de: 'B',
+    en: 'Bb',
+    fr: 'Si♭',
+  },
+
+  //Optional, not in use now
+  Csharp: {      
+    de: 'C♯',
+    en: 'C♯',
+    fr: 'Do♯',
+  },
+  Dsharp: {
+    de: 'D♯',
+    en: 'D♯',
+    fr: 'Ré♯',
+  },
+  Fsharp: {
+    de: 'F♯',
+    en: 'F♯',
+    fr: 'Fa♯',
+  },
+  Gsharp: {
+    de: 'G♯',
+    en: 'G♯',
+    fr: 'Sol♯',
+  },
+  Asharp: {
+    de: 'A♯',
+    en: 'A♯',
+    fr: 'La♯',
+  },
+
 };
 
 // Modified functions to return content based on the current language
