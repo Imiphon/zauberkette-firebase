@@ -189,10 +189,11 @@ function buildStack(Cards) {
   setCardHelper();
 }
 
+//generate brass-circle to open showInfo()
 function setCardHelper() {
   let cardHelpers = document.querySelectorAll('.name-frame');
     cardHelpers[1].innerHTML += `
-      <div class="card-info-frame brass-gear3 no-btn" alt="Info"></div>
+      <div class="card-info-frame brass-gear3 no-btn " alt="Info"></div>
     `;
 }
 
@@ -290,7 +291,7 @@ function toggleLang() {
 document.addEventListener('DOMContentLoaded', () => {
   const savedIndex = localStorage.getItem('currentLangIndex');
   if (savedIndex !== null) {
-    currentLangIndex = savedIndex - 1; //
+    currentLangIndex = savedIndex - 1; 
   } else {
     currentLangIndex = 0;
   }

@@ -268,7 +268,7 @@ const texts = {
     fr: 'La♭',
   },
   Bb: {
-    de: 'B',
+    de: 'B♭',
     en: 'Bb',
     fr: 'Si♭',
   },

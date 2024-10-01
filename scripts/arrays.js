@@ -93,7 +93,7 @@ let allMaj = [
   { nr: 3, circleNr: 3, title: 'D', amount: 2, src: 'assets/images/accords/accD.jpg' },
   { nr: 4, circleNr: 10, title: 'Eb', amount: 1, src: 'assets/images/accords/accEb.jpg' },
   { nr: 5, circleNr: 5, title: 'E', amount: 2, src: 'assets/images/accords/accE.jpg' },
-  { nr: 6, circleNr: 12, title: 'F', amount: 0, src: 'assets/images/accords/accF.jpg' },
+  { nr: 6, circleNr: 12, title: 'F', amount: 2, src: 'assets/images/accords/accF.jpg' },
   { nr: 7, circleNr: 7, title: 'Gb', amount: 2, src: 'assets/images/accords/accGb.jpg' },
   { nr: 8, circleNr: 2, title: 'G', amount: 2, src: 'assets/images/accords/accG.jpg' },
   { nr: 9, circleNr: 9, title: 'Ab', amount: 2, src: 'assets/images/accords/accAb.jpg' },

@@ -220,7 +220,7 @@
   transform: translate(-50%, -50%);
   width: 12px;
   height: 18px;
-  background-color: rgb(146, 146, 146);
+  background-color: #ead0ae;
   border-radius: 10px;
   margin: 5px;
 }
@@ -306,6 +306,7 @@ img {
 
 .card-info-frame {
   cursor: pointer;
+  padding: 20px !important;
 }
 
 .info-text {
