@@ -46,7 +46,7 @@ async function finishRound() {
         }, 10000);
         isWinner =false;
     } else {
-        playSound('success', 'gong-deep', 0.5);
+        playSound('success', 'clave', 0.5);
         startRound();
     }
     

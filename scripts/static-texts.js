@@ -15,10 +15,9 @@ const startSide = {
           </div>
         </div>
         <div class="startside-btns">        
-          <a href="table.html">
-            <div id="startBtn" class="">Zauberkette spielen</div>
-          </a>
-        </div>
+    <div id="startBtn" class="start-btn" onclick="renderNames()">Play Zauberkette</div>
+</div>
+
       </div>
     `,
     en: /*html*/`
@@ -35,10 +34,9 @@ const startSide = {
           </div>
         </div>
         <div class="startside-btns">        
-          <a href="table.html">
-            <div id="startBtn" class="">Play Zauberkette</div>
-          </a>
-        </div>
+    <div id="startBtn" class="start-btn" onclick="renderNames()">Play Zauberkette</div>
+</div>
+
       </div>
     `,
     fr: /*html*/`
@@ -55,10 +53,9 @@ const startSide = {
           </div>
         </div>
         <div class="startside-btns">        
-          <a href="table.html">
-            <div id="startBtn" class="">Joue Zauberkette</div>
-          </a>
-        </div>
+    <div id="startBtn" class="start-btn" onclick="renderNames()">Play Zauberkette</div>
+</div>
+
       </div>
     `,
   }
@@ -67,6 +64,18 @@ const startSide = {
 //gives back landingpage infos
 function infoStartSite() {
   return startSide.infoStartSite[language];
+}
+
+const nameInputHeader = {
+  de: 'Spielernamen',
+  en: 'Player Names',
+  fr: 'Noms des joueurs',
+}
+
+const startBtn = {
+  de: 'Start',
+  en: 'Start',
+  fr: 'Commencer',
 }
 
 const ruleTexts = {

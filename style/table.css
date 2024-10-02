@@ -119,6 +119,11 @@
   background-repeat: no-repeat;
 }
 
+body.mirror-view .table-top {
+  top: 32px;
+  position: relative;
+}
+
 .inner-table {
   position: relative;
   width: 100%;
@@ -160,22 +165,11 @@
 }
 
 .left-center-frame {
-  width: 40%;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 32px;
 }
-
-/*.shimmering-gold {
-  background: linear-gradient(45deg, #FFD700, #FFC107, #FFD700);
-  /* Goldene Farbtöne im Verlauf 
-  background-size: 200% 200%;
-  /* Größerer Hintergrund, um die Animation zu ermöglichen 
-  box-shadow: 0 4px 8px rgba(255, 223, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.7);
-  /* Glanz-Effekt 
-  border-radius: 20%;
-}*/
 
 .accord-zone {
   position: relative;
@@ -253,7 +247,7 @@
   top: 32px;
 }
 
-.bottom-zone{
+.bottom-zone {
   top: -32px;
 }
 
@@ -269,14 +263,14 @@
 .card-group {
   display: flex;
   justify-content: center;
-  align-items: space-evenly;
+  /*align-items: space-evenly;*/
   flex-direction: row;
 }
 
 .card {
   margin: 8px;
-  width: 80px;
-  height: 120px;
+  width: 8vw;
+  height: auto;
   min-height: 80px;
   background-color: antiquewhite;
 }
@@ -324,7 +318,6 @@ img {
 
 .info-frame {
   position: relative;
-  left: 32px;
   width: min-content;
   height: 98px;
   min-height: fit-content;
@@ -408,7 +401,7 @@ img {
 
 .btn-group {
   margin: 12px 12px;
-  width: 60%;
+  width: 50%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -435,7 +428,7 @@ img {
 }
 
 .no-btn {
-  padding: 12px;
+
   max-height: fit-content;
   background-size: 100% 100%;
   background-position: center;
@@ -448,12 +441,14 @@ img {
 }
 
 .brass-long {
+  padding: 20px;
   background-image: url('./../assets/images/bgr/brass-long.png');
   color: rgb(0 0 0);
   background-repeat: no-repeat;
 }
 
 .brass-long-high {
+  padding: 20px;
   background-image: url('./../assets/images/bgr/brass-long-high.png');
   color: rgb(0 0 0);
   background-size: cover;
@@ -463,6 +458,7 @@ img {
 }
 
 .brass-plate {
+  padding: 12px;
   background-image: url(./../assets/images/bgr/brass-plate.png);
   color: rgb(0 0 0);
   min-width: 80px;
@@ -564,13 +560,7 @@ img {
   }
 
   .table-top,
-.table-bottom {
-  width: 90%;
-}
-
-body.mirror-view .table-top {
-  top: 32px;
-  position: relative;
-}
-
+  .table-bottom {
+    width: 90%;
+  }
 }

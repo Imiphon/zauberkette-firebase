@@ -161,20 +161,22 @@ function renderOptAccords(optAcc, stackNr, optAccsPart) {
 //called in buildStack()
 function renderStack(player, part) {
   let currCardStack = docID(part);
-  currCardStack.innerHTML = '';
-  let cards = player === "playerCard" ? playerCards : observerCards;
-
-  for (let i = 0; i < cards.length; i++) {
-    let card = cards[i];
-    card.stackNr = i;
-
-    currCardStack.innerHTML += generateCardHTML(card, i, player);
-
-    let optAccNr = findOptAccords(card.nr);
-    let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
-    renderOptAccords(optAccNr, card.stackNr, optAccsPart);
+  if(currCardStack){
+    currCardStack.innerHTML = '';
+    let cards = player === "playerCard" ? playerCards : observerCards;
+  
+    for (let i = 0; i < cards.length; i++) {
+      let card = cards[i];
+      card.stackNr = i;
+  
+      currCardStack.innerHTML += generateCardHTML(card, i, player);
+  
+      let optAccNr = findOptAccords(card.nr);
+      let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
+      renderOptAccords(optAccNr, card.stackNr, optAccsPart);
+    }
+    stackOpacity1(cards, player);
   }
-  stackOpacity1(cards, player);
 }
 
 function buildStack(Cards) {
@@ -335,6 +337,18 @@ function calculateAvailableHeight() {
   return availableHeight;
 }
 
+
+
+function renderNames() {
+  let player2 = document.getElementById('obsNameID');
+  let player1 = document.getElementById('playNameID');
+  let input1 = document.getElementById('player1Input');
+  let input2 = document.getElementById('player2Input');
+
+  player1 = input1;
+  player2 = input2;
+}
+
 function renderTable() {
   const header = document.querySelector('header');
   header.innerHTML = renderHeaderHTML();
@@ -352,6 +366,12 @@ function renderTable() {
 function initialize() {
   renderTable();
   detectTouchDevice();
+
+  const player1Name = localStorage.getItem('player1Name') || 'Beta';
+  const player2Name = localStorage.getItem('player2Name') || 'Alfa';
+  document.getElementById('playNameID').textContent = player1Name;
+  document.getElementById('obsNameID').textContent = player2Name;
+  playSound('success', 'clave', 0.3);
 }
 
 /*------------------------------- POPUPs  ------------*/
@@ -359,7 +379,7 @@ function initialize() {
 function chainHelper() { //Kay --handle the cheat sheet for the accords. Z-Index higher!
   let chainHelper = document.querySelector('.chain-helper');
   chainHelper.addEventListener('click', function (event) {
-    // Das Event stoppen, damit der document click-Handler nicht ausgelöst wird
+    // that document click-Handler doesn't start
     event.stopPropagation();
     this.classList.toggle('expanded');
   });
@@ -394,3 +414,54 @@ function closePopup() { //Kay -- remove Element
     body.style.overflow = 'hidden';
   }
 }
+
+/*------------- POPUP and INSERT NAMES IN INDEX ------------------*/
+
+function renderStartBtn() {
+
+  // Event Listener für den Start-Button hinzufügen
+  const startBtn = document.getElementById('popupStartBtn');
+  startBtn.addEventListener('click', function() {
+    const input1 = document.getElementById('player1Input');
+    const input2 = document.getElementById('player2Input');
+
+    const player1InputValue = input1.value || 'Spieler 1';
+    const player2InputValue = input2.value || 'Spieler 2';
+
+    // Spielernamen in localStorage speichern
+    localStorage.setItem('player1Name', player1InputValue);
+    localStorage.setItem('player2Name', player2InputValue);
+
+    // Popup schließen
+    popupOverlay.parentNode.removeChild(popupOverlay);
+
+    // Navigation zur neuen Seite oder Aufruf von initialize()
+    window.location.href = 'table.html'; // Oder initialize();
+  });
+}
+
+function renderNames() {
+  const popupOverlay = document.createElement('div');
+  popupOverlay.id = 'popupOverlay';
+  popupOverlay.classList.add('popup-overlay');
+  document.body.appendChild(popupOverlay);
+  const header = nameInputHeader[language];
+  const buttonText = startBtn[language];
+  popupOverlay.innerHTML = `
+    <div id="popupWindow" class="popup-window">
+      <h2 data-key="nameInputHeader">${header}</h2>
+      <input type="text" id="player1Input" placeholder="Spieler 1">
+      <input type="text" id="player2Input" placeholder="Spieler 2">
+      <button id="popupStartBtn">${buttonText}</button>
+    </div>
+  `;
+
+  // click outside window
+  popupOverlay.addEventListener('click', function(event) {
+    if (event.target === popupOverlay) {
+      popupOverlay.parentNode.removeChild(popupOverlay);
+    }
+  });
+  renderStartBtn();
+}
+
