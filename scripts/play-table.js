@@ -203,8 +203,7 @@ function showInfo(infoContent) {
   if (!info) {
     console.log('found not the info div');
     return;
-  }
-  //playSound('success', 'clave', 0.2);
+  }  
   info.innerHTML = '';
   if (typeof infoContent === 'function') {
     infoContent = infoContent();

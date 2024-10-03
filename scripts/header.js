@@ -11,42 +11,43 @@ function renderHeaderHTML() {
     <div class="nav-right">
         <div class="nav-btns">
             <div class="game-goal" id="gameGoalID">
-                <span data-key="chainLength">${staticTexts.chainLength.currLang}:</span>
-                <div class="num-picker"   id="numberPicker">
+                <span data-key="chainLength">${staticTexts.chainLength[language]}:</span>
+                <div class="num-picker" id="numberPicker">
                     <button type="button" id="decreaseBtn" onclick="decreaseValue()">-</button>
                     <span id="currentValue">5</span>
                     <button type="button" id="increaseBtn" onclick="increaseValue()">+</button>
                 </div>
             </div>
+            ${!isLandingpage ? `
             <button class="nav-btn" onclick="changeView()">
-                <img class="turn" src="assets/images/btn/turn.png" alt="">
-                <img class="turn-back" src="assets/images/btn/turn-back.png" alt="">
+                <img class="turn" src="assets/images/btn/turn.png" alt="" ${mirrorView ? 'style="display:none;"' : ''}>
+                <img class="turn-back" src="assets/images/btn/turn-back.png" alt="" ${!mirrorView ? 'style="display:none;"' : ''}>
             </button>
             <button class="nav-btn" onclick="changeMute()">
-                <img class="volume_up" src="assets/images/btn/volume_up.png" alt="">
-                <img class="volume_off" src="assets/images/btn/volume_off.png" alt="">
+                <img class="volume_up" src="assets/images/btn/volume_up.png" alt="" ${isMuted ? 'style="display:none;"' : ''}>
+                <img class="volume_off" src="assets/images/btn/volume_off.png" alt="" ${!isMuted ? 'style="display:none;"' : ''}>
             </button>
             <button class="nav-btn" id="fullscreenBtn" onclick="toggleFullscreen()">
-                <img class="fullscreen-enter" src="assets/images/btn/fullscreen-enter-32.png" alt="Enter Fullscreen">
-                <img class="fullscreen-exit" src="assets/images/btn/fullscreen-exit-32.png" alt="Exit Fullscreen"
-                    style="display: none;">
+                <img class="fullscreen-enter" src="assets/images/btn/fullscreen-enter-32.png" alt="Enter Fullscreen" ${fullscreen ? 'style="display:none;"' : ''}>
+                <img class="fullscreen-exit" src="assets/images/btn/fullscreen-exit-32.png" alt="Exit Fullscreen" ${!fullscreen ? 'style="display:none;"' : ''}>
             </button>
             <button class="nav-btn" onclick="skipToStart()">
                 <img class="volume_up" src="assets/images/btn/skip-to-start-32.png" alt="new start">
             </button>
+            ` : ''}
             <button class="nav-btn" onclick="toggleLang()">
-                <img class="lang" id="langImg" src="assets/images/btn/${currLang}.svg" alt="toggle language">
+                <img class="lang" id="langImg" src="assets/images/btn/${language}.svg" alt="toggle language">
             </button>
-            <div class ="menu-frame">
+            <div class="menu-frame">
 
             <button class="nav-btn" onclick="openMenu()" id="menuButton" aria-haspopup="true" aria-expanded="false">
                 <img class="lang" src="assets/images/btn/burger-black-50kb.png" alt="">
             </button>
 
             <div class="menu" id="menuContainer" aria-hidden="true">
-                <a href="#" class="menu-item" onclick="handleMenuItemClick(event, 'mirror-view')" data-key="mirrorView">${staticTexts.mirrorView.currLang}</a>
+                <a href="#" class="menu-item" onclick="handleMenuItemClick(event, 'mirror-view')" data-key="mirrorView">${staticTexts.mirrorView[language]}</a>
                 <a href="index.html" class="menu-item">Home</a>
-                <a href="javascript:void(0);" class="menu-item" onclick="openRulesPopup()" data-key="gameRules">${staticTexts.gameRules.currLang}</a>
+                <a href="javascript:void(0);" class="menu-item" onclick="openRulesPopup()" data-key="gameRules">${staticTexts.gameRules[language]}</a>
                 <a href="#" class="menu-item">More</a>              
             </div>
             </div>
@@ -55,7 +56,6 @@ function renderHeaderHTML() {
 </nav>
 `;
 }
-// data-key="chainLength">${staticTexts.chainLength.currLang} 
 
 function openRulesPopup() {
     let popup = createPopup();

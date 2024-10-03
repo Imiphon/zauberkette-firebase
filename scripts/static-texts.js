@@ -1,69 +1,20 @@
 
-const startSide = {
-  infoStartSite: {
-    de: /*html*/`
-      <div class="startside-top">
-        <div class="startside-text">
-          <div class="opener-frame">
-            <p class="opener">
-              In der Welt von Ionoï herrscht die Magie der Musik. 
-              Töne und Klänge werden hier zu einem großen Zauber. 
-              Dafür nehmen die Magier winzige Wellenfische, die einen Ton in sich tragen und verbinden sie zu Zaubern.
-              Nur allzu gern messen sie sich darin, wem dann aus diesen Zaubern die längste Zauberkette gelingt. 
-              Beweise deine Zauberkräfte und zeige es ihnen allen!
-            </p>
-          </div>
-        </div>
-        <div class="startside-btns">        
-    <div id="startBtn" class="start-btn" onclick="renderNames()">Play Zauberkette</div>
-</div>
 
-      </div>
-    `,
-    en: /*html*/`
-        <div class="startside-top">
-        <div class="startside-text">
-          <div class="opener-frame">
-            <p class="opener">
-            In the world of Ionoï, the magic of music reigns supreme.
-            Here, tones and sounds transform into powerful spells.
-            To achieve this, the mages take tiny wavefish that carry a tone within themselves and bind them into spells.
-            They eagerly compete to see who can create the longest chain of spells from these enchantments.
-            Prove your magical abilities and show them all!
-            </p>
-          </div>
-        </div>
-        <div class="startside-btns">        
-    <div id="startBtn" class="start-btn" onclick="renderNames()">Play Zauberkette</div>
-</div>
-
-      </div>
-    `,
-    fr: /*html*/`
-         <div class="startside-top">
-        <div class="startside-text">
-          <div class="opener-frame">
-            <p class="opener">
-            Dans le monde d'Ionoï, la magie de la musique règne en maître.
-            Ici, les tons et les sons se transforment en puissants sorts.
-            Pour ce faire, les mages prennent de minuscules poissons-ondes qui portent un ton en eux-mêmes et les lient en sorts.
-            Ils se mesurent avec empressement pour voir qui parvient à créer la plus longue chaîne de sorts à partir de ces enchantements.
-            Prouve tes capacités magiques et montre-leur à tous !
-            </p>
-          </div>
-        </div>
-        <div class="startside-btns">        
-    <div id="startBtn" class="start-btn" onclick="renderNames()">Play Zauberkette</div>
-</div>
-
-      </div>
-    `,
-  }
-}
 
 //gives back landingpage infos
 function infoStartSite() {
-  return startSide.infoStartSite[language];
+  return /*html*/`
+    <div class="startside-top">
+      <div class="startside-text">
+        <div class="opener-frame">
+          <p class="opener" data-key="startOpener"></p>
+        </div>
+      </div>
+      <div class="startside-btns">        
+        <div id="startBtn" class="start-btn" onclick="renderNames()" data-key="startBtnText"></div>
+      </div>
+    </div>
+  `;
 }
 
 const nameInputHeader = {
@@ -276,5 +227,14 @@ const staticTexts = {
     en: 'Player',
     fr: 'Joueur',
   },
-  // Add other static texts as needed
+  startOpener: {
+    de: 'In der Welt von Ionoï herrscht die Magie der Musik. Töne und Klänge werden hier zu einem großen Zauber. Dafür nehmen die Magier winzige Wellenfische, die einen Ton in sich tragen und verbinden sie zu Zaubern. Nur allzu gern messen sie sich darin, wem dann aus diesen Zaubern die längste Zauberkette gelingt. Beweise deine Zauberkräfte und zeige es ihnen allen!',
+    en: 'In the world of Ionoï, the magic of music reigns supreme. Here, tones and sounds transform into powerful spells. To achieve this, the mages take tiny wavefish that carry a tone within themselves and bind them into spells. They eagerly compete to see who can create the longest chain of spells from these enchantments. Prove your magical abilities and show them all!',
+    fr: 'Dans le monde d\'Ionoï, la magie de la musique règne en maître. Ici, les tons et les sons se transforment en puissants sorts. Pour ce faire, les mages prennent de minuscules poissons-ondes qui portent un ton en eux-mêmes et les lient en sorts. Ils se mesurent avec empressement pour voir qui parvient à créer la plus longue chaîne de sorts à partir de ces enchantements. Prouve tes capacités magiques et montre-leur à tous !',
+  },
+  startBtnText: {
+    de: 'Los geht\'s',
+    en: 'Play',
+    fr: 'Commencer',
+  },
 };

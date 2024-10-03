@@ -7,8 +7,12 @@ function docID(id) {
 /* --------------- INDEX.HTML  ------------------------*/
 //called for landingpage
 function renderIndex() {
+  isLandingpage = true; 
   let mainContent = docID("startSideContent");
-  if (mainContent) mainContent.innerHTML = infoStartSite();
+  if (mainContent) {
+    mainContent.innerHTML = infoStartSite();
+    updateStaticTexts(); // Update texts after rendering
+  }
 
   const header = document.querySelector('header');
   header.innerHTML = renderHeaderHTML();
@@ -161,16 +165,16 @@ function renderOptAccords(optAcc, stackNr, optAccsPart) {
 //called in buildStack()
 function renderStack(player, part) {
   let currCardStack = docID(part);
-  if(currCardStack){
+  if (currCardStack) {
     currCardStack.innerHTML = '';
     let cards = player === "playerCard" ? playerCards : observerCards;
-  
+
     for (let i = 0; i < cards.length; i++) {
       let card = cards[i];
       card.stackNr = i;
-  
+
       currCardStack.innerHTML += generateCardHTML(card, i, player);
-  
+
       let optAccNr = findOptAccords(card.nr);
       let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
       renderOptAccords(optAccNr, card.stackNr, optAccsPart);
@@ -194,7 +198,7 @@ function buildStack(Cards) {
 //generate brass-circle to open showInfo()
 function setCardHelper() {
   let cardHelpers = document.querySelectorAll('.name-frame');
-    cardHelpers[1].innerHTML += `
+  cardHelpers[1].innerHTML += `
       <div class="card-info-frame brass-gear3 no-btn " alt="Info"></div>
     `;
 }
@@ -259,7 +263,7 @@ function renderCircles() {
 function updateStaticTexts() {
   const elements = document.querySelectorAll('[data-key]');
   elements.forEach((element) => {
-    const key = element.getAttribute('data-key');  
+    const key = element.getAttribute('data-key');
 
     if (staticTexts[key] && staticTexts[key][language]) {
       element.textContent = staticTexts[key][language];
@@ -269,22 +273,20 @@ function updateStaticTexts() {
 
 /**
  * Update the index to the next language, wrapping around if necessary
- * Update the image source in btn and alt attribute 
- *  updatePageLanguage(currLang);
- *  Update the displayed info to the new language
+ * Update the displayed texts to the new language
  */
-currLang = 'de';
 function toggleLang() {
   currentLangIndex = (currentLangIndex + 1) % languages.length;
-  currLang = languages[currentLangIndex];
-  language = currLang;
+  language = languages[currentLangIndex];
   if (currentInfoFunction) {
     showInfo(currentInfoFunction);
   }
-
-  renderIndex();
+   //const header = document.querySelector('header');
+   //header.innerHTML = renderHeaderHTML();
+  let langFlag = document.getElementById('langImg');
+  if(langFlag)langFlag.src = `assets/images/btn/${language}.svg`;
   updateStaticTexts();
-  //just to update optAcc
+  //just to update optAcc-texts
   renderStack("playerCard", "playerStackID");
   renderStack("observerCard", "observerStackID");
   localStorage.setItem('currentLangIndex', currentLangIndex);
@@ -293,7 +295,7 @@ function toggleLang() {
 document.addEventListener('DOMContentLoaded', () => {
   const savedIndex = localStorage.getItem('currentLangIndex');
   if (savedIndex !== null) {
-    currentLangIndex = savedIndex - 1; 
+    currentLangIndex = savedIndex - 1;
   } else {
     currentLangIndex = 0;
   }
@@ -337,8 +339,6 @@ function calculateAvailableHeight() {
   return availableHeight;
 }
 
-
-
 function renderNames() {
   let player2 = document.getElementById('obsNameID');
   let player1 = document.getElementById('playNameID');
@@ -349,29 +349,19 @@ function renderNames() {
   player2 = input2;
 }
 
-function renderTable() {
+function setupGame() {
+  isLandingpage = false; 
   const header = document.querySelector('header');
   header.innerHTML = renderHeaderHTML();
   currentInfoFunction = infoStart;
   showInfo(currentInfoFunction);
-  buildStack("playerCards"); // Kay -- render player stack with joined function
+  buildStack("playerCards"); // Render player stack
   buildStack("observerCards");
   renderCircles();
   chainHelper();
   currentCardID = -1;
   startRound();
-  updateStaticTexts()
-}
-
-function initialize() {
-  renderTable();
-  detectTouchDevice();
-
-  const player1Name = localStorage.getItem('player1Name') || 'Beta';
-  const player2Name = localStorage.getItem('player2Name') || 'Alfa';
-  document.getElementById('playNameID').textContent = player1Name;
-  document.getElementById('obsNameID').textContent = player2Name;
-  playSound('success', 'clave', 0.3);
+  updateStaticTexts();
 }
 
 /*------------------------------- POPUPs  ------------*/
@@ -421,22 +411,20 @@ function renderStartBtn() {
 
   // Event Listener für den Start-Button hinzufügen
   const startBtn = document.getElementById('popupStartBtn');
-  startBtn.addEventListener('click', function() {
+  startBtn.addEventListener('click', function () {
     const input1 = document.getElementById('player1Input');
     const input2 = document.getElementById('player2Input');
 
     const player1InputValue = input1.value || 'Spieler 1';
     const player2InputValue = input2.value || 'Spieler 2';
 
-    // Spielernamen in localStorage speichern
     localStorage.setItem('player1Name', player1InputValue);
     localStorage.setItem('player2Name', player2InputValue);
 
-    // Popup schließen
     popupOverlay.parentNode.removeChild(popupOverlay);
 
-    // Navigation zur neuen Seite oder Aufruf von initialize()
-    window.location.href = 'table.html'; // Oder initialize();
+    renderTable(); 
+    playSound('success', 'clave', 0.2);
   });
 }
 
@@ -457,7 +445,7 @@ function renderNames() {
   `;
 
   // click outside window
-  popupOverlay.addEventListener('click', function(event) {
+  popupOverlay.addEventListener('click', function (event) {
     if (event.target === popupOverlay) {
       popupOverlay.parentNode.removeChild(popupOverlay);
     }

@@ -2,11 +2,13 @@
 let vh = window.innerHeight * 0.01; //saves 1% of 100vh manual (somtimes neccassary for mobiles with border)
 document.documentElement.style.setProperty("--vh", `${vh}px`); //set var '--v' for css stuff like: height: calc(var(--vh, 1vh) * 100);
 
+let isLandingpage = true;
 let goalValue = 5;
 let isWinner = false;
 let languages = ['de', 'en', 'fr'];
 let currentLangIndex = 0;
 let language = 'de';
+let fullscreen = false;
 let currentInfoFunction = null; 
 
 let cardClickHandler = null; 
