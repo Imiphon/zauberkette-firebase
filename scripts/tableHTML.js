@@ -2,7 +2,7 @@ function renderTable() {
     // Hauptinhaltselement, in das der Tabelleninhalt eingefügt wird
     const mainContent = document.getElementById('startSideContent');
     if (mainContent) {
-      mainContent.innerHTML = `
+      mainContent.innerHTML = /*html*/`
         <main>
         <header id="headInfoID"></header>
         <div class="table-frame">

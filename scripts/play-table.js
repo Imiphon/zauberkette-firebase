@@ -47,14 +47,19 @@ function setSpecialInfo(special) {
  * old card is getting amount++ in allTones[]
  */
 async function changeCard() {
-  let newCard = randomStack(); // get randomNewCard with amount:1 --Kay-- or height
+  let newCard = randomStack(); // get randomNewCard with amount:1 
   let oldNr = playerCards[currentCardID]['nr']; //  Selected card.nr
-  let allTonesUpdate = allTones.find((card) => card.nr === oldNr); // Kay -- work it correct?
+  let allTonesUpdate = allTones.find((card) => card.nr === oldNr);
   if (allTonesUpdate) {
     allTonesUpdate.amount++;
   }
   playerCards[currentCardID] = newCard; // Kay -- add card to player cards
   let cardElement = docID(`playerCard${currentCardID}`);
+  //const spellOverlay = parentElement.querySelector('.spell-overlay');
+  //if (spellOverlay) {
+  //  spellOverlay.remove();
+  //}
+
   cardElement.src = newCard.src; //all infos include
   renderStack("playerCard", "playerStackID"); //Kay --render the player Stack
   disableCardClicks(); //Kay --remove Pointer and Click-eventlistener of 
@@ -83,19 +88,55 @@ function randomStack() {
   }
 }
 
-function changeWinnerCards() { // Kay -- cards combine to magic card. 
-  for (i = 0; i < cardCombi.length; i++) {
-    currentCardID = cardCombi[i].stackNr;
-    changeCard();
-    cardCombi[i].stackNr = -1;
+function changeWinnerCards() {
+  const cardIDs = [];
+  for (let i = 0; i < cardCombi.length; i++) {
+    const currentCardID = cardCombi[i].stackNr;
+    cardIDs.push(currentCardID);
+    fadeToSpell(currentCardID);
   }
-  noBtns(); //Kay reset all Button style
+  noBtns(); 
   currentInfoFunction = infoWinMagic;
   showInfo(currentInfoFunction);
+
   setTimeout(() => {
+    for (let i = 0; i < cardCombi.length; i++) {
+      currentCardID = cardIDs[i]; // needed for changeCard()
+      changeCard(); 
+      cardCombi[i].stackNr = -1; 
+    }
     finishRound();
   }, 7000);
 }
+
+function fadeToSpell(cardID) {
+  const cardElement = document.getElementById(`playerCard${cardID}`);
+
+  if (!cardElement) {
+    console.error(`Kein Element mit ID 'playerCard${cardID}' gefunden.`);
+    return;
+  }
+  cardElement.style.opacity = '0.5';
+//
+//  const existingOverlay = cardElement.parentElement.querySelector('.spell-overlay');
+//  if (existingOverlay) {
+//    existingOverlay.remove();
+//  }
+
+  const spellImage = document.createElement('img');
+  spellImage.src = 'assets/images/specials/spell.png';
+  spellImage.classList.add('spell-overlay');
+
+  const parentElement = cardElement.parentElement;
+  if (window.getComputedStyle(parentElement).position === 'static') {
+    parentElement.style.position = 'relative';
+  }
+
+  parentElement.appendChild(spellImage);
+}
+
+
+
 
 /*------------------------------- CLICK CARD STUFF -------------------------------*/
 
@@ -127,25 +168,29 @@ function stepBack() {
 function enablePlayerCards() {
   const styledCards = document.querySelectorAll('#playerStackID .card');
   styledCards.forEach((card) => {
-    card.style.pointerEvents = 'auto';
+    card.style.pointerEvents = 'auto';//still neccassary?
+    card.classList.add('active');
   });
 }
 
 function enableObserverCards() {
   const styledCards = document.querySelectorAll('#observerStackID .card');
   styledCards.forEach((card) => {
-    card.style.pointerEvents = 'auto';
+    card.style.pointerEvents = 'auto';//still neccassary?
+    card.classList.add('active');
   });
 }
 
 function disableCardClicks() {
   const styledCards = document.querySelectorAll('.card');
   styledCards.forEach((card) => {
-    card.style.pointerEvents = 'none';
-    card.removeEventListener('click', getCardInfo);
+    card.style.pointerEvents = 'none'; //still neccassary?
+    card.classList.remove('active');
+    card.removeEventListener('click', getCardInfo); //still neccassary?
   });
 }
 
+//Index of current clicked card
 function getCardInfo(i) {
   currentCardID = i; // Set glob arr
 }
@@ -180,30 +225,32 @@ async function awaitChangeCard() {
   btnGroup3();
   currentCardID = await waitForCardClick();
   changeCard();
-  currentCardID = -1;
-  isAwaitChangeCard = false;
+  title = playerCards[currentCardID]['title']
+  setTimeout(() => {
+    playSound('tone', title, 0.3);
+    currentCardID = -1;
+    isAwaitChangeCard = false;
+  }, 1000);
+
 }
 
+let isWaitingForCardClick = false;
+let waitForCardClickResolve;
+
 function waitForCardClick() {
-  return new Promise((resolve, reject) => {
-    cardClickHandler = function (event) {
-      const cardIndex = event.target.getAttribute('stackNr');
-      if (cardIndex === null) return; // Ignore other clicks
-      currentCardID = parseInt(cardIndex, 10); // 10 stands for decimal count system
-      document.removeEventListener('click', cardClickHandler);
-      resolve(cardIndex);
-    };
-    document.addEventListener('click', cardClickHandler);
+  isWaitingForCardClick = true;
+  return new Promise((resolve) => {
+    waitForCardClickResolve = resolve;
   });
 }
 
 //Parameters with ()
-function showInfo(infoContent) { 
+function showInfo(infoContent) {
   let info = docID("infoTextID");
   if (!info) {
     console.log('found not the info div');
     return;
-  }  
+  }
   info.innerHTML = '';
   if (typeof infoContent === 'function') {
     infoContent = infoContent();

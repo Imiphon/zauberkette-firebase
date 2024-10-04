@@ -245,7 +245,7 @@ function threeJoker() {
     let isDouble = playerAccords.some(acc => acc.nr === card.nr);
     let isEmptyAmount = card.amount === 0;
     if (isEmptyAmount) {
-      popup.innerHTML += `
+      popup.innerHTML += /*html*/`
         <div class="flex-column card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
           <img class="pop-circle-card" src="${card['src']}" onclick="showWithTimeout(infoAccEmpty, 4000); playSound('failed', 'buzzer-short', 0.5); showEmpty()">          
         </div>
@@ -253,7 +253,7 @@ function threeJoker() {
         <span class="empty-acc" id="emptyAcc">empty</span>
         </div>`;
     } else {
-      popup.innerHTML += `
+      popup.innerHTML += /*html*/`
         <div class="card-item" style="transform: rotate(${angle}deg) translate(150px) rotate(-${angle}deg);">
           <img class="pop-circle-card" src="${card['src']}" onclick="setAcc(${card.nr}, true, false, ${isDouble}); closePopup();">
         </div>`;

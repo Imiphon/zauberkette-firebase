@@ -37,6 +37,20 @@ function testModus() {
     //{ nr: 15, stackNr: -1, title: 'wizard', amount: 1, inUse: false, src: 'assets/images/specials/wizard.jpg' }
   ];
   console.log('testCards activated');
+  playerAccords = [
+  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'assets/images/accords/accC.jpg' },
+  //{ nr: 2, circleNr: 8, title: 'Db', amount: 2, src: 'assets/images/accords/accDb.jpg' },
+  //{ nr: 3, circleNr: 3, title: 'D', amount: 2, src: 'assets/images/accords/accD.jpg' },
+  //{ nr: 4, circleNr: 10, title: 'Eb', amount: 2, src: 'assets/images/accords/accEb.jpg' },
+  //{ nr: 5, circleNr: 5, title: 'E', amount: 2, src: 'assets/images/accords/accE.jpg' },
+  { nr: 6, circleNr: 12, title: 'F', amount: 1, src: 'assets/images/accords/accF.jpg' },
+  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'assets/images/accords/accGb.jpg' },
+  //{ nr: 8, circleNr: 2, title: 'G', amount: 1, src: 'assets/images/accords/accG.jpg' },
+  //{ nr: 9, circleNr: 9, title: 'Ab', amount: 2, src: 'assets/images/accords/accAb.jpg' },
+  //{ nr: 10, circleNr: 4, title: 'A', amount: 2, src: 'assets/images/accords/accA.jpg' },
+  //{ nr: 11, circleNr: 11, title: 'Bb', amount: 2, src: 'assets/images/accords/accBb.jpg' },
+  //{ nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'assets/images/accords/accB.jpg' },
+ ];
 }
 
 //called in renderStack()
@@ -44,12 +58,12 @@ function generateCardHTML(card, i, player) {
   let img_id = player === "playerCard" ? `playerCard${i}` : `observerCard${i}`;
   let optAccsPart = player === "playerCard" ? `optAccsPlayer` : `optAccsObserver`;
 
-  return `
+  return /*html*/`
     <div class="pl-card-frame">
       <img class="card" id="${img_id}" 
       stackNr="${card.stackNr}"  
       src="${card.src}"
-      onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)">
+      ><!--onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)"-->
       <div class="brass-plate no-btn small-font" id="${optAccsPart}${i}"></div>
     </div>
   `;
@@ -185,11 +199,13 @@ function renderStack(player, part) {
 
 function buildStack(Cards) {
   let targetArray = (Cards === "playerCards") ? playerCards : observerCards;
-
+  targetArray.length = 0;
   for (let i = 0; i < 5; i++) {
     let newCard = randomStack();
     targetArray.push(newCard);
   }
+
+
   testModus();
   Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
   setCardHelper();
@@ -340,21 +356,23 @@ function calculateAvailableHeight() {
 }
 
 function renderNames() {
-  let player2 = document.getElementById('obsNameID');
   let player1 = document.getElementById('playNameID');
-  let input1 = document.getElementById('player1Input');
-  let input2 = document.getElementById('player2Input');
+  let player2 = document.getElementById('obsNameID');
+  let playerName = localStorage.getItem('player1Name');
+  let obsName = localStorage.getItem('player2Name');
 
-  player1 = input1;
-  player2 = input2;
+  player1.innerHTML = playerName;
+  player2.innerHTML = obsName;
 }
 
-function setupGame() {
+function setupGame(isSkip) {
   isLandingpage = false; 
+  renderNames();
   const header = document.querySelector('header');
   header.innerHTML = renderHeaderHTML();
   currentInfoFunction = infoStart;
   showInfo(currentInfoFunction);
+  if (isSkip) originalStack();
   buildStack("playerCards"); // Render player stack
   buildStack("observerCards");
   renderCircles();
@@ -428,14 +446,14 @@ function renderStartBtn() {
   });
 }
 
-function renderNames() {
+function setNames() {
   const popupOverlay = document.createElement('div');
   popupOverlay.id = 'popupOverlay';
   popupOverlay.classList.add('popup-overlay');
   document.body.appendChild(popupOverlay);
   const header = nameInputHeader[language];
   const buttonText = startBtn[language];
-  popupOverlay.innerHTML = `
+  popupOverlay.innerHTML = /*html*/`
     <div id="popupWindow" class="popup-window">
       <h2 data-key="nameInputHeader">${header}</h2>
       <input type="text" id="player1Input" placeholder="Spieler 1">

@@ -92,10 +92,11 @@ function closePopupRules() {
     document.body.style.overflow = 'auto';
 }
 
-
-
 function skipToStart() {
-    window.location.reload();
+    //window.location.reload();
+    const isSkip = true;
+    setupGame(isSkip); 
+    playSound('success', 'clave', 0.2);
 }
 
 /**

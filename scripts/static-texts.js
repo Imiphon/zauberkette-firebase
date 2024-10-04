@@ -11,7 +11,7 @@ function infoStartSite() {
         </div>
       </div>
       <div class="startside-btns">        
-        <div id="startBtn" class="start-btn" onclick="renderNames()" data-key="startBtnText"></div>
+        <div id="startBtn" class="start-btn" onclick="setNames()" data-key="startBtnText"></div>
       </div>
     </div>
   `;
