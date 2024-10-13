@@ -309,11 +309,13 @@ img {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 12px;
 }
 
 .info-text p {
   width: 100%;
   white-space: wrap;
+  font-weight: 800;
 }
 
 .info-frame {
@@ -428,8 +430,6 @@ img {
 }
 
 .no-btn {
-
-  max-height: fit-content;
   background-size: 100% 100%;
   background-position: center;
   background-color: unset;
@@ -461,7 +461,8 @@ img {
   padding: 12px;
   background-image: url(./../assets/images/bgr/brass-plate.png);
   color: rgb(0 0 0);
-  min-width: 80px;
+  text-wrap: nowrap;
+  text-align: left;
 }
 
 .small-font {
@@ -471,7 +472,7 @@ img {
 .brass-gear1,
 .brass-gear2,
 .brass-gear3 {
-  background-image: url('./../assets/images/bgr/brass-gear1.png');
+  background-image: url('./../assets/images/bgr/iron-gear2.png');
   color: rgb(55, 42, 32);
   background-size: 32px 32px;
   background-repeat: no-repeat;
@@ -480,13 +481,16 @@ img {
 
 .brass-gear1 {
   position: absolute;
-  bottom: -16px;
-  right: 12px;
+  width: 32px;
+  height: 32px;
+  bottom: -20px;
+  right: 20px;
 }
 
 .brass-gear3 {
   position: absolute;
-  right: -24px;
+  left: -24px;
+  bottom: -8px;
   z-index: 12;
 }
 

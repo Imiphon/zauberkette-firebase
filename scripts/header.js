@@ -6,7 +6,6 @@ function renderHeaderHTML() {
     </div>
     <div class="nav-center">
         <h3>Zauberkette</h3>
-
     </div>
     <div class="nav-right">
         <div class="nav-btns">
@@ -20,7 +19,7 @@ function renderHeaderHTML() {
             </div>
             ${!isLandingpage ? `
             <button class="nav-btn" onclick="changeView()">
-                <img class="turn" src="assets/images/btn/turn.png" alt="" ${mirrorView ? 'style="display:none;"' : ''}>
+                <img class="turn" src="assets/images/btn/mirror-play.png" alt="" ${mirrorView ? 'style="display:none;"' : ''}>
                 <img class="turn-back" src="assets/images/btn/turn-back.png" alt="" ${!mirrorView ? 'style="display:none;"' : ''}>
             </button>
             <button class="nav-btn" onclick="changeMute()">
