@@ -66,13 +66,13 @@ allTonesOriginal = [
 ];
 
 allMajOriginal = [
-  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'assets/images/accords/accC.jpg' },
+  { nr: 1, circleNr: 1, title: 'C', amount: 2, src: 'assets/images/accords/accC.jpg' },
   { nr: 2, circleNr: 8, title: 'Db', amount: 2, src: 'assets/images/accords/accDb.jpg' },
   { nr: 3, circleNr: 3, title: 'D', amount: 2, src: 'assets/images/accords/accD.jpg' },
   { nr: 4, circleNr: 10, title: 'Eb', amount: 2, src: 'assets/images/accords/accEb.jpg' },
   { nr: 5, circleNr: 5, title: 'E', amount: 2, src: 'assets/images/accords/accE.jpg' },
-  { nr: 6, circleNr: 12, title: 'F', amount: 1, src: 'assets/images/accords/accF.jpg' },
-  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'assets/images/accords/accGb.jpg' },
+  { nr: 6, circleNr: 12, title: 'F', amount: 2, src: 'assets/images/accords/accF.jpg' },
+  { nr: 7, circleNr: 7, title: 'Gb', amount: 2, src: 'assets/images/accords/accGb.jpg' },
   { nr: 8, circleNr: 2, title: 'G', amount: 2, src: 'assets/images/accords/accG.jpg' },
   { nr: 9, circleNr: 9, title: 'Ab', amount: 2, src: 'assets/images/accords/accAb.jpg' },
   { nr: 10, circleNr: 4, title: 'A', amount: 2, src: 'assets/images/accords/accA.jpg' },

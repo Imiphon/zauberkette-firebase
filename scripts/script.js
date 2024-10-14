@@ -7,7 +7,7 @@ function docID(id) {
 /* --------------- INDEX.HTML  ------------------------*/
 //called for landingpage
 function renderIndex() {
-  isLandingpage = true; 
+  isLandingpage = true;
   let mainContent = docID("startSideContent");
   if (mainContent) {
     mainContent.innerHTML = infoStartSite();
@@ -38,19 +38,19 @@ function testModus() {
   ];
   console.log('testCards activated');
   playerAccords = [
-  { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'assets/images/accords/accC.jpg' },
-  //{ nr: 2, circleNr: 8, title: 'Db', amount: 2, src: 'assets/images/accords/accDb.jpg' },
-  //{ nr: 3, circleNr: 3, title: 'D', amount: 2, src: 'assets/images/accords/accD.jpg' },
-  //{ nr: 4, circleNr: 10, title: 'Eb', amount: 2, src: 'assets/images/accords/accEb.jpg' },
-  //{ nr: 5, circleNr: 5, title: 'E', amount: 2, src: 'assets/images/accords/accE.jpg' },
-  { nr: 6, circleNr: 12, title: 'F', amount: 1, src: 'assets/images/accords/accF.jpg' },
-  { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'assets/images/accords/accGb.jpg' },
-  //{ nr: 8, circleNr: 2, title: 'G', amount: 1, src: 'assets/images/accords/accG.jpg' },
-  //{ nr: 9, circleNr: 9, title: 'Ab', amount: 2, src: 'assets/images/accords/accAb.jpg' },
-  //{ nr: 10, circleNr: 4, title: 'A', amount: 2, src: 'assets/images/accords/accA.jpg' },
-  //{ nr: 11, circleNr: 11, title: 'Bb', amount: 2, src: 'assets/images/accords/accBb.jpg' },
-  //{ nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'assets/images/accords/accB.jpg' },
- ];
+    { nr: 1, circleNr: 1, title: 'C', amount: 1, src: 'assets/images/accords/accC.jpg' },
+    //{ nr: 2, circleNr: 8, title: 'Db', amount: 2, src: 'assets/images/accords/accDb.jpg' },
+    //{ nr: 3, circleNr: 3, title: 'D', amount: 2, src: 'assets/images/accords/accD.jpg' },
+    //{ nr: 4, circleNr: 10, title: 'Eb', amount: 2, src: 'assets/images/accords/accEb.jpg' },
+    //{ nr: 5, circleNr: 5, title: 'E', amount: 2, src: 'assets/images/accords/accE.jpg' },
+    { nr: 6, circleNr: 12, title: 'F', amount: 1, src: 'assets/images/accords/accF.jpg' },
+    { nr: 7, circleNr: 7, title: 'Gb', amount: 1, src: 'assets/images/accords/accGb.jpg' },
+    //{ nr: 8, circleNr: 2, title: 'G', amount: 1, src: 'assets/images/accords/accG.jpg' },
+    //{ nr: 9, circleNr: 9, title: 'Ab', amount: 2, src: 'assets/images/accords/accAb.jpg' },
+    //{ nr: 10, circleNr: 4, title: 'A', amount: 2, src: 'assets/images/accords/accA.jpg' },
+    //{ nr: 11, circleNr: 11, title: 'Bb', amount: 2, src: 'assets/images/accords/accBb.jpg' },
+    //{ nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'assets/images/accords/accB.jpg' },
+  ];
 }
 
 //called in renderStack()
@@ -205,8 +205,9 @@ function buildStack(Cards) {
     targetArray.push(newCard);
   }
 
+  //For testing cards and accords
+  //testModus();
 
-  testModus();
   Cards === "playerCards" ? renderStack("playerCard", "playerStackID") : renderStack("observerCard", "observerStackID");
   setCardHelper();
 }
@@ -297,10 +298,10 @@ function toggleLang() {
   if (currentInfoFunction) {
     showInfo(currentInfoFunction);
   }
-   //const header = document.querySelector('header');
-   //header.innerHTML = renderHeaderHTML();
+  //const header = document.querySelector('header');
+  //header.innerHTML = renderHeaderHTML();
   let langFlag = document.getElementById('langImg');
-  if(langFlag)langFlag.src = `assets/images/btn/${language}.svg`;
+  if (langFlag) langFlag.src = `assets/images/btn/${language}.svg`;
   updateStaticTexts();
   //just to update optAcc-texts
   renderStack("playerCard", "playerStackID");
@@ -366,7 +367,7 @@ function renderNames() {
 }
 
 function setupGame(isSkip) {
-  isLandingpage = false; 
+  isLandingpage = false;
   renderNames();
   const header = document.querySelector('header');
   header.innerHTML = renderHeaderHTML();
@@ -433,15 +434,15 @@ function renderStartBtn() {
     const input1 = document.getElementById('player1Input');
     const input2 = document.getElementById('player2Input');
 
-    const player1InputValue = input1.value || 'Spieler 1';
-    const player2InputValue = input2.value || 'Spieler 2';
+    const player1InputValue = input1.value || 'Remi';
+    const player2InputValue = input2.value || 'Lasi';
 
     localStorage.setItem('player1Name', player1InputValue);
     localStorage.setItem('player2Name', player2InputValue);
 
     popupOverlay.parentNode.removeChild(popupOverlay);
 
-    renderTable(); 
+    renderTable();
     playSound('success', 'clave', 0.2);
   });
 }
@@ -453,13 +454,13 @@ function setNames() {
   document.body.appendChild(popupOverlay);
   const header = nameInputHeader[language];
   const buttonText = startBtn[language];
-  popupOverlay.innerHTML = /*html*/`
-    <div id="popupWindow" class="popup-window">
-      <h2 data-key="nameInputHeader">${header}</h2>
-      <input type="text" id="player1Input" placeholder="Spieler 1">
-      <input type="text" id="player2Input" placeholder="Spieler 2">
-      <button id="popupStartBtn">${buttonText}</button>
-    </div>
+  popupOverlay.innerHTML = /*html*/`  
+<div id="popupWindow" class="popup-window">
+  <h2 data-key="nameInputHeader">${header}</h2>
+  <input type="text" class ="popup-input" id="player1Input" placeholder="Remi">
+  <input type="text" class ="popup-input" id="player2Input" placeholder="Lasi">
+  <button class="start-btn" id="popupStartBtn">${buttonText}</button>
+</div>
   `;
 
   // click outside window

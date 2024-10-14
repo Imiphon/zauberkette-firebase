@@ -9,7 +9,7 @@ html {
 	padding: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
-	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+	font-family: "mono-space", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
 		"Lucida Sans", Arial, sans-serif;
 	box-sizing: border-box;
 }
@@ -50,16 +50,16 @@ h3 {
 /*--------- special for cardChange curr in changeWinnerCards ----------------*/
 
 
-  .spell-overlay {
+.spell-overlay {
 	position: absolute;
 	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	pointer-events: none;
-	width: 80%; 
+	width: 80%;
 	height: auto;
-  }
-  
+}
+
 
 /*--------- INDEX ----------------*/
 .startside-top {
@@ -74,6 +74,9 @@ h3 {
 	background-position: center;
 	background-repeat: no-repeat;
 	min-height: 100vh;
+	text-shadow:
+		1px 1px 2px rgba(255, 255, 255, 0.6),
+		-1px -1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .startside-text {
@@ -89,6 +92,8 @@ h3 {
 	padding: 32px;
 	font-weight: 700;
 	box-sizing: border-box;
+
+	filter: brightness(1.7);
 }
 
 .opener-frame {
@@ -122,10 +127,45 @@ h3 {
 	align-items: center;
 	font-weight: 900;
 	cursor: pointer;
+	filter: brightness(1.7);
 }
 
 #startBtn a {
 	position: absolute;
+}
+
+#popupWindow input,
+.start-btn {
+	background-image: url(./../assets/images/bgr/iron-long-cross.png);
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 110%;
+	text-align: center;
+}
+
+#popupWindow input,
+h2 {
+	text-shadow:
+		1px 1px 2px rgba(255, 255, 255, 0.6),
+		-1px -1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#popupWindow input,
+h2, 
+.start-btn {
+	font-family: monospace;
+	color: #210808;
+	font-weight: 900;
+	font-size: large;
+	text-wrap: wrap;
+	width: min-content;
+	margin-right: 8px;
+}
+
+.popup-window .start-btn {
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.8);
+	background-size: initial;
 }
 
 .all-chains {
@@ -141,6 +181,7 @@ h3 {
 .all-chains img {
 	z-index: 10;
 }
+
 
 /*-------------------- volume-btn--------------------*/
 
@@ -289,14 +330,14 @@ h3 {
 }
 
 .popup-window {
-	padding: 12px;
-	background-image: url(./../assets/images/bgr/steam-punk-frame1.png);
+	position: absolute;
+	/* padding: 12px; */
+	background-image: url(./../assets/images/bgr/start-popup-bgr.png);
 	color: rgb(55, 42, 32);
-	width: 70vw;
-	height: 70vw;
+	width: 55vw;
+	height: 55vw;
 	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
+	/* background-repeat: no-repeat; */
 	border-radius: 5px;
 	display: flex;
 	flex-direction: column;
@@ -304,10 +345,7 @@ h3 {
 	align-items: center;
 }
 
-.popup-window h2 {
-	margin-top: 0;
-	color: #ead0ae;
-}
+
 
 .popup-window input {
 	width: 50%;
@@ -319,5 +357,5 @@ h3 {
 
 .popup-window button {
 	margin: 10px 20px;
-	cursor: pointer;
+    cursor: pointer;
 }
