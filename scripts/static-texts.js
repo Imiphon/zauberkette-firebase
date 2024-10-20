@@ -59,13 +59,14 @@ const ruleTexts = {
     <p>Der Kobold erlaubt es dir, einen einzelnen oder am Kettenende stehenden Zauber vom Gegner zu klauen.<br>
     Klicke dazu den Kobold-Knopf, und wähle dann einen Zauber beim Gegner, der sich mit einem deiner Zauber verketten lässt.</p>
 
-    <p>Der Magier, erlaubt dir den Tausch eines Zaubers mit dem Gegner oder einer ganzen Kette und umgekehrt, jedoch kein Aufteilen von Ketten.<br>
-    Magier und Kobold funktionieren nur(!) wenn sich die gegnerischen Zauber mit einem eigenen Zauber verbinden lassen.</p>
+    <p>Der Magier, erlaubt dir den Tausch eines Zaubers mit dem Gegner oder einer ganzen Kette und umgekehrt, jedoch kein Aufteilen von Ketten.<p>
+    
+    <p>Magier und Kobold funktionieren nur(!) wenn sich die gegnerischen Zauber mit einem eigenen Zauber verbinden lassen.</p>
 
     <p>Ein Zug lässt sich jederzeit beenden, spätestens jedoch wenn man durch 3 passende Wellenfische, den Kobold oder den Magier einen Zauber beziehungsweise eine Zauberkette erhalten hat.<br>
     Ist der Zug beendet, werden alle abgelegten Spielkarten durch neue ersetzt. Erst danach ist die nächste Person am Zug.</p>
 
-    <p>2. Ziel ist es, eine Zauberkette zu bilden.<br>
+    <p>2. Ziel ist es, die Länge der vereinbarten Zauberkette zu erreichen.<br>
     Ab zwei verbundenen Zaubern hast du eine Zauberkette.<br>
     Jeder Zauber verbindet sich mit zwei anderen Zaubern.<br>
     Wenn Zauber sich verketten lassen, tun sie dies automatisch.</p>
@@ -105,13 +106,14 @@ const ruleTexts = {
     <p>The goblin allows you to steal a single spell or one at the end of a chain from your opponent.<br>
     Click the goblin button, then select a spell from your opponent that can connect with one of your spells.</p>
 
-    <p>The wizard allows you to exchange a spell with your opponent or an entire chain and vice versa, but no splitting of chains.<br>
-    Wizards and goblins only work if the opponent's spells can connect with one of your spells.</p>
+    <p>The wizard allows you to exchange a spell with your opponent or an entire chain and vice versa, but no splitting of chains.</p>
+    
+    <p>Wizards and goblins only work if the opponent's spells can connect with one of your spells.</p>
 
     <p>A turn can be ended at any time, but at the latest when you have received a spell or a spell chain through 3 matching wave fish, the goblin, or the wizard.<br>
     If the turn is over, all discarded playing cards are replaced with new ones. Only then is it the next person's turn.</p>
 
-    <p>2. The goal is to form a spell chain.<br>
+    <p>2. The goal is to reach the length of the agreed-upon magic chain.<br>
     From two connected spells, you have a spell chain.<br>
     Each spell connects with two other spells.<br>
     When spells can connect, they do so automatically.</p>
@@ -151,13 +153,14 @@ const ruleTexts = {
     <p>Le lutin te permet de voler un sort isolé ou se trouvant à la fin d'une chaîne de l'adversaire.<br>
     Clique sur le bouton lutin, puis choisis un sort chez l'adversaire qui peut se lier à l'un de tes sorts.</p>
 
-    <p>Le mage te permet d'échanger un sort avec l'adversaire ou une chaîne entière et inversement, mais pas de diviser des chaînes.<br>
-    Mages et lutins ne fonctionnent que si les sorts adverses peuvent se connecter à un de tes sorts.</p>
+    <p>Le mage te permet d'échanger un sort avec l'adversaire ou une chaîne entière et inversement, mais pas de diviser des chaînes.</p>
+    
+    <p>Mages et lutins ne fonctionnent que si les sorts adverses peuvent se connecter à un de tes sorts.</p>
 
     <p>Un tour peut être terminé à tout moment, mais au plus tard lorsqu'un sort ou une chaîne de sorts a été obtenue grâce à 3 poissons d'onde correspondants, au lutin ou au mage.<br>
     Si le tour est terminé, toutes les cartes défaussées sont remplacées par de nouvelles. Ce n'est qu'alors que c'est le tour de la prochaine personne.</p>
 
-    <p>2. Le but est de former une chaîne de sorts.<br>
+    <p>2. L'objectif est d'atteindre la longueur de la chaîne magique convenue.<br>
     Dès que deux sorts sont connectés, tu as une chaîne de sorts.<br>
     Chaque sort se connecte à deux autres sorts.<br>
     Lorsque les sorts peuvent se connecter, ils le font automatiquement.</p>
