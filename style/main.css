@@ -137,11 +137,11 @@ h3 {
 #popupWindow input,
 .start-btn {
 	background-image: url(./../assets/images/bgr/iron-long-cross.png);
-	background-size: contain;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 110%;
-	text-align: center;
+    background-size: ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 117%, auto;
+    text-align: center;
 }
 
 #popupWindow input,
@@ -161,11 +161,15 @@ h2,
 	text-wrap: wrap;
 	width: min-content;
 	margin-right: 8px;
+	border: none;
+    border-radius: 2px;
 }
 
 .popup-window .start-btn {
-    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.8);
-	background-size: initial;
+	box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.8);
+    background-size: initial;
+    border-radius: 2px;
+    border: none;
 }
 
 .all-chains {
@@ -345,14 +349,13 @@ h2,
 	align-items: center;
 }
 
-
-
 .popup-window input {
 	width: 50%;
 	margin: 10px;
 	padding: 8px;
 	border-radius: 4px;
 	box-sizing: border-box;
+	box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6), -1px -1px 2px rgba(0, 0, 0, 0.7);
 }
 
 .popup-window button {

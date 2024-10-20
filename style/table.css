@@ -165,6 +165,7 @@ body.mirror-view .table-top {
 }
 
 .left-center-frame {
+  position: relative;
   width: 50%;
   display: flex;
   align-items: center;
@@ -197,9 +198,9 @@ body.mirror-view .table-top {
   top: 0px;
   left: 50%;
   right: 50%;
-  transform: translate(-50%, 25%);
-  width: 70%;
-  height: 70%;
+  transform: translate(-50%, 0%);
+  width: 100%;
+  height: 100%;
   background-color: rgba(255, 217, 0, 0.3);
   box-shadow: 0px 0px 16px 6px rgba(255, 217, 0, 0.3);
   border-radius: 100%;
@@ -322,7 +323,7 @@ img {
 .info-frame {
   position: relative;
   width: min-content;
-  height: 98px;
+  height: 132px;
   min-height: fit-content;
   min-width: 300px;
   text-align: center;
