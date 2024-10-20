@@ -46,9 +46,7 @@ h3 {
 	margin: 0;
 }
 
-
 /*--------- special for cardChange curr in changeWinnerCards ----------------*/
-
 
 .spell-overlay {
 	position: absolute;
@@ -59,7 +57,6 @@ h3 {
 	width: 80%;
 	height: auto;
 }
-
 
 /*--------- INDEX ----------------*/
 .startside-top {
@@ -136,11 +133,11 @@ h3 {
 #popupWindow input,
 .start-btn {
 	background-image: url(./../assets/images/bgr/iron-long-cross.png);
-    background-size: ;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 117%, auto;
-    text-align: center;
+	background-size: ;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 117%, auto;
+	text-align: center;
 }
 
 #popupWindow input,
@@ -151,7 +148,7 @@ h2 {
 }
 
 #popupWindow input,
-h2, 
+h2,
 .start-btn {
 	font-family: monospace;
 	color: #210808;
@@ -161,14 +158,14 @@ h2,
 	width: min-content;
 	margin-right: 8px;
 	border: none;
-    border-radius: 2px;
+	border-radius: 2px;
 }
 
 .popup-window .start-btn {
 	box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.8);
-    background-size: initial;
-    border-radius: 2px;
-    border: none;
+	background-size: initial;
+	border-radius: 2px;
+	border: none;
 }
 
 .all-chains {
@@ -184,7 +181,6 @@ h2,
 .all-chains img {
 	z-index: 10;
 }
-
 
 /*-------------------- volume-btn--------------------*/
 
@@ -242,10 +238,11 @@ h2,
 	padding: 60px 32px 32px 32px;
 	text-align: left;
 }
+
 .game-description h2 {
 	text-shadow: none;
-    text-align: center;
-    width: fit-content;
+	text-align: center;
+	width: fit-content;
 }
 
 .game-description::-webkit-scrollbar {
@@ -364,5 +361,5 @@ h2,
 
 .popup-window button {
 	margin: 10px 20px;
-    cursor: pointer;
+	cursor: pointer;
 }

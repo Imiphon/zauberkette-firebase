@@ -45,31 +45,31 @@ function setSpecialInfo(special) {
 /**
  * add new random card into the playerCards and 
  * old card is getting amount++ in allTones[]
+ * give back new card after 1500
  */
 async function changeCard() {
-  let newCard = randomStack(); // get randomNewCard with amount:1 
-  let oldNr = playerCards[currentCardID]['nr']; //  Selected card.nr
-  let allTonesUpdate = allTones.find((card) => card.nr === oldNr);
+  let newCard = randomStack(); // Zufällige neue Karte
+  let oldNr = playerCards[currentCardID]['nr']; // Aktuelle Karten-Nr.
+  let allTonesUpdate = allTones.find((card) => card.nr === oldNr);  
+  let cardElement = docID(`playerCard${currentCardID}`);
+  cardElement.style.opacity = 0.5;
+  await new Promise(resolve => setTimeout(resolve, 1500));
+  cardElement.style.opacity = 1;  
   if (allTonesUpdate) {
     allTonesUpdate.amount++;
-  }
-  playerCards[currentCardID] = newCard; // Kay -- add card to player cards
-  let cardElement = docID(`playerCard${currentCardID}`);
-  //const spellOverlay = parentElement.querySelector('.spell-overlay');
-  //if (spellOverlay) {
-  //  spellOverlay.remove();
-  //}
-
-  cardElement.src = newCard.src; //all infos include
-  renderStack("playerCard", "playerStackID"); //Kay --render the player Stack
-  disableCardClicks(); //Kay --remove Pointer and Click-eventlistener of 
+  }  
+  playerCards[currentCardID] = newCard;
+  cardElement.src = newCard.src;  
+  renderStack("playerCard", "playerStackID");
+  disableCardClicks();
   setCardHelper();
-  setCardInfo();
+  setCardInfo();  
   if (newCard.nr === oldNr) {
     await showWithTimeout(changeSameCard, 3000);
-  }
+  }  
   btnGroup2();
 }
+
 
 function randomStack() {
   let totalAmount = allTones.reduce((sum, card) => sum + card.amount, 0);
@@ -224,14 +224,11 @@ async function awaitChangeCard() {
   showInfo(currentInfoFunction);
   btnGroup3();
   currentCardID = await waitForCardClick();
-  changeCard();
+  await changeCard();
   title = playerCards[currentCardID]['title']
-  setTimeout(() => {
-    playSound('tone', title, 0.3);
-    currentCardID = -1;
-    isAwaitChangeCard = false;
-  }, 1000);
-
+  playSound('tone', title, 0.3);
+  currentCardID = -1;
+  isAwaitChangeCard = false;
 }
 
 let isWaitingForCardClick = false;
