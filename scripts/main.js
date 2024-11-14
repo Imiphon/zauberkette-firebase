@@ -4,20 +4,6 @@ function docID(id) {
   return document.getElementById(id);
 }
 
-/* --------------- INDEX.HTML  ------------------------*/
-//called for landingpage
-function renderIndex() {
-  isLandingpage = true;
-  let mainContent = docID("startSideContent");
-  if (mainContent) {
-    mainContent.innerHTML = infoStartSite();
-    updateStaticTexts(); // Update texts after rendering
-  }
-
-  const header = document.querySelector('header');
-  header.innerHTML = renderHeaderHTML();
-}
-
 /*------------------------------- TABLE FUNCTIONS ---------------------------*/
 
 //called in buildStack()
@@ -135,12 +121,10 @@ function renderAccordList(optAccArray, parentElement) {
       // Get the translated title
       const titleKey = currAcc.title;
       const translatedTitle = texts[titleKey] && texts[titleKey][language] ? texts[titleKey][language] : titleKey;
-
       // Create a composite key for translation  e.g., 'prime_C' term = "
       const compositeKey = termKey + titleKey;
       // Combine term and title
       const combinedText = term + translatedTitle; //e.g. "prime in C"
-
       // Append the translated text
       appendTranslatedText(compositeKey, combinedText, parentElement);
     } else {
@@ -219,7 +203,6 @@ function setCardHelper() {
       <div class="card-info-frame brass-gear3 no-btn " alt="Info"></div>
     `;
 }
-
 
 function positionAccCards() {
   const accCards = document.querySelectorAll('.accCard');
@@ -319,35 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
   toggleLang();
 });
 
-function detectTouchDevice() {
-  if ('ontouchstart' in window || navigator.maxTouchPoints) {
-    // It is a touch device
-    document.querySelectorAll('.hover-effect').forEach(function (element) {
-      let hasHover = false;
-      element.addEventListener('click', function (event) {
-        if (!hasHover) {
-          event.preventDefault();
-          element.classList.add('hover');
-          hasHover = true;
-          setTimeout(function () {
-            hasHover = false;
-          }, 300); // Adjust the timeout as needed
-        } else {
-          element.classList.remove('hover');
-          hasHover = false;
-          // Trigger the original click event
-          let originalClickEvent = new Event('click', {
-            bubbles: true,
-            cancelable: true
-          });
-          element.dispatchEvent(originalClickEvent);
-        }
-      });
-    });
-  }
-}
-
-// Höhe der Tableiste ermitteln (Differenz zwischen Viewport und Dokumenthöhe)
+/** 
+ * @returns difference between viewport and doc.height
+ */
 function calculateAvailableHeight() {
   const viewportHeight = window.innerHeight;
   const documentHeight = document.documentElement.clientHeight;
@@ -366,7 +323,7 @@ function renderNames() {
   player2.innerHTML = obsName;
 }
 
-function setupGame(isSkip) {
+function setupGame(isSkip, isStartRound) {
   isLandingpage = false;
   renderNames();
   const header = document.querySelector('header');
@@ -379,96 +336,19 @@ function setupGame(isSkip) {
   renderCircles();
   chainHelper();
   currentCardID = -1;
-  startRound();
+  startRound(isStartRound);
   updateStaticTexts();
 }
 
-/*------------------------------- POPUPs  ------------*/
-
-function chainHelper() { //Kay --handle the cheat sheet for the accords. Z-Index higher!
-  let chainHelper = document.querySelector('.chain-helper');
-  chainHelper.addEventListener('click', function (event) {
-    // that document click-Handler doesn't start
-    event.stopPropagation();
-    this.classList.toggle('expanded');
-  });
-  // a click anywhere to remove listener
-  document.addEventListener('click', function () {
-    chainHelper.classList.remove('expanded');
-  });
-}
-
-function openCardPopup() { //Kay -- create Pop-Up Element 
-  let popup = document.createElement('div');
-  popup.className = 'popup';
-  popup.style.display = 'flex';
-  document.body.appendChild(popup);
-}
-
-function closeEvent() { // Kay -- close Popup element by click on the site
-  document.addEventListener('DOMContentLoaded', function () {
-    let popup = document.querySelector('.popup');
-    if (popup) {
-      popup.addEventListener('click', function () {
-        popup.style.display = 'none';
-      });
-    }
-  });
-}
-
-function closePopup() { //Kay -- remove Element
-  let popup = document.querySelector('.popup');
-  if (popup) {
-    popup.remove();
-    body.style.overflow = 'hidden';
+//called for landingpage
+function renderIndex() {
+  isLandingpage = true;
+  let mainContent = docID("startSideContent");
+  if (mainContent) {
+    mainContent.innerHTML = infoStartSite();
+    updateStaticTexts(); // Update texts after rendering
   }
+
+  const header = document.querySelector('header');
+  header.innerHTML = renderHeaderHTML();
 }
-
-/*------------- POPUP and INSERT NAMES IN INDEX ------------------*/
-
-function renderStartBtn() {
-
-  // Event Listener für den Start-Button hinzufügen
-  const startBtn = document.getElementById('popupStartBtn');
-  startBtn.addEventListener('click', function () {
-    const input1 = document.getElementById('player1Input');
-    const input2 = document.getElementById('player2Input');
-
-    const player1InputValue = input1.value || 'Remi';
-    const player2InputValue = input2.value || 'Lasi';
-
-    localStorage.setItem('player1Name', player1InputValue);
-    localStorage.setItem('player2Name', player2InputValue);
-
-    popupOverlay.parentNode.removeChild(popupOverlay);
-
-    renderTable();
-    playSound('success', 'clave', 0.2);
-  });
-}
-
-function setNames() {
-  const popupOverlay = document.createElement('div');
-  popupOverlay.id = 'popupOverlay';
-  popupOverlay.classList.add('popup-overlay');
-  document.body.appendChild(popupOverlay);
-  const header = nameInputHeader[language];
-  const buttonText = startBtn[language];
-  popupOverlay.innerHTML = /*html*/`  
-<div id="popupWindow" class="popup-window">
-  <h2 data-key="nameInputHeader">${header}</h2>
-  <input type="text" class ="popup-input" id="player1Input" placeholder="Remi">
-  <input type="text" class ="popup-input" id="player2Input" placeholder="Lasi">
-  <button class="start-btn" id="popupStartBtn">${buttonText}</button>
-</div>
-  `;
-
-  // click outside window
-  popupOverlay.addEventListener('click', function (event) {
-    if (event.target === popupOverlay) {
-      popupOverlay.parentNode.removeChild(popupOverlay);
-    }
-  });
-  renderStartBtn();
-}
-

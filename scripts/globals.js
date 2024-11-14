@@ -10,15 +10,14 @@ let currentLangIndex = 0;
 let language = 'de';
 let fullscreen = false;
 let currentInfoFunction = null;
-
 let cardClickHandler = null;
 
 let playerCards = [];//all cards in current Array of observer card-stack
 let observerCards = [];//all cards in current Array of player card-stack
-let playerAccords = [
-  ];//all Accords in current Array of player Accords
-let observerAccords = [
-  ];//all Accords in current Array of observer Accords
+let playerAccords = [];//all Accords in current Array of player Accords
+let observerAccords = [];//all Accords in current Array of observer Accords
+let playerName1 = 'Remi';
+let playerName2 = 'Lasi';
 
 let currentCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
 let clickAccount = 0; // counts clicks in setCardCombi()

@@ -110,7 +110,7 @@ h3 {
 	color: rgb(55, 42, 32);
 }
 
-#startBtn {
+#firstStartBtn {
 	position: relative;
 	width: 220px;
 	height: 100px;
@@ -124,21 +124,10 @@ h3 {
 	font-weight: 900;
 	cursor: pointer;
 	filter: brightness(1.7);
+	color: #210808;
 }
 
-#startBtn a {
-	position: absolute;
-}
 
-#popupWindow input,
-.start-btn {
-	background-image: url(./../assets/images/bgr/iron-long-cross.png);
-	background-size: ;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 117%, auto;
-	text-align: center;
-}
 
 #popupWindow input,
 h2 {
@@ -156,9 +145,37 @@ h2,
 	font-size: large;
 	text-wrap: wrap;
 	width: min-content;
-	margin-right: 8px;
 	border: none;
 	border-radius: 2px;
+}
+
+#popupWindow input,
+.start-btn {
+	background-image: url('./../assets/images/bgr/iron-long-cross.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 233%, auto;
+	text-align: center;
+}
+
+.start-btn-frame {
+	position: relative;
+	position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.start-btn img {
+	width: 2em;
+}
+
+.start-btn {
+	width: 40px;
+	height: 32px;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
 }
 
 .popup-window .start-btn {
@@ -332,6 +349,7 @@ h2,
 	/* Jetzt sichtbar */
 	justify-content: center;
 	align-items: center;
+	z-index: 100;
 }
 
 .popup-window {
@@ -357,9 +375,4 @@ h2,
 	border-radius: 4px;
 	box-sizing: border-box;
 	box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6), -1px -1px 2px rgba(0, 0, 0, 0.7);
-}
-
-.popup-window button {
-	margin: 10px 20px;
-	cursor: pointer;
 }

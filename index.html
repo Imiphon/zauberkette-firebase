@@ -9,14 +9,20 @@
     <link rel="stylesheet" href="style/nav.css">
     <link rel="stylesheet" href="style/main.css">
     <link rel="stylesheet" href="style/table.css">
-    
-    <script src="scripts/arrays.js"></script>
+
+    <!-- Firebase App (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+
+    <script src="scripts/globals.js"></script>
     <script src="scripts/header.js"></script>
     <script src="scripts/variable-texts.js"></script>
     <script src="scripts/static-texts.js"></script>
-    <script src="scripts/script.js"></script>
+    <script src="scripts/firebase-service.js"></script> <!-- type="module"-->
+    <script src="scripts/start-page.js"></script>
+    <script src="scripts/main.js"></script>
     <script src="scripts/play-buttons.js"></script>
-    
     <script src="scripts/play-cards.js"></script>
     <script src="scripts/play-accords.js"></script>
     <script src="scripts/play-table.js"></script>
@@ -28,9 +34,9 @@
 </head>
 
 <body onload="renderIndex()" id="body">
-        <header id="headInfoID"></header>
+    <header id="headInfoID"></header>
     <main id="startSideContent"></main>
-        
+
 
     </main>
     <footer></footer>

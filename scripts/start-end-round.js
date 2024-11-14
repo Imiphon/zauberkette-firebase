@@ -26,7 +26,7 @@ async function finishRound() {
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     if (specialInProgress) {
-        usedSpecials.pop(); // Last special will be removed
+        usedSpecials.pop(); // Last (not finished) special will be removed
         specialInProgress = false;
     }
     if (usedSpecials.length != 0) {
@@ -44,9 +44,10 @@ async function finishRound() {
         setTimeout(() => {
             startRound();
         }, 10000);
-        isWinner =false;
+        isWinner = false;
     } else {
-        startRound();
+        let isStartRound = true;
+        startRound(isStartRound);
     }
     
 }
@@ -84,9 +85,9 @@ function swapParts() {
 // ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
 // DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN
 // ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
-function startRound() {
+function startRound(isStartRound, isForObserver) {
     let name = document.getElementById('playNameID');
-    let isStartRound = true;
+    
     name.style.animation = 'none';
     //a minimal delay to get sure for full animation
     requestAnimationFrame(() => {

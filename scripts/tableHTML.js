@@ -1,5 +1,4 @@
 function renderTable() {
-    // Hauptinhaltselement, in das der Tabelleninhalt eingefügt wird
     const mainContent = document.getElementById('startSideContent');
     if (mainContent) {
       mainContent.innerHTML = /*html*/`
@@ -120,7 +119,5 @@ function renderTable() {
     </main>
       `;
     }
-  
-    setupGame();
   }
   

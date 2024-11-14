@@ -11,7 +11,7 @@ function infoStartSite() {
         </div>
       </div>
       <div class="startside-btns">        
-        <div id="startBtn" class="start-btn" onclick="setNames()" data-key="startBtnText"></div>
+        <div id="firstStartBtn" onclick="setNames()" data-key="startBtnText"></div>
       </div>
     </div>
   `;
@@ -21,6 +21,12 @@ const nameInputHeader = {
   de: 'Spielernamen',
   en: 'Player Names',
   fr: 'Noms des joueurs',
+}
+
+const emailInput = {
+  de: 'Einladung an',
+  en: 'Invitation to',
+  fr: 'Invitation à',
 }
 
 const startBtn = {
