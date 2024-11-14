@@ -159,7 +159,7 @@ function sendEmail(email) {
     const gameID = gameRef.id;
 
     // Generiere den Spiel-Link (ersetze 'www.mensching.online' durch deine tatsächliche Domain)
-    const gameLink = `https://www.mensching.online/zauberkette/${gameID}`;
+    const gameLink = `https://www.mensching.online/zauberkette-fb/index.html/${gameID}`;
 
     // Definiere den Betreff und den Body der E-Mail
     const subject = encodeURIComponent('Einladung zu meinem aktuellen Spiel');
@@ -193,7 +193,7 @@ function copyLink() {
     const gameID = gameRef.id;
 
     // Generiere den Spiel-Link (ersetze 'www.mensching.online' durch deine tatsächliche Domain)
-    const gameLink = `https://www.mensching.online/zauberkette/${gameID}`;
+    const gameLink = `https://www.mensching.online/zauberkette-fb/${gameID}`;
 
     // Verwende die Clipboard API, um den Link zu kopieren
     navigator.clipboard.writeText(gameLink)
@@ -249,3 +249,15 @@ function detectTouchDevice() {
         });
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const gameId = getGameIdFromUrl();
+    if (gameId) {
+      // Der zweite Spieler tritt bei
+      joinGame(gameId);
+    } else {
+      // Der erste Spieler startet ein neues Spiel
+      setNames();
+    }
+  });
+  

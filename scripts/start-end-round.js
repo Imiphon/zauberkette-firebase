@@ -99,6 +99,7 @@ function startRound(isStartRound, isForObserver) {
     setBackBooleans();
     setCardHelper();
     setCardInfo();
+    updateGameData();
 }
 
 function checkForWin(part) {

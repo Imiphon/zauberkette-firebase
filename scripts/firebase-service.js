@@ -8,7 +8,10 @@ const firebaseConfig = {
   measurementId: "G-WPEL0B6YQL"
 };
 
-firebase.initializeApp(firebaseConfig);
+// check Firebase if fb is initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.firestore();
 let gameRef = null;
 
@@ -39,21 +42,49 @@ function addDataToFirestore() {
 
 function setupSnapshotListener() {
   if (!gameRef) {
-    console.error('gameRef not set.');
+    console.error('gameRef nicht gesetzt.');
     return;
   }
 
   gameRef.onSnapshot((docSnapshot) => {
     if (docSnapshot.exists) {
       const game = docSnapshot.data();
-      updateObserver(game);
+      // Aktualisieren Sie das Spiel mit den neuen Daten
+      updateGameWithNewData(game);
     } else {
-      console.log('game not found!');
+      console.log('Spiel nicht gefunden!');
     }
   }, (error) => {
-    console.error('error with Snapshots:', error);
+    console.error('Fehler mit Snapshots:', error);
   });
 }
+
+// Set game-var with gameData
+function initializeGameWithData(gameData) {  
+  playerCards = gameData.playerCards;
+  observerCards = gameData.observerCards;
+  playerAccords = gameData.playerAccords;
+  observerAccords = gameData.observerAccords;
+  allTones = gameData.allTones;
+  allMaj = gameData.allMaj;
+  playerName1 = gameData.playerName1;
+  playerName2 = gameData.playerName2;  
+  setupGame();
+}
+
+function updateGameWithNewData(gameData) {
+  playerCards = gameData.playerCards;
+  observerCards = gameData.observerCards;
+  playerAccords = gameData.playerAccords;
+  observerAccords = gameData.observerAccords;
+  allTones = gameData.allTones;
+  allMaj = gameData.allMaj;
+  playerName1 = gameData.playerName1;
+  playerName2 = gameData.playerName2;  
+  renderStack("playerCard", "playerStackID");
+  renderStack("observerCard", "observerStackID");
+}
+
 
 function updateArrays() {
   if (!gameRef) {
@@ -81,6 +112,42 @@ function updateArrays() {
     });
 }
 
-function updateObserver(currGame) {
-  console.log('currGame is: ', currGame);
+
+//get referenz of gameID
+function joinGame(gameId) {
+  gameRef = db.collection('on-table').doc(gameId);
+  gameRef.get().then((doc) => {
+    if (doc.exists) {
+      const gameData = doc.data();
+      // Initialisiere das Spiel mit gameData
+      initializeGameWithData(gameData);
+      setupSnapshotListener();
+    } else {
+      console.error('Spiel nicht gefunden!');
+    }
+  }).catch((error) => {
+    console.error('Fehler beim Beitreten zum Spiel:', error);
+  });
 }
+
+
+//to check datas on fb
+function fetchGameData(gameID) {
+  var db = firebase.firestore();
+  var gameRef = db.collection('on-table').doc(gameID);
+
+  gameRef.get()
+    .then(function(doc) {
+      if (doc.exists) {
+        console.log("Spieldaten:", doc.data());
+        // Laden Sie die Daten ins Spiel
+        initializeGameWithData(doc.data());
+      } else {
+        console.log("Kein Spiel mit dieser ID gefunden!");
+      }
+    })
+    .catch(function(error) {
+      console.error("Fehler beim Abrufen der Spieldaten:", error);
+    });
+}
+
