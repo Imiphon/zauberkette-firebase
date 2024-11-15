@@ -328,7 +328,6 @@ function getGameIdFromUrl() {
 
 function updateGameData() {
   if (!gameRef) {
-    console.error('gameRef nicht gesetzt.');
     return;
   }
 

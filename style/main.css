@@ -110,7 +110,7 @@ h3 {
 	color: rgb(55, 42, 32);
 }
 
-#firstStartBtn {
+.startBtn {
 	position: relative;
 	width: 220px;
 	height: 100px;

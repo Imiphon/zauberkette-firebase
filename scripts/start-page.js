@@ -1,13 +1,22 @@
 /* --------------- INDEX.HTML  ------------------------*/
 
+function startInvitation(invitationID) {
+    handleStartClick(startOneTable);
+    joinGame(invitationID);
+}
 
 function setNames() {
-    const popupOverlay = document.createElement('div');
-    popupOverlay.id = 'popupOverlay';
-    popupOverlay.classList.add('popup-overlay');
-    document.body.appendChild(popupOverlay);
-    const header = nameInputHeader[language];
-    popupOverlay.innerHTML = /*html*/`  
+    const invitationInput = document.getElementById('invitationInput');
+    const invitationID = invitationInput ? invitationInput.value.trim() : null;
+    if (invitationID) {
+        startInvitation(invitationID);
+    } else {
+        const popupOverlay = document.createElement('div');
+        popupOverlay.id = 'popupOverlay';
+        popupOverlay.classList.add('popup-overlay');
+        document.body.appendChild(popupOverlay);
+        const header = nameInputHeader[language];
+        popupOverlay.innerHTML = /*html*/`  
       <div id="popupWindow" class="popup-window">
         <h2 data-key="nameInputHeader">${header}</h2>
         <input type="text" class="popup-input" id="player1Input" placeholder="Remi">
@@ -23,13 +32,14 @@ function setNames() {
       </div>
     `;
 
-    popupOverlay.addEventListener('click', function (event) {
-        if (event.target === popupOverlay) {
-            popupOverlay.parentNode.removeChild(popupOverlay);
-        }
-    });
+        popupOverlay.addEventListener('click', function (event) {
+            if (event.target === popupOverlay) {
+                popupOverlay.parentNode.removeChild(popupOverlay);
+            }
+        });
 
-    renderStartBtns();
+        renderStartBtns();
+    }
 }
 
 /*------------- POPUP and INSERT NAMES IN INDEX ------------------*/
@@ -37,15 +47,15 @@ function setNames() {
 function handleStartClick(renderFunction) {
     const input1 = document.getElementById('player1Input');
     const input2 = document.getElementById('player2Input');
-    playerName1 = input1.value.trim() || 'Remi';
-    playerName2 = input2.value.trim() || 'Lasi';
+    playerName1 = input1 ? input1.value.trim() : 'Player1';
+    playerName2 = input2 ? input2.value.trim() : 'Player2';
     localStorage.setItem('player1Name', playerName1);
     localStorage.setItem('player2Name', playerName2);
     const popupOverlay = document.getElementById('popupOverlay');
     if (popupOverlay) {
         popupOverlay.parentNode.removeChild(popupOverlay);
     }
-    renderFunction();
+    renderFunction(); //startOneTable/startTwoTables
     playSound('success', 'clave', 0.2);
 }
 
@@ -159,10 +169,10 @@ function sendEmail(email) {
     const gameID = gameRef.id;
 
     // Generiere den Spiel-Link (ersetze 'www.mensching.online' durch deine tatsächliche Domain)
-    const gameLink = `https://www.mensching.online/zauberkette-fb/index.html/${gameID}`;
+    const gameLink = `${gameID}`;
 
     // Definiere den Betreff und den Body der E-Mail
-    const subject = encodeURIComponent('Einladung zu meinem aktuellen Spiel');
+    const subject = encodeURIComponent('Hier die gameID zu meinem aktuellen Spiel');
     const body = encodeURIComponent(`Hallo,\n\nHier ist der Link zu meinem aktuellen Spiel: ${gameLink}\n\nViel Spaß!`);
 
     // Erstelle den mailto-Link
@@ -171,17 +181,13 @@ function sendEmail(email) {
     // Öffne das Standard-E-Mail-Programm mit der vorgefertigten E-Mail
     window.location.href = mailtoLink;
 
-    // Entferne das Popup-Overlay
     const popupOverlay = document.getElementById('popupOverlay');
     if (popupOverlay) {
         popupOverlay.parentNode.removeChild(popupOverlay);
     }
-
-    // Optional: Feedback an den Benutzer
-    alert('Dein E-Mail-Programm sollte nun geöffnet sein.');
 }
 
-// Funktion zum Kopieren des Spiel-Links in die Zwischenablage
+// copy game link for 2nd player
 function copyLink() {
     if (!gameRef) {
         console.error('gameRef ist nicht gesetzt.');
@@ -189,17 +195,14 @@ function copyLink() {
         return;
     }
 
-    // Hole die aktuelle gameID
     const gameID = gameRef.id;
+    const gameLink = `${gameID}`;
 
-    // Generiere den Spiel-Link (ersetze 'www.mensching.online' durch deine tatsächliche Domain)
-    const gameLink = `https://www.mensching.online/zauberkette-fb/${gameID}`;
-
-    // Verwende die Clipboard API, um den Link zu kopieren
+    // use Clipboard API to copy link
     navigator.clipboard.writeText(gameLink)
         .then(() => {
             alert('Der Spiel-Link wurde in die Zwischenablage kopiert!');
-            // Entferne das Popup-Overlay
+            // remove Popup-Overlay
             const popupOverlay = document.getElementById('popupOverlay');
             if (popupOverlay) {
                 popupOverlay.parentNode.removeChild(popupOverlay);
@@ -250,14 +253,11 @@ function detectTouchDevice() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const gameId = getGameIdFromUrl();
-    if (gameId) {
-      // Der zweite Spieler tritt bei
-      joinGame(gameId);
-    } else {
-      // Der erste Spieler startet ein neues Spiel
-      setNames();
-    }
-  });
-  
+//document.addEventListener('DOMContentLoaded', () => {
+//    const gameId = getGameIdFromUrl();
+//    if (gameId) {
+//      joinGame(gameId);
+//    } else {
+//      setNames();
+//    }
+//  });

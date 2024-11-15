@@ -11,7 +11,8 @@ function infoStartSite() {
         </div>
       </div>
       <div class="startside-btns">        
-        <div id="firstStartBtn" onclick="setNames()" data-key="startBtnText"></div>
+        <div class="startBtn" id="firstStartBtn" onclick="setNames()" data-key="startBtnText"></div>
+        <div class="startBtn"><input id="invitationInput" placeholder="meine EinladungsID"></div>
       </div>
     </div>
   `;

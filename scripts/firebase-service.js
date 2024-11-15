@@ -69,7 +69,7 @@ function initializeGameWithData(gameData) {
   allMaj = gameData.allMaj;
   playerName1 = gameData.playerName1;
   playerName2 = gameData.playerName2;  
-  setupGame();
+  //setupGame();
 }
 
 function updateGameWithNewData(gameData) {
@@ -119,7 +119,6 @@ function joinGame(gameId) {
   gameRef.get().then((doc) => {
     if (doc.exists) {
       const gameData = doc.data();
-      // Initialisiere das Spiel mit gameData
       initializeGameWithData(gameData);
       setupSnapshotListener();
     } else {
@@ -140,7 +139,6 @@ function fetchGameData(gameID) {
     .then(function(doc) {
       if (doc.exists) {
         console.log("Spieldaten:", doc.data());
-        // Laden Sie die Daten ins Spiel
         initializeGameWithData(doc.data());
       } else {
         console.log("Kein Spiel mit dieser ID gefunden!");
