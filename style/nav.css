@@ -1,0 +1,180 @@
+nav,
+header {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(84, 83, 83);
+  color: #f5deb3;
+  z-index: 1000;
+}
+
+nav {
+  justify-content: flex-start;
+}
+
+.nav-left {
+  position: relative;
+  left: 12px;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.nav-center {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.game-goal {
+  display: flex;
+  flex-direction: column;
+}
+
+.num-picker {
+  display: flex;
+  margin: 0 8px;
+  gap: 8px;
+}
+
+.num-picker button {
+  color: #f5deb3;
+  background-color: rgb(84, 83, 83);
+  cursor: pointer;
+  ;
+}
+
+.nav-btns {
+  width: 45%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-btn {
+  width: fit-content;
+  background-color: unset;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px;
+  border-radius: 4px;
+  border-width: 1px;
+  box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.5);
+}
+
+.nav-btn img {
+  width: fit-content;
+  height: auto;
+  z-index: 1;
+}
+
+#fullscreenBtn {
+  z-index: 2;
+}
+
+.turn {
+  display: block;
+  width: 32px !important;
+  height: auto;
+}
+
+.turn-back {
+  display: none;
+  width: 32px !important;
+  height: auto;
+}
+
+.nav-right {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.game-goal {
+  width: 100%;
+  display: flex;
+  padding: 4px 0 4px 12px;
+  gap: 4px;
+  align-items: center;
+  text-wrap: nowrap;
+}
+
+.game-goal input {
+  margin: 4px;
+  width: auto;
+}
+
+.lang {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.sideInfo {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 100%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left top;
+  width: 100vh;
+  z-index: 10;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.menu-frame {
+  position: relative;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 12px;
+  background-color: #f5deb3;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  flex-direction: column;
+  width: fit-content;
+  height: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.3s ease;
+  text-align: left;
+}
+
+.menu.show {
+  display: flex; /* Show the menu when 'show' class is added */
+  opacity: 1;
+  visibility: visible;
+  margin-top: 8px;
+  border-radius: 0 0 0 12px;
+}
+
+.menu a {
+  padding: 8px 16px;
+  text-decoration: none;
+  color: rgba(44, 44, 44, 0.5);
+  display: block;
+  text-wrap: nowrap;
+}
+
+.menu a:hover {
+  background-color: #555;
+  color:  #f5deb3;
+}

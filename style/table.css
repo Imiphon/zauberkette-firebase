@@ -1,0 +1,602 @@
+.name {
+  margin: 4px 0px 8px;
+  border-radius: 50%;
+}
+
+.name-frame {
+  position: relative;
+  width: fit-content;
+  height: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.zone-descr {
+  margin: 4px 0px;
+}
+
+.empty-acc {
+  display: none;
+  color: orange;
+  animation: fadeInOut 2s;
+  font-size: 52px;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeOutIn {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInOut {
+
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* background color for curr player*/
+@keyframes yellowNameFade {
+  0% {
+    background-color: transparent;
+    color: gold;
+    border-radius: 50%;
+    box-shadow: none;
+  }
+
+  50% {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 0, 0.5);
+    box-shadow: 0 0 10px 10px rgba(255, 255, 0, 0.5);
+    /* Schimmer-Effekt */
+  }
+
+  100% {
+    background-color: transparent;
+    color: rgb(55, 42, 32);
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.schimmer-text {
+  animation: yellowNameFade 3s ease-in-out;
+}
+
+.table-content {
+  height: auto;
+  display: flex;
+  padding: 4px;
+  position: relative;
+}
+
+.table-frame {
+  top: 60px;
+  /*minus header*/
+  height: calc(100vh - 60px);
+}
+
+.table-mirror-frame {
+  left: 28px;
+  width: calc(100vh - 60px);
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.table-frame,
+.table-mirror-frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url(./../assets/images/bgr/bgr.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body.mirror-view .table-top {
+  top: 32px;
+  position: relative;
+}
+
+.inner-table {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  min-height: 96%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table-top,
+.table-bottom {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex: 0 0 40%;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+
+.rotated-180 {
+  transform: rotate(180deg);
+  transform-origin: center center;
+}
+
+.table-center {
+  width: 100%;
+  height: auto;
+  margin: 8px 0;
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+}
+
+.left-center-frame {
+  position: relative;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accord-zone {
+  position: relative;
+  flex: 0 0 40%;
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3%;
+}
+
+.circle-img {
+  background-image: url('./../assets/images/bgr/brass-triad.png');
+  background-size: 160px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+.bgr-circle {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, 0%);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 217, 0, 0.3);
+  box-shadow: 0px 0px 16px 6px rgba(255, 217, 0, 0.3);
+  border-radius: 100%;
+  z-index: 0;
+}
+
+/*.chain */
+.accCard {
+  position: absolute;
+  left: 46%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 18px;
+  background-color: #ead0ae;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+/*.chain */
+.accCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: content-box;
+}
+
+/*----------GAME ZONE---------------*/
+
+.bottom-zone,
+.top-zone {
+  position: relative;
+  right: 0;
+  /* width: 70%; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.top-zone {
+  top: 32px;
+}
+
+.bottom-zone {
+  top: -32px;
+}
+
+.pl-card-frame {
+  display: flex;
+  margin: 0 12px;
+  width: 8vw;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card-group {
+  display: flex;
+  justify-content: center;
+  /*align-items: space-evenly;*/
+  flex-direction: row;
+}
+
+.card {
+  margin: 8px;
+  width: 8vw;
+  height: auto;
+  min-height: 80px;
+  background-color: antiquewhite;
+}
+
+.card:hover {
+  cursor: pointer !important;
+  transform: rotate(180deg) !important;
+}
+
+img {
+  cursor: pointer;
+  z-index: 10;
+}
+
+.hide-image {
+  visibility: hidden;
+}
+
+.special {
+  position: relative;
+}
+
+.special img {
+  width: 62px !important;
+  height: 62px !important;
+}
+
+.card-info-frame {
+  cursor: pointer;
+  padding: 20px !important;
+}
+
+.info-text {
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 12px;
+  font-size: 1.3em;
+}
+
+.info-text p {
+  width: 100%;
+  white-space: wrap;
+  font-weight: 800;
+}
+
+.info-frame {
+  position: relative;
+  width: min-content;
+  height: 132px;
+  min-height: fit-content;
+  min-width: 300px;
+  text-align: center;
+}
+
+.helper-frame {
+  position: relative;
+  left: -24px;
+  top: -8px;
+}
+
+#infoMellot {
+  display: none;
+}
+
+#infoGoblin {
+  display: none;
+}
+
+#infoWizard {
+  display: none;
+}
+
+.chain-frame:hover .chain-helper,
+.helper-frame:hover .infoMellot,
+.helper-frame:hover .infoGoblin,
+.helper-frame:hover .infoWizard {
+  display: block;
+}
+
+.chain-helper {
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 50px;
+  z-index: 100;
+}
+
+.chain-frame {
+  position: absolute;
+  right: -10px;
+  bottom: -8px;
+}
+
+@keyframes yellowFade {
+  0% {
+    background-color: transparent;
+    color: black;
+  }
+
+  50% {
+    background-color: yellow;
+  }
+
+  100% {
+    background-color: transparent;
+    color: #f2f2f2;
+  }
+}
+
+.info-animate {
+  animation-name: yellowFade;
+  animation-duration: 4s;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.btn-group {
+  margin: 12px 12px;
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+  z-index: 2;
+}
+
+.btn-group button:hover {
+  animation: shimmer 3s infinite linear;
+}
+
+.btn-group img {
+  width: 32px;
+  height: 32px;
+  background-color: unset;
+}
+
+.btn {
+  padding: 20px;
+  max-height: fit-content;
+  background-size: 100% 100%;
+  background-position: center;
+  background-color: unset;
+  text-align: center;
+}
+
+.no-btn {
+  background-size: 100% 100%;
+  background-position: center;
+  background-color: unset;
+  text-align: center;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+/********************* BUTTON STYLE ***************/
+
+.brass-long {
+  padding: 20px;
+  background-image: url('./../assets/images/bgr/brass-long.png');
+  
+  background-repeat: no-repeat;
+  filter: brightness(1.5);
+  font-family: monospace;
+  font-style: italic;
+  text-shadow:
+        1px 1px 2px rgba(255, 255, 255, 0.6), 
+        -1px -1px 2px rgba(0, 0, 0, 0.7); 
+}
+
+.brass-long-high {
+  padding: 20px;
+  background-image: url('./../assets/images/bgr/brass-long-high.png');
+  
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-width: auto;
+  min-height: auto;
+  filter: brightness(1.5);
+  font-family: monospace;
+  text-shadow:
+        1px 1px 2px rgba(255, 255, 255, 0.6), 
+        -1px -1px 2px rgba(0, 0, 0, 0.7); 
+}
+
+.brass-plate {
+  padding: 12px;
+  background-image: url(./../assets/images/bgr/brass-plate.png);
+  
+  text-wrap: nowrap;
+  text-align: left;
+  filter: brightness(1.7);
+  font-style: italic;
+  font-family: monospace;
+  text-shadow:
+        1px 1px 2px rgba(255, 255, 255, 0.6), 
+        -1px -1px 2px rgba(0, 0, 0, 0.7); 
+}
+
+.small-font {
+  font-size: 0.8em;
+  font-weight: 900;
+}
+
+.brass-gear1,
+.brass-gear2,
+.brass-gear3 {
+  background-image: url('./../assets/images/bgr/iron-gear2.png');
+  color: rgb(42, 34, 27);
+  background-size: 32px 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.brass-gear1 {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  bottom: -20px;
+  right: 20px;
+}
+
+.brass-gear3 {
+  position: absolute;
+    right: -24px;
+    top: -18px;
+    z-index: 12;
+}
+
+.iron-circle {
+  padding: 0;
+  background-image: url(./../assets/images/bgr/iron-circle.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.iron-long-cross {
+  background-image: url('./../assets/images/bgr/iron-long-cross.png');
+  color: #210808;
+  font-weight: 900;
+  font-size: large;
+  text-wrap: wrap;
+  width: min-content;
+  margin-right: 8px;
+  text-shadow:
+        1px 1px 2px rgba(255, 255, 255, 0.6), 
+        -1px -1px 2px rgba(0, 0, 0, 0.7); 
+
+.iron-plate {
+  background-image: url('./../assets/images/bgr/iron-plate.png');
+  color: #000000;
+  font-weight: 700;
+  text-shadow:
+        1px 1px 2px rgba(255, 255, 255, 0.6), 
+        -1px -1px 2px rgba(0, 0, 0, 0.7); 
+}
+
+/* ------------------------- CIRCLE BOARD --------------------------- */
+.circle-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.board-frame {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-board {
+  background-color: aqua;
+  width: 50%;
+}
+
+.right-board {
+  position: fixed;
+  bottom: 150px;
+  background-color: rosybrown;
+  width: 50%;
+}
+
+/*changes for accCard*/
+.big {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  background-color: rgb(198, 29, 29);
+  border-radius: 10px;
+  margin: 5px;
+}
+
+@media (max-width: 1400px) {
+  .small-font {
+    font-size: 1.0em;
+    font-weight: 900;
+  }
+
+  .table-top,
+  .table-bottom {
+    width: 90%;
+  }
+}
