@@ -1,16 +1,15 @@
-
 function setCardInfo() {
-  let cardInfoFrames = document.querySelectorAll('.card-info-frame');
+  let cardInfoFrames = document.querySelectorAll(".card-info-frame");
   cardInfoFrames.forEach(function (cardInfoFrame) {
-    let info = document.getElementById('infoTextID');
+    let info = document.getElementById("infoTextID");
     let savedText = info.innerHTML;
-    cardInfoFrame.addEventListener('mouseenter', function () {
+    cardInfoFrame.addEventListener("mouseenter", function () {
       currentInfoFunction = optAccInfoText;
       showInfo(currentInfoFunction);
     });
 
-    cardInfoFrame.addEventListener('mouseleave', function () {
-      let info = document.getElementById('infoTextID');
+    cardInfoFrame.addEventListener("mouseleave", function () {
+      let info = document.getElementById("infoTextID");
       info.innerHTML = savedText; //set back original text
     });
   });
@@ -21,92 +20,105 @@ function setCardInfo() {
  * @param {string} special id-name of special container
  */
 function setSpecialInfo(special) {
-  let info = document.getElementById('infoTextID');
+  let info = document.getElementById("infoTextID");
   let specialInfo = document.getElementById(special);
   let savedText = info.innerHTML;
-  let funcName = special + 'Text';
+  let funcName = special + "Text";
 
-  specialInfo.addEventListener('mouseenter', function () {
-    if (typeof window[funcName] === 'function') {
+  specialInfo.addEventListener("mouseenter", function () {
+    if (typeof window[funcName] === "function") {
       currentInfoFunction = window[funcName];
       showInfo(currentInfoFunction);
-      //showInfo(window[funcName]()); 
+      //showInfo(window[funcName]());
     } else {
       console.error(`Funktion ${funcName} ist nicht definiert.`);
     }
   });
 
-  specialInfo.addEventListener('mouseleave', function () {
-    let info = document.getElementById('infoTextID');
+  specialInfo.addEventListener("mouseleave", function () {
+    let info = document.getElementById("infoTextID");
     info.innerHTML = savedText;
   });
 }
 
 /**
- * add new random card into the playerCards and 
+ * add new random card into the playerCards and
  * old card is getting amount++ in allTones[]
  * give back new card after 1500
  */
-async function changeCard() {
-  let newCard = randomStack(); // Zufällige neue Karte
-  let oldNr = playerCards[currentCardID]['nr']; // Aktuelle Karten-Nr.
-  let allTonesUpdate = allTones.find((card) => card.nr === oldNr);  
-  let cardElement = docID(`playerCard${currentCardID}`);
+async function changeCard(stackID) {
+  const id = typeof stackID === "number" ? stackID : currentCardID;
+  const oldCardNr = playerCards[id].nr;
+  const newCard   = randomStack(oldCardNr);
+  let allTonesUpdate = allTones.find((card) => card.nr === oldCardNr);
+  const cardElement = docID(`playerCard${id}`);
+
   cardElement.style.opacity = 0.5;
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  cardElement.style.opacity = 1;  
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+  cardElement.style.opacity = 1;
   if (allTonesUpdate) {
     allTonesUpdate.amount++;
-  }  
-  playerCards[currentCardID] = newCard;
-  cardElement.src = newCard.src;  
+  }
+  playerCards[id] = newCard;
+  cardElement.src = newCard.src;
   renderStack("playerCard", "playerStackID");
   disableCardClicks();
   setCardHelper();
-  setCardInfo();  
-  if (newCard.nr === oldNr) {
+  setCardInfo();
+  if (newCard.nr === oldCardNr) {
     await showWithTimeout(changeSameCard, 3000);
-  }  
+  }
   btnGroup2();
 }
 
-
-function randomStack() {
-  let totalAmount = allTones.reduce((sum, card) => sum + card.amount, 0);
-  if (totalAmount === 0) {
-    return null;
-  }
-  let random = Math.floor(Math.random() * totalAmount);
-  for (let i = 0; i < allTones.length; i++) {
-    let card = allTones[i];
-    if (random < card.amount) {
-      card.amount -= 1;
-      return { ...card, amount: 1 };
-    } else {
-      random -= card.amount;
-    }
-  }
+function randomStack(oldCardNr) {
+  // nur Typen, die noch >0 haben
+  const available = allTones.filter((c) => c.amount > 0);
+  if (!available.length) return null;
+  // optional alter Typ rausfiltern
+  const choices =
+    available.length > 1
+      ? available.filter((c) => c.nr !== oldCardNr)
+      : available;
+  const pick = choices[Math.floor(Math.random() * choices.length)];
+  pick.amount--;
+  return { ...pick, amount: 1 };
 }
 
-function changeWinnerCards() {
-  const cardIDs = [];
-  for (let i = 0; i < cardCombi.length; i++) {
-    const currentCardID = cardCombi[i].stackNr;
-    cardIDs.push(currentCardID);
-    fadeToSpell(currentCardID);
+let deck = allTones.slice(); // initial alle Karten-Objekte
+let discard = [];
+
+function shuffle(a) {
+  /* Fisher-Yates */
+}
+
+function drawCard() {
+  if (!deck.length) {
+    deck = discard.splice(0);
+    shuffle(deck);
   }
-  noBtns(); 
+  const c = deck.pop();
+  discard.push(c);
+  return c;
+}
+function changeWinnerCards() {
+  const stackIDs = cardCombi.map(c => c.stackNr);
+  stackIDs.forEach(fadeToSpell);
+
+  noBtns();
   currentInfoFunction = infoWinMagic;
   showInfo(currentInfoFunction);
 
   setTimeout(() => {
-    for (let i = 0; i < cardCombi.length; i++) {
-      currentCardID = cardIDs[i]; // needed for changeCard()
-      changeCard(); 
-      cardCombi[i].stackNr = -1; 
-    }
-    finishRound();
-  }, 7000);
+    // Inline-async IIFE, to use await
+    (async () => {
+      for (const id of stackIDs) {
+        await changeCard(id);       
+        cardCombi.find(c => c.stackNr === id).stackNr = -1;
+      }
+      finishRound();
+    })();
+  }, 5000);
 }
 
 function fadeToSpell(cardID) {
@@ -116,27 +128,19 @@ function fadeToSpell(cardID) {
     console.error(`Kein Element mit ID 'playerCard${cardID}' gefunden.`);
     return;
   }
-  cardElement.style.opacity = '0.5';
-//
-//  const existingOverlay = cardElement.parentElement.querySelector('.spell-overlay');
-//  if (existingOverlay) {
-//    existingOverlay.remove();
-//  }
+  cardElement.style.opacity = "0.5";
 
-  const spellImage = document.createElement('img');
-  spellImage.src = 'assets/images/specials/spell.png';
-  spellImage.classList.add('spell-overlay');
+  const spellImage = document.createElement("img");
+  spellImage.src = "assets/images/specials/spell.png";
+  spellImage.classList.add("spell-overlay");
 
   const parentElement = cardElement.parentElement;
-  if (window.getComputedStyle(parentElement).position === 'static') {
-    parentElement.style.position = 'relative';
+  if (window.getComputedStyle(parentElement).position === "static") {
+    parentElement.style.position = "relative";
   }
 
   parentElement.appendChild(spellImage);
 }
-
-
-
 
 /*------------------------------- CLICK CARD STUFF -------------------------------*/
 
@@ -150,7 +154,7 @@ function stepBack() {
     tryGoblinStrike = false;
   }
   if (cardClickHandler) {
-    document.removeEventListener('click', cardClickHandler);
+    document.removeEventListener("click", cardClickHandler);
     cardClickHandler = null;
   }
   if (isAwaitChangeCard) {
@@ -158,35 +162,35 @@ function stepBack() {
   } else {
     btnGroup2();
   }
-  stackOpacity1(playerCards, 'playerCard');
+  stackOpacity1(playerCards, "playerCard");
   setBackArrays();
   setBackBooleans();
-  playSound('failed', 'backMag', 0.5);
+  playSound("failed", "backMag", 0.5);
   disableCardClicks();
 }
 
 function enablePlayerCards() {
-  const styledCards = document.querySelectorAll('#playerStackID .card');
+  const styledCards = document.querySelectorAll("#playerStackID .card");
   styledCards.forEach((card) => {
-    card.style.pointerEvents = 'auto';//still neccassary?
-    card.classList.add('active');
+    card.style.pointerEvents = "auto"; //still neccassary?
+    card.classList.add("active");
   });
 }
 
 function enableObserverCards() {
-  const styledCards = document.querySelectorAll('#observerStackID .card');
+  const styledCards = document.querySelectorAll("#observerStackID .card");
   styledCards.forEach((card) => {
-    card.style.pointerEvents = 'auto';//still neccassary?
-    card.classList.add('active');
+    card.style.pointerEvents = "auto"; //still neccassary?
+    card.classList.add("active");
   });
 }
 
 function disableCardClicks() {
-  const styledCards = document.querySelectorAll('.card');
+  const styledCards = document.querySelectorAll(".card");
   styledCards.forEach((card) => {
-    card.style.pointerEvents = 'none'; //still neccassary?
-    card.classList.remove('active');
-    card.removeEventListener('click', getCardInfo); //still neccassary?
+    card.style.pointerEvents = "none"; //still neccassary?
+    card.classList.remove("active");
+    card.removeEventListener("click", getCardInfo); //still neccassary?
   });
 }
 
@@ -196,24 +200,28 @@ function getCardInfo(i) {
 }
 
 function enableObserverAccordClicks() {
-  const styledCards = document.querySelectorAll('#obsCircle1 .accCard, #obsCircle2 .accCard');
+  const styledCards = document.querySelectorAll(
+    "#obsCircle1 .accCard, #obsCircle2 .accCard"
+  );
   styledCards.forEach((accordCard) => {
-    accordCard.style.pointerEvents = 'auto';
+    accordCard.style.pointerEvents = "auto";
   });
 }
 
 function enablePlayerAccordClicks() {
-  const styledCards = document.querySelectorAll('#playerCircle1 .accCard, #playerCircle2 .accCard');
+  const styledCards = document.querySelectorAll(
+    "#playerCircle1 .accCard, #playerCircle2 .accCard"
+  );
   styledCards.forEach((accordCard) => {
-    accordCard.style.pointerEvents = 'auto';
+    accordCard.style.pointerEvents = "auto";
   });
 }
 
 function disableAccClicks() {
-  const styledCards = document.querySelectorAll('.accCard');
+  const styledCards = document.querySelectorAll(".accCard");
   styledCards.forEach((card) => {
-    card.style.pointerEvents = 'none';
-    card.removeEventListener('click', getCardInfo);
+    card.style.pointerEvents = "none";
+    card.removeEventListener("click", getCardInfo);
   });
 }
 
@@ -225,8 +233,8 @@ async function awaitChangeCard() {
   btnGroup3();
   currentCardID = await waitForCardClick();
   await changeCard();
-  title = playerCards[currentCardID]['title']
-  playSound('tone', title, 0.3);
+  title = playerCards[currentCardID]["title"];
+  playSound("tone", title, 0.3);
   currentCardID = -1;
   isAwaitChangeCard = false;
 }
@@ -245,27 +253,27 @@ function waitForCardClick() {
 function showInfo(infoContent) {
   let info = docID("infoTextID");
   if (!info) {
-    console.log('found not the info div');
+    console.log("found not the info div");
     return;
   }
-  info.innerHTML = '';
-  if (typeof infoContent === 'function') {
+  info.innerHTML = "";
+  if (typeof infoContent === "function") {
     infoContent = infoContent();
   }
   info.innerHTML += infoContent;
   // Set the animation directly via JavaScript
-  info.style.animation = 'none';
+  info.style.animation = "none";
   info.offsetHeight; // Trigger reflow
   info.style.animation = null; // Reset die Animation
-  info.style.animation = 'yellowNameFade 4s forwards';
+  info.style.animation = "yellowNameFade 4s forwards";
 }
 
 /**
- * takes function references so parameters without () 
- * @param {*} func 
- * @param {*} timeout 
- * @param {*} optFunc 
- * @returns 
+ * takes function references so parameters without ()
+ * @param {*} func
+ * @param {*} timeout
+ * @param {*} optFunc
+ * @returns
  */
 function showWithTimeout(func, timeout, optFunc) {
   currentInfoFunction = func;
@@ -283,12 +291,11 @@ function showWithTimeout(func, timeout, optFunc) {
   });
 }
 
-
 /**
- * Vergleicht neue 
+ * Vergleicht neue
  */
 function youWin(part, length) {
-  let idName = part === 'player' ? 'playNameID' : 'obsNameID';
+  let idName = part === "player" ? "playNameID" : "obsNameID";
   let element = document.getElementById(idName);
   if (element) {
     let name = element.textContent;

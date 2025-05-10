@@ -55,7 +55,7 @@ function handleStartClick(renderFunction) {
     if (popupOverlay) {
         popupOverlay.parentNode.removeChild(popupOverlay);
     }
-    renderFunction(); //startOneTable/startTwoTables
+    renderFunction(); //startOneTable() or startTwoTables()
     playSound('success', 'clave', 0.2);
 }
 

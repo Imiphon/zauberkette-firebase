@@ -1,14 +1,15 @@
 
 
-function changeSpecials() {
-    usedSpecials.forEach(special => {
-        currentCardID = special.index;
-        special.card.style.visibility = 'visible';
-        changeCard();
-    });
+async function changeSpecials() {
+    for (const special of usedSpecials) {
+      const id = special.index;
+      special.card.style.visibility = 'visible';
+      await changeCard(id);
+    }
+  
     usedSpecials = [];
     currentSpecial = null;
-}
+  }
 
 //to prevent double-click on finishRound-btn and skip other player
 function handleFinishRoundClick() {
@@ -30,7 +31,7 @@ async function finishRound() {
         specialInProgress = false;
     }
     if (usedSpecials.length != 0) {
-        changeSpecials();
+       await changeSpecials();
     }
     checkForChain('player');
     checkForChain('observer');

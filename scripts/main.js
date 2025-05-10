@@ -152,7 +152,7 @@ function buildStack(Cards) {
   let targetArray = (Cards === "playerCards") ? playerCards : observerCards;
   targetArray.length = 0;
   for (let i = 0; i < 5; i++) {
-    let newCard = randomStack();
+    let newCard =  randomStack();
     targetArray.push(newCard);
   }
 
@@ -305,6 +305,7 @@ function setupGame(isSkip, isStartRound) {
   currentCardID = -1;
   startRound(isStartRound);
   updateStaticTexts();
+  if(isStartRound) deck = [];
 }
 
 //called for landingpage

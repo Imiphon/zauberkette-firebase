@@ -64,6 +64,8 @@ allTonesOriginal = [
   { nr: 15, stackNr: -1, title: 'wizard', amount: 1, inUse: false, src: 'assets/images/specials/wizard.jpg' }
 ];
 
+let allTones = allTonesOriginal.map(obj => ({ ...obj }));
+
 allMajOriginal = [
   { nr: 1, circleNr: 1, title: 'C', amount: 2, src: 'assets/images/accords/accC.jpg' },
   { nr: 2, circleNr: 8, title: 'Db', amount: 2, src: 'assets/images/accords/accDb.jpg' },
@@ -79,7 +81,6 @@ allMajOriginal = [
   { nr: 12, circleNr: 6, title: 'B', amount: 2, src: 'assets/images/accords/accB.jpg' },
 ];
 
-let allTones = allTonesOriginal.map(obj => ({ ...obj }));
 let allMaj = allMajOriginal.map(obj => ({ ...obj }));
 
 function originalStack() {
