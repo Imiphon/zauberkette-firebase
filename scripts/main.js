@@ -327,34 +327,6 @@ function getGameIdFromUrl() {
   return urlParts[urlParts.length - 1];
 }
 
-function updateGameData() {
-  if (!gameRef) {
-    return;
-  }
-
-  const jsonData = {
-    playerCards: playerCards,
-    observerCards: observerCards,
-    playerAccords: playerAccords,
-    observerAccords: observerAccords,
-    allTones: allTones,
-    allMaj: allMaj,
-    playerName1: playerName1,
-    playerName2: playerName2
-  };
-
-  gameRef.set(jsonData, { merge: true })
-    .then(() => {
-      console.log('Spielzustand aktualisiert.');
-    })
-    .catch((error) => {
-      console.error('Fehler beim Aktualisieren des Spiels:', error);
-    });
-}
-
-
-
-
 //called in buildStack()
 function testModus() {
   playerCards = [

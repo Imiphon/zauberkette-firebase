@@ -2,12 +2,13 @@
 let vh = window.innerHeight * 0.01; //saves 1% of 100vh manual (somtimes neccassary for mobiles with border)
 document.documentElement.style.setProperty("--vh", `${vh}px`); //set var '--v' for css stuff like: height: calc(var(--vh, 1vh) * 100);
 
+let languages = ['de', 'en', 'fr'];
+let language = 'de';
+let currentLangIndex = 0;
+
 let isLandingpage = true;
 let goalValue = 5;
 let isWinner = false;
-let languages = ['de', 'en', 'fr'];
-let currentLangIndex = 0;
-let language = 'de';
 let fullscreen = false;
 let currentInfoFunction = null;
 let cardClickHandler = null;
@@ -19,6 +20,8 @@ let observerAccords = [];//all Accords in current Array of observer Accords
 let playerName1 = 'Remi';
 let playerName2 = 'Lasi';
 
+let playerChains = []; //Array of accord chains after every round
+let observerChains = [];//    -"-
 let currentCardID = -1; // Variable, um den Index der ausgewählten Karte zu speichern
 let clickAccount = 0; // counts clicks in setCardCombi()
 let cardCombi = []; //sammelt 3 tones oder joker
@@ -35,8 +38,6 @@ let wizardTakes = []; // is storing all neighbors in observer circle(higher OR l
 let wizardGives = []; //     -"-   in player circle     -"-
 let flatNeighbor = []; //neighbor of choosenAcc (for observer (or also player in wizardGives)
 let sharpNeighbor = [];//    -"-
-let playerChains = []; //Array of accord chains after every round
-let observerChains = [];//    -"-
 let flatPlayerConnection = []; //card neighbors in player card stack
 let sharpPlayerConnection = [];//    -"-
 let isChainCheck = false;

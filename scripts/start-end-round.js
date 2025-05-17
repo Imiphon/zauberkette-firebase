@@ -37,6 +37,7 @@ async function finishRound() {
     checkForChain('observer');
     swapParts();
     changeNames();
+    updateGameData();
     if (mirrorView) {
         rotateWebsite();
     }
@@ -82,10 +83,6 @@ function swapParts() {
     renderCircles();
 }
 
-// AN DIESER STELLE AUF FIREBASE DEN AKTUELLEN STAND VON PLAYER UND OBSERVER ÜBERGEBEN 
-// ALSO: post {playerCards, observerCards, playerAccords, observerAccords und die Namen der Spieler }
-// DANN VON FIREBASE DEN AKTUELLEN STAND HERUNTERLADEN
-// ABER AUCH BEI JEDER KARTENBEWEGUNG NOCH EINMAL POSTEN UND OBSERVER AKTIVIEREN BEIM GEGNER
 function startRound(isStartRound, isForObserver) {
     let name = document.getElementById('playNameID');
     
@@ -100,7 +97,6 @@ function startRound(isStartRound, isForObserver) {
     setBackBooleans();
     setCardHelper();
     setCardInfo();
-    updateGameData();
 }
 
 function checkForWin(part) {
