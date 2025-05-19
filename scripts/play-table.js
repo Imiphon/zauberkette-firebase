@@ -53,9 +53,11 @@ async function changeCard(stackID) {
   let allTonesUpdate = allTones.find((card) => card.nr === oldCardNr);
   const cardElement = docID(`playerCard${id}`);
 
-  cardElement.style.opacity = 0.5;
+  let curOp = cardElement.style.opacity = 0.5;
+  setCardOpacity(id, curOp);
   await new Promise((resolve) => setTimeout(resolve, 1500));
-  cardElement.style.opacity = 1;
+  curOp = cardElement.style.opacity = 1;
+  setCardOpacity(id, curOp);
   if (allTonesUpdate) {
     allTonesUpdate.amount++;
   }
@@ -125,11 +127,11 @@ function fadeToSpell(cardID) {
   const cardElement = document.getElementById(`playerCard${cardID}`);
 
   if (!cardElement) {
-    console.error(`Kein Element mit ID 'playerCard${cardID}' gefunden.`);
+    console.error(`No Element with ID 'playerCard${cardID}'`);
     return;
   }
   cardElement.style.opacity = "0.5";
-
+setCardOpacity(cardID, opacity);
   const spellImage = document.createElement("img");
   spellImage.src = "assets/images/specials/spell.png";
   spellImage.classList.add("spell-overlay");
@@ -233,10 +235,12 @@ async function awaitChangeCard() {
   btnGroup3();
   currentCardID = await waitForCardClick();
   await changeCard();
+  debugger
   title = playerCards[currentCardID]["title"];
   playSound("tone", title, 0.3);
   currentCardID = -1;
   isAwaitChangeCard = false;
+  uploadGameData();
 }
 
 let isWaitingForCardClick = false;

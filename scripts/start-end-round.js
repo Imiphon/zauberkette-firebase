@@ -37,7 +37,7 @@ async function finishRound() {
     checkForChain('observer');
     swapParts();
     changeNames();
-    updateGameData();
+    uploadGameData();
     if (mirrorView) {
         rotateWebsite();
     }

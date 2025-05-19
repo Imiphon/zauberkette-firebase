@@ -17,7 +17,9 @@ function generateCardHTML(card, i, player) {
       stackNr="${card.stackNr}"  
       src="${card.src}"
       ><!--onclick="getCardInfo(${i}); playSound('tone', '${card.title}', 0.3)"-->
-      <div class="brass-plate no-btn small-font" id="${optAccsPart}${i}"></div>
+      <div class="brass-plate no-btn small-font " >
+        <div id="${optAccsPart}${i}" class="gradient-text"></div>
+      </div>
     </div>
   `;
 }

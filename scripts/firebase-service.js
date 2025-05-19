@@ -14,6 +14,8 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 let gameRef = null;
+let gameID = null;
+let gameLink = null;
 
 function addDataToFirestore() {
   const jsonData = {
@@ -30,14 +32,16 @@ function addDataToFirestore() {
   db.collection("on-table")
     .add(jsonData)
     .then((docRef) => {
-      console.log("new ID on firestore is:", docRef.id);
-      // Set gameRef and ID
-      gameRef = db.collection("on-table").doc(docRef.id);
-      // set Snapshot-Listener
+      gameID = docRef.id;
+      gameLink = `${window.location.origin}/${gameID}`;
+
+      console.log("new ID on firestore is:", gameID);
+      gameRef = db.collection("on-table").doc(gameID);
+
       setupSnapshotListener();
     })
     .catch((error) => {
-      console.error("error:", error);
+      console.error("error adding game:", error);
     });
 }
 
@@ -51,7 +55,6 @@ function setupSnapshotListener() {
     (docSnapshot) => {
       if (docSnapshot.exists) {
         const game = docSnapshot.data();
-        // Aktualisieren Sie das Spiel mit den neuen Daten
         updateGameWithNewData(game);
       } else {
         console.log("Spiel nicht gefunden!");
@@ -88,13 +91,10 @@ function updateGameWithNewData(gameData) {
   renderStack("playerCard", "playerStackID");
   renderStack("observerCard", "observerStackID");
   renderCircles();
-  }
+}
 
-
-function updateGameData() {
-  if (!gameRef) {
-    return;
-  }
+function uploadGameData() {
+  if (!gameRef) return;
 
   const jsonData = {
     playerCards: playerCards,
@@ -104,10 +104,12 @@ function updateGameData() {
     allTones: allTones,
     allMaj: allMaj,
     playerName1: playerName1,
-    playerName2: playerName2
-    
-  };
+    playerName2: playerName2,
 
+    cardStyles: {
+      styles: currentCardStyles,
+    },
+  };
 
   gameRef
     .set(jsonData, { merge: true })
@@ -117,35 +119,19 @@ function updateGameData() {
     .catch((error) => {
       console.error("error with udate on Firestore:", error);
     });
-
 }
 
-// function updateArraysOnFS() {
-//   if (!gameRef) {
-//     console.error("no gameRef exist.");
-//     return;
-//   }
+function setCardOpacity(stackNr, opacity) {
+  if (!gameRef) return;
 
-//   const jsonData = {
-//     playerCards: playerCards,
-//     observerCards: observerCards,
-//     playerAccords: playerAccords,
-//     observerAccords: observerAccords,
-//     allTones: allTones,
-//     allMaj: allMaj,
-//     playerName1: playerName1,
-//     playerName2: playerName2,
-//   };
+  const el = document.getElementById(`playerCard${stackNr}`);
+  if (el) el.style.opacity = opacity;
 
-//   gameRef
-//     .set(jsonData, { merge: true })
-//     .then(() => {
-//       console.log("updated array on firestore");
-//     })
-//     .catch((error) => {
-//       console.error("error with udate on Firestore:", error);
-//     });
-// }
+  // delete old entry with stackNr
+  currentCardStyles = currentCardStyles.filter((s) => s.stackNr !== stackNr);
+  currentCardStyles.push({ stackNr, opacity });
+  uploadGameData();
+}
 
 //get referenz of gameID
 function joinGame(gameId) {
