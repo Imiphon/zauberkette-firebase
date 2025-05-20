@@ -458,16 +458,16 @@ img {
 }
 
 .color{
-color: #abafff;
+color: #767dfd;
 color: #cb9066;
 color: #9efec7;
 color: #fe4a51;
-color: #b6fe7c;
-color: #b395fb;
+color: #e3fb8e;
+color: #c5adfc;
 color: #feaf4d;
 color: #8bb7fd;
 color: #fe88b0;
-color: #89fe50;
+color: #81ee4a;
 color: #fe42a6;
 color: #ebfe47;
 }
@@ -508,8 +508,6 @@ color: #ebfe47;
   background-image: url(./../assets/images/bgr/brass-plate.png);
   text-wrap: nowrap;
   text-align: center;
-  /* filter: brightness(0.8); */
-  /* font-weight: 900; */
   font-family: monospace;
   word-spacing: -0.3em;
   letter-spacing: -0.1em;
@@ -524,6 +522,9 @@ color: #ebfe47;
   color: #ffe864;
   text-shadow: 5px 7px 2px rgb(0 0 0 / 45%);
   font-size: 0.8em;
+  white-space: nowrap;
+  word-spacing: -0.1em;
+  letter-spacing: -0.1em;
   /* font-weight: 900; */
 }
 
@@ -626,8 +627,6 @@ color: #ebfe47;
 @media (max-width: 1400px) {
   .small-font {
     font-size: 1.0em;
-    /* font-weight: 900; */
-    text-wrap: auto;
   }
 
   .table-top,

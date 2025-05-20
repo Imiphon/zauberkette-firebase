@@ -255,16 +255,16 @@ allMajOriginal = [
 ];
 
 const toneColors = {
-  1: "#abafff",
+  1: "#767dfd",
   2: "#cb9066",
   3: "#9efec7",
   4: "#fe4a51",
-  5: "#b6fe7c",
-  6: "#b395fb",
+  5: "#e3fb8e",
+  6: "#c5adfc",
   7: "#feaf4d",
   8: "#8bb7fd",
   9: "#fe88b0",
-  10: "#89fe50",
+  10: "#81ee4a",
   11: "#fe42a6",
   12: "#ebfe47",
 };
