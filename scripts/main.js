@@ -177,7 +177,7 @@ function buildStack(Cards) {
   }
 
   //For testing cards and accords
-  testStack();
+  //testStack();
 
   Cards === "playerCards"
     ? renderStack("playerCard", "playerStackID")
