@@ -29,10 +29,10 @@ let specialInProgress = false; //if btn for special is clicked in process before
 let usedSpecials = []; //coming from separateSpecial()
 let choosenAcc = []; //taken from observerAccords to put it into playerAccords and reversed
 let tryGoblinStrike = false; //if player clicks goblin btn
-let tryWizardStrike = false; //if player clicks wizard btn
-let wizardTakes = []; // is storing all neighbors in observer circle(higher OR lower) of choosenAcc, or only single Accords
-let wizardGives = []; //     -"-   in player circle     -"-
-let flatNeighbor = []; //neighbor of choosenAcc (for observer (or also player in wizardGives)
+let tryWizzardStrike = false; //if player clicks wizzard btn
+let wizzardTakes = []; // is storing all neighbors in observer circle(higher OR lower) of choosenAcc, or only single Accords
+let wizzardGives = []; //     -"-   in player circle     -"-
+let flatNeighbor = []; //neighbor of choosenAcc (for observer (or also player in wizzardGives)
 let sharpNeighbor = []; //    -"-
 let flatPlayerConnection = []; //card neighbors in player card stack
 let sharpPlayerConnection = []; //    -"-
@@ -158,10 +158,10 @@ allTonesOriginal = [
   {
     nr: 15,
     stackNr: -1,
-    title: "wizard",
+    title: "wizzard",
     amount: 1,
     inUse: false,
-    src: "assets/images/specials/wizard.jpg",
+    src: "assets/images/specials/wizzard.jpg",
   },
 ];
 
@@ -253,6 +253,21 @@ allMajOriginal = [
     src: "assets/images/accords/accB.jpg",
   },
 ];
+
+const toneColors = {
+  1: "#abafff",
+  2: "#cb9066",
+  3: "#9efec7",
+  4: "#fe4a51",
+  5: "#b6fe7c",
+  6: "#b395fb",
+  7: "#feaf4d",
+  8: "#8bb7fd",
+  9: "#fe88b0",
+  10: "#89fe50",
+  11: "#fe42a6",
+  12: "#ebfe47",
+};
 
 let allMaj = allMajOriginal.map((obj) => ({ ...obj }));
 

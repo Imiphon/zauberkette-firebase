@@ -15,9 +15,9 @@ const texts = {
     en: `Press the Goblin button and you can steal a spell from the opponent if it connects to one of your spells.`,
     fr: `Appuyez sur le bouton Gobelin et vous pouvez voler un sort à l'adversaire s'il se connecte à l'un de vos sorts.`,
   },
-  infoWizardText: {
+  infoWizzardText: {
     de: `Drücke den Magier-Knopf und du kannst einzelne Zauber oder Zauberketten mit dem Gegner austauschen, wenn sie an einen deiner (verbliebenen) Zauber passen.`,
-    en: `Press the Wizard button and you can exchange individual spells or spell chains with the opponent if they connect to one of your (remaining) spells.`,
+    en: `Press the Wizzard button and you can exchange individual spells or spell chains with the opponent if they connect to one of your (remaining) spells.`,
     fr: `Appuyez sur le bouton Magicien et vous pouvez échanger des sorts individuels ou des chaînes de sorts avec l'adversaire s'ils se connectent à l'un de vos sorts (restants).`,
   },
   noText: {
@@ -40,14 +40,14 @@ const texts = {
     en: `<p>Unfortunately, this is not possible at the moment.</p>`,
     fr: `<p>Malheureusement, cela n'est pas possible pour le moment.</p>`,
   },
-  wizardRules: {
+  wizzardRules: {
     de: `<p>Dies ist leider gerade nicht möglich.</p>`,
     en: `<p>Unfortunately, this is not possible at the moment.</p>`,
     fr: `<p>Malheureusement, cela n'est pas possible pour le moment.</p>`,
   },
-  infoWizard: {
+  infoWizzard: {
     de: `<p>Mit dem Magier kannst du einen Zauber oder eine Kette mit dem Gegner austauschen, solange du noch einen Zauber für die Verkettung hast. Oder du drückst 'zurück'.</p>`,
-    en: `<p>With the Wizard, you can exchange a spell or a chain with the opponent, as long as you still have a spell for chaining. Or press 'back'.</p>`,
+    en: `<p>With the Wizzard, you can exchange a spell or a chain with the opponent, as long as you still have a spell for chaining. Or press 'back'.</p>`,
     fr: `<p>Avec le Magicien, vous pouvez échanger un sort ou une chaîne avec l'adversaire, tant que vous avez encore un sort pour la liaison. Ou appuyez sur 'retour'.</p>`,
   },
   infoGoblin: {
@@ -135,7 +135,7 @@ const texts = {
     en: `<p>This spell cannot connect with any of yours.</p>`,
     fr: `<p>Ce sort ne peut se connecter à aucun des vôtres.</p>`,
   },
-  infoUseWizard: {
+  infoUseWizzard: {
     de: `<p>Klicke auf den Zauber, der sich mit einem deiner Zauber verbinden lässt, egal, ob es eine Kette oder ein einzelner Zauber ist.</p>`,
     en: `<p>Click on the spell that can connect with one of your spells, whether it's a chain or a single spell.</p>`,
     fr: `<p>Cliquez sur le sort qui peut se connecter avec l'un de vos sorts, qu'il s'agisse d'une chaîne ou d'un sort unique.</p>`,
@@ -145,17 +145,17 @@ const texts = {
     en: `<p>You need this spell for linking. Choose another or press 'Back'</p>`,
     fr: `<p>Vous avez besoin de ce sort pour la liaison. Choisissez-en un autre ou appuyez sur 'Retour'</p>`,
   },
-  infoWizardComplete: {
+  infoWizzardComplete: {
     de: `<p>Bravo! Du hast den Magier eingesetzt. Deine Runde ist zu Ende.</p>`,
-    en: `<p>Bravo! You have used the Wizard. Your turn is over.</p>`,
+    en: `<p>Bravo! You have used the Wizzard. Your turn is over.</p>`,
     fr: `<p>Bravo! Vous avez utilisé le Magicien. Votre tour est terminé.</p>`,
   },
-  wizardTookSoloCard: {
+  wizzardTookSoloCard: {
     de: `<p>Du hast dich für einen Zauber entschieden. Was möchtest du dafür geben? Du kannst einen einzelnen Zauber wählen oder eine Kette, die du bereit bist, deinem Gegner zu geben.</p>`,
     en: `<p>You have chosen a spell. What would you like to give in return? You can choose a single spell or a chain that you're willing to give to your opponent.</p>`,
     fr: `<p>Vous avez choisi un sort. Que souhaitez-vous donner en retour ? Vous pouvez choisir un sort unique ou une chaîne que vous êtes prêt à donner à votre adversaire.</p>`,
   },
-  wizardTookChain: {
+  wizzardTookChain: {
     de: `<p>Du hast dich für eine ganze Zauberkette entschieden. Was möchtest du dafür geben? Du kannst einen einzelnen Zauber wählen oder eine Kette, die du bereit bist, deinem Gegner zu geben.</p>`,
     en: `<p>You have chosen a whole spell chain. What would you like to give in return? You can choose a single spell or a chain that you're willing to give to your opponent.</p>`,
     fr: `<p>Vous avez choisi une chaîne de sorts entière. Que souhaitez-vous donner en retour ? Vous pouvez choisir un sort unique ou une chaîne que vous êtes prêt à donner à votre adversaire.</p>`,
@@ -190,26 +190,26 @@ const texts = {
     en: 'Goblin',
     fr: 'Gobelin',
   },
-  wizard: {
+  wizzard: {
     de: 'Magier',
-    en: 'Wizard',
+    en: 'Wizzard',
     fr: 'Magicien',
   },
 
   prime: {
-    de: 'Prime in ',
-    en: 'Prime in ',
-    fr: 'Prime à ',
+    de: 'Prime ',
+    en: 'Prime ',
+    fr: 'Prime ',
   },
   terz: {
-    de: 'Terz in ',
-    en: 'Third in ',
-    fr: 'Tierce à ',
+    de: 'Terz ',
+    en: 'Third ',
+    fr: 'Tierce ',
   },
   quint: {
-    de: 'Quint in ',
-    en: 'Fifth in ',
-    fr: 'Quinte à ',
+    de: 'Quint ',
+    en: 'Fifth ',
+    fr: 'Quinte ',
   },
 
   C: {
@@ -320,8 +320,8 @@ function infoGoblinText() {
   return texts.infoGoblinText[language];
 }
 
-function infoWizardText() {
-  return texts.infoWizardText[language];
+function infoWizzardText() {
+  return texts.infoWizzardText[language];
 }
 
 function noText() {
@@ -340,12 +340,12 @@ function goblinRules() {
   return texts.goblinRules[language];
 }
 
-function wizardRules() {
-  return texts.wizardRules[language];
+function wizzardRules() {
+  return texts.wizzardRules[language];
 }
 
-function infoWizard() {
-  return texts.infoWizard[language];
+function infoWizzard() {
+  return texts.infoWizzard[language];
 }
 
 function infoGoblin() {
@@ -416,24 +416,24 @@ function noConnection() {
   return texts.noConnection[language];
 }
 
-function infoUseWizard() {
-  return texts.infoUseWizard[language];
+function infoUseWizzard() {
+  return texts.infoUseWizzard[language];
 }
 
 function needForConnection() {
   return texts.needForConnection[language];
 }
 
-function infoWizardComplete() {
-  return texts.infoWizardComplete[language];
+function infoWizzardComplete() {
+  return texts.infoWizzardComplete[language];
 }
 
-function wizardTookSoloCard() {
-  return texts.wizardTookSoloCard[language];
+function wizzardTookSoloCard() {
+  return texts.wizzardTookSoloCard[language];
 }
 
-function wizardTookChain() {
-  return texts.wizardTookChain[language];
+function wizzardTookChain() {
+  return texts.wizzardTookChain[language];
 }
 
 function infoUseGoblin() {

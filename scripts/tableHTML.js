@@ -73,11 +73,11 @@ function renderTable() {
                             </div>
                         </div>
                         <div class="special-frame">
-                            <div class="iron-circle btn special" onclick="useWizard()" id="changeClicks(6)"
+                            <div class="iron-circle btn special" onclick="useWizzard()" id="changeClicks(6)"
                                 style="display: none;"><img src="assets/images/btn/wiz-stand.png" alt="icon">
                             </div>
-                            <div class="helper-frame" id="infoWizard">
-                                <div class="brass-gear1 no-btn" id="wizardBrass" alt="Info"> </div>
+                            <div class="helper-frame" id="infoWizzard">
+                                <div class="brass-gear1 no-btn" id="wizzardBrass" alt="Info"> </div>
 
                             </div>
                         </div>

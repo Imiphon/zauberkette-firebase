@@ -194,9 +194,9 @@ function setBackArrays(isStartRound) {
 
     choosenAcc = [];
     tryGoblinStrike = false;
-    tryWizardStrike = false;
-    wizardTakes = [];
-    wizardGives = [];
+    tryWizzardStrike = false;
+    wizzardTakes = [];
+    wizzardGives = [];
     flatNeighbor = [];
     sharpNeighbor = [];
     playerChains = [];

@@ -49,11 +49,11 @@ function setSpecialInfo(special) {
 async function changeCard(stackID) {
   const id = typeof stackID === "number" ? stackID : currentCardID;
   const oldCardNr = playerCards[id].nr;
-  const newCard   = randomStack(oldCardNr);
+  const newCard = randomStack(oldCardNr);
   let allTonesUpdate = allTones.find((card) => card.nr === oldCardNr);
   const cardElement = docID(`playerCard${id}`);
 
-  let curOp = cardElement.style.opacity = 0.5;
+  let curOp = (cardElement.style.opacity = 0.5);
   setCardOpacity(id, curOp);
   await new Promise((resolve) => setTimeout(resolve, 1500));
   curOp = cardElement.style.opacity = 1;
@@ -104,7 +104,7 @@ function drawCard() {
   return c;
 }
 function changeWinnerCards() {
-  const stackIDs = cardCombi.map(c => c.stackNr);
+  const stackIDs = cardCombi.map((c) => c.stackNr);
   stackIDs.forEach(fadeToSpell);
 
   noBtns();
@@ -115,8 +115,8 @@ function changeWinnerCards() {
     // Inline-async IIFE, to use await
     (async () => {
       for (const id of stackIDs) {
-        await changeCard(id);       
-        cardCombi.find(c => c.stackNr === id).stackNr = -1;
+        await changeCard(id);
+        cardCombi.find((c) => c.stackNr === id).stackNr = -1;
       }
       finishRound();
     })();
@@ -125,24 +125,29 @@ function changeWinnerCards() {
 
 function fadeToSpell(cardID) {
   const cardElement = document.getElementById(`playerCard${cardID}`);
-
   if (!cardElement) {
-    console.error(`No Element with ID 'playerCard${cardID}'`);
+    console.error(`Kein Element mit ID 'playerCard${cardID}' gefunden.`);
     return;
   }
-  cardElement.style.opacity = "0.5";
-setCardOpacity(cardID, opacity);
+
+  // 1) definiere und setze Deine Opacity
+  const newOpacity = 0.5;
+  cardElement.style.opacity = newOpacity;
+
+  // 2) pushe das in Firestore
+  setCardOpacity(cardID, newOpacity);
+
+  // 3) zaubere das Overlay
   const spellImage = document.createElement("img");
   spellImage.src = "assets/images/specials/spell.png";
   spellImage.classList.add("spell-overlay");
-
   const parentElement = cardElement.parentElement;
   if (window.getComputedStyle(parentElement).position === "static") {
     parentElement.style.position = "relative";
   }
-
   parentElement.appendChild(spellImage);
 }
+
 
 /*------------------------------- CLICK CARD STUFF -------------------------------*/
 
@@ -152,7 +157,7 @@ function stepBack() {
     special.card.style.opacity = 1;
     specialInProgress = false;
     mellotArray = [];
-    tryWizardStrike = false;
+    tryWizzardStrike = false;
     tryGoblinStrike = false;
   }
   if (cardClickHandler) {
@@ -235,7 +240,6 @@ async function awaitChangeCard() {
   btnGroup3();
   currentCardID = await waitForCardClick();
   await changeCard();
-  debugger
   title = playerCards[currentCardID]["title"];
   playSound("tone", title, 0.3);
   currentCardID = -1;

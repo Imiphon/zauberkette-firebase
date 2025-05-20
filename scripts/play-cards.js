@@ -20,26 +20,31 @@ function newCardOrder() {
 }
 
 function stackOpacity1(stack, cardString) {
-  for (let i = 0; i < stack.length; i++) {
-    let card = document.getElementById(cardString + `${i}`);
-    if (card) {
-      let curOp = (card.style.opacity = 1);
-      setCardOpacity(i, curOp);
-    }
-  }
-  if (usedSpecials.length != 0 && cardString === "playerCard") {
-    usedSpecials.forEach((usedSpecial) => {
-      let specialCard = document.getElementById(
-        cardString + `${usedSpecial.index}`
-      );
-      if (specialCard) {
-        specialCard.style.pointerEvents = "none";
-        let curOp = (specialCard.style.opacity = 0.5);
-        setCardOpacity(i, curOp);
-      }
+  stack.forEach((card, i) => {
+    const el = document.getElementById(`${cardString}${i}`);
+    if (!el) return;
+
+    // 1) aus Deinem globalen State (currentCardStyles) die opacity holen:
+    const entry = currentCardStyles.find(s => s.stackNr === i);
+    const opacity = entry?.opacity ?? 1;
+
+    // 2) auf das Element anwenden
+    el.style.opacity = opacity;
+  });
+
+  // Spezial-Fälle (usedSpecials) ebenfalls nur anwenden, nicht beschreiben:
+  if (usedSpecials.length && cardString === "playerCard") {
+    usedSpecials.forEach(({ index: stackNr }) => {
+      const el = document.getElementById(`${cardString}${stackNr}`);
+      if (!el) return;
+      const entry = currentCardStyles.find(s => s.stackNr === stackNr);
+      const opacity = entry?.opacity ?? 0.5; // default für Spezial
+      el.style.opacity = opacity;
+      el.style.pointerEvents = "none";
     });
   }
 }
+
 
 function toggleCardOpacity(index) {
   if (index != undefined) {

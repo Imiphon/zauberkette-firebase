@@ -94,7 +94,7 @@ const ruleTexts = {
     3x1 gnome as a joker for the wave fish.<br>
     2x1 Mellot<br>
     2x1 Goblin<br>
-    1x1 Wizard</p>
+    1x1 Wizzard</p>
 
     <p><strong>Gameplay:</strong><br>
     The length of the spell chain to be achieved is agreed upon and set in the navigation bar under "Winning Chain" (standard is 5 spells in a chain).<br>
@@ -113,11 +113,11 @@ const ruleTexts = {
     <p>The goblin allows you to steal a single spell or one at the end of a chain from your opponent.<br>
     Click the goblin button, then select a spell from your opponent that can connect with one of your spells.</p>
 
-    <p>The wizard allows you to exchange a spell with your opponent or an entire chain and vice versa, but no splitting of chains.</p>
+    <p>The wizzard allows you to exchange a spell with your opponent or an entire chain and vice versa, but no splitting of chains.</p>
     
-    <p>Wizards and goblins only work if the opponent's spells can connect with one of your spells.</p>
+    <p>Wizzards and goblins only work if the opponent's spells can connect with one of your spells.</p>
 
-    <p>A turn can be ended at any time, but at the latest when you have received a spell or a spell chain through 3 matching wave fish, the goblin, or the wizard.<br>
+    <p>A turn can be ended at any time, but at the latest when you have received a spell or a spell chain through 3 matching wave fish, the goblin, or the wizzard.<br>
     If the turn is over, all discarded playing cards are replaced with new ones. Only then is it the next person's turn.</p>
 
     <p>2. The goal is to reach the length of the agreed-upon magic chain.<br>
