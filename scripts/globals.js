@@ -288,13 +288,14 @@ function globalCardClickHandler(event) {
   if (!cardElement) return; // Click was not on a card
 
   const cardIndex = cardElement.getAttribute("stackNr");
-  if (cardIndex === null) return;
+  const idx      = Number(cardIndex);
+  if (Number.isNaN(idx)) return;
 
   if (!cardElement.classList.contains("active")) return;
   // Resolve the promise
   isWaitingForCardClick = false;
-  waitForCardClickResolve(cardIndex);
+  waitForCardClickResolve(idx);
 
-  getCardInfo(cardIndex);
-  playSound("tone", playerCards[cardIndex].title, 0.3);
+  getCardInfo(idx);
+  playSound("tone", playerCards[idx].title, 0.3);
 }
