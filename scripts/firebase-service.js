@@ -61,17 +61,14 @@ function setupSnapshotListener() {
         console.log("Spiel nicht gefunden!");
         return;
       }
-
       // 🔥 ignore local Writes:
       if (docSnapshot.metadata.hasPendingWrites) {
         return;
       }
-
       if (isLocalUpdate) {
         isLocalUpdate = false;
         return;
       }
-
       // only remote from other client
       const game = docSnapshot.data();
       updateGameWithNewData(game);
@@ -92,7 +89,6 @@ function initializeGameWithData(gameData) {
   allMaj = gameData.allMaj;
   playerName1 = gameData.playerName1;
   playerName2 = gameData.playerName2;
-  //setupGame();
 }
 
 function updateGameWithNewData(gameData) {
@@ -111,7 +107,6 @@ function updateGameWithNewData(gameData) {
     // local Styles-Array synchronise
     currentCardStyles = gameData.cardStyles.styles.slice();
 
-    // for both DOM-Sets anwenden
     for (const { stackNr, opacity } of currentCardStyles) {
       const pl = document.getElementById(`playerCard${stackNr}`);
       if (pl) pl.style.opacity = opacity;
@@ -119,54 +114,96 @@ function updateGameWithNewData(gameData) {
   }
 }
 
-function uploadGameData() {
-  if (!gameRef) return;
-  isLocalUpdate = true;
-  const cleanPlayerCards = playerCards.map((c) => ({
+function mapPlayerCards() {
+  return playerCards.map((c) => ({
+    nr: c.nr,
+    stackNr: c.stackNr,
+    title: c.title,
+    amount: c.amount,
+    src: c.src,
+  }))
+}
+
+function mapObsCards() {
+  return observerCards.map((c) => ({
     nr: c.nr,
     stackNr: c.stackNr,
     title: c.title,
     amount: c.amount,
     src: c.src,
   }));
-  const cleanObserverCards = observerCards.map((c) => ({
-    nr: c.nr,
-    stackNr: c.stackNr,
-    title: c.title,
-    amount: c.amount,
-    src: c.src,
-  }));
-  const cleanPlayerAccords = playerAccords.map((a) => ({
+}
+
+function mapPlayAccs() {
+  return playerAccords.map((a) => ({
     nr: a.nr,
     circleNr: a.circleNr,
     title: a.title,
     amount: a.amount,
     src: a.src,
   }));
-  const jsonData = {
-    playerCards: cleanPlayerCards,
-    observerCards: cleanObserverCards,
-    playerAccords: cleanPlayerAccords,
-    observerAccords: observerAccords.map((a) => ({
-      nr: a.nr,
-      circleNr: a.circleNr,
-      title: a.title,
-      amount: a.amount,
-      src: a.src,
-    })),
-    allTones: allTones.map((t) => ({
+}
+
+function mapObsAccs() {
+  return observerAccords.map((a) => ({
+    nr: a.nr,
+    circleNr: a.circleNr,
+    title: a.title,
+    amount: a.amount,
+    src: a.src,
+  }));
+}
+
+function mapAllTones(){
+  return allTones.map((t) => ({
       nr: t.nr,
       title: t.title,
       amount: t.amount,
       src: t.src,
-    })),
-    allMaj: allMaj.map((m) => ({
+    }));
+}
+
+function mapAllMaj() {
+  return allMaj.map((m) => ({
       nr: m.nr,
       circleNr: m.circleNr,
       title: m.title,
       amount: m.amount,
       src: m.src,
-    })),
+    }))
+}
+
+function uploadGameData() {
+  if (!gameRef) return;
+  isLocalUpdate = true;
+  // const cleanPlayerCards = playerCards.map((c) => ({
+  //   nr: c.nr,
+  //   stackNr: c.stackNr,
+  //   title: c.title,
+  //   amount: c.amount,
+  //   src: c.src,
+  // }));
+  // const cleanObserverCards = observerCards.map((c) => ({
+  //   nr: c.nr,
+  //   stackNr: c.stackNr,
+  //   title: c.title,
+  //   amount: c.amount,
+  //   src: c.src,
+  // }));
+  // const cleanPlayerAccords = playerAccords.map((a) => ({
+  //   nr: a.nr,
+  //   circleNr: a.circleNr,
+  //   title: a.title,
+  //   amount: a.amount,
+  //   src: a.src,
+  // }));
+  const jsonData = {
+    playerCards: mapPlayerCards(),//cleanPlayerCards,
+    observerCards: mapObsCards(),//cleanObserverCards,
+    playerAccords: mapPlayAccs(),//cleanPlayerAccords,
+    observerAccords: mapObsAccs(),
+    allTones: mapAllTones(),
+    allMaj: mapAllMaj(),
     playerName1,
     playerName2,
     cardStyles: {
@@ -176,26 +213,6 @@ function uploadGameData() {
   gameRef
     .set(jsonData, { merge: true })
     .catch((err) => console.error("Firestore-Error:", err));
-}
-
-function setCardOpacity(stackNr, opacity) {
-  if (!gameRef) return;
-
-  const idx = Number(stackNr);
-  if (Number.isNaN(idx)) {
-    console.error("setCardOpacity: Ungültiger Index", stackNr);
-    return;
-  }
-  // set Opacity in DOM
-  const el = document.getElementById(`playerCard${idx}`);
-  if (el) el.style.opacity = opacity;
-
-  // State-Array update
-  currentCardStyles = currentCardStyles
-    .filter((s) => s.stackNr !== idx)
-    .concat({ stackNr: idx, opacity });
-
-  uploadGameData();
 }
 
 //get referenz of gameID

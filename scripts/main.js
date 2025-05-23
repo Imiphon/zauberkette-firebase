@@ -46,6 +46,47 @@ function findOptAccords(cardNr) {
   }
 }
 
+
+function stackOpacity1(stack, cardString) {
+  stack.forEach((card, i) => {
+    const el = document.getElementById(`${cardString}${i}`);
+    if (!el) return;
+
+    const entry = currentCardStyles.find((s) => s.stackNr === i);
+    const opacity = entry?.opacity ?? 1;
+    el.style.opacity = opacity;
+  });
+
+  if (usedSpecials.length && cardString === "playerCard") {
+    usedSpecials.forEach(({ index: stackNr }) => {
+      const el = document.getElementById(`${cardString}${stackNr}`);
+      if (!el) return;
+      const entry = currentCardStyles.find((s) => s.stackNr === stackNr);
+      const opacity = entry?.opacity ?? 0.5;
+      el.style.opacity = opacity;
+      el.style.pointerEvents = "none";
+    });
+  }
+}
+
+function toggleCardOpacity(stackNr) {
+  if (stackNr == null) return;
+
+  // 1) Hole *nur* das lokale <img> aus #playerStackID
+  const playerContainer = document.getElementById("playerStackID");
+  const clickedCard = playerContainer.querySelector(
+    `.card[stackNr="${stackNr}"]`
+  );
+  if (!clickedCard) return;
+
+  // 2) Toggle die Opacity
+  const curOp = clickedCard.style.opacity == 1 ? 0.5 : 1;
+  clickedCard.style.opacity = curOp;
+
+  // 3) Wenn Du die Opacity weiter in Firebase schreibst:
+  setCardOpacity(stackNr, curOp);
+}
+
 // Helper Function to Append Translated Text
 function appendTranslatedText(key, text, parentElement) {
   const span = document.createElement("span");
@@ -177,7 +218,7 @@ function buildStack(Cards) {
   }
 
   //For testing cards and accords
-  //testStack();
+  testStack();
 
   Cards === "playerCards"
     ? renderStack("playerCard", "playerStackID")
@@ -270,8 +311,6 @@ function toggleLang() {
   if (currentInfoFunction) {
     showInfo(currentInfoFunction);
   }
-  //const header = document.querySelector('header');
-  //header.innerHTML = renderHeaderHTML();
   let langFlag = document.getElementById("langImg");
   if (langFlag) langFlag.src = `assets/images/btn/${language}.svg`;
   updateStaticTexts();
@@ -347,6 +386,18 @@ function renderIndex() {
 function getGameIdFromUrl() {
   const urlParts = window.location.pathname.split("/");
   return urlParts[urlParts.length - 1];
+}
+
+function setCardOpacity(stackNr, opacity) {
+  if (!gameRef) return;
+  // set Opacity in DOM
+  const el = document.getElementById(`playerCard${stackNr}`);
+  if (el) el.style.opacity = opacity;
+  // State-Array update
+  currentCardStyles = currentCardStyles
+    .filter((s) => s.stackNr !== stackNr)
+    .concat({ stackNr: idx, opacity });
+  uploadGameData();
 }
 
 //called in buildStack()

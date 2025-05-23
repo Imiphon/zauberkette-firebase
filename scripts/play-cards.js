@@ -19,45 +19,6 @@ function newCardOrder() {
   setCardInfo();
 }
 
-function stackOpacity1(stack, cardString) {
-  stack.forEach((card, i) => {
-    const el = document.getElementById(`${cardString}${i}`);
-    if (!el) return;
-
-    const entry = currentCardStyles.find((s) => s.stackNr === i);
-    const opacity = entry?.opacity ?? 1;
-    el.style.opacity = opacity;
-  });
-
-  if (usedSpecials.length && cardString === "playerCard") {
-    usedSpecials.forEach(({ index: stackNr }) => {
-      const el = document.getElementById(`${cardString}${stackNr}`);
-      if (!el) return;
-      const entry = currentCardStyles.find((s) => s.stackNr === stackNr);
-      const opacity = entry?.opacity ?? 0.5;
-      el.style.opacity = opacity;
-      el.style.pointerEvents = "none";
-    });
-  }
-}
-
-function toggleCardOpacity(stackNr) {
-  if (stackNr == null) return;
-
-  // 1) Hole *nur* das lokale <img> aus #playerStackID
-  const playerContainer = document.getElementById("playerStackID");
-  const clickedCard = playerContainer.querySelector(
-    `.card[stackNr="${stackNr}"]`
-  );
-  if (!clickedCard) return;
-
-  // 2) Toggle die Opacity
-  const curOp = clickedCard.style.opacity == 1 ? 0.5 : 1;
-  clickedCard.style.opacity = curOp;
-
-  // 3) Wenn Du die Opacity weiter in Firebase schreibst:
-  setCardOpacity(stackNr, curOp);
-}
 
 async function clickCardsforCombi() {
   isWaitingForCardClick = true;
@@ -348,40 +309,48 @@ function changeMellotCards() {
     observerCards[card2Index].src;
 }
 
-async function useMellot() {
+function prepareMellotChange(params) {
   playSound("tone", "mellot", 0.5);
   disableCardClicks();
   specialInProgress = true;
   enablePlayerCards();
   separateSpecial("mellot");
+  uploadGameData();
   mellotArray = []; //to define the two cards for change
-  currentInfoFunction = infoToGiveCard;
-  showInfo(currentInfoFunction);
+  showInfo(infoToGiveCard);
   btnGroup3();
+}
+
+function finishMellotChange() {
+  changeMellotCards();
+  specialInProgress = false;
+  newCardOrder();
+  btnGroup2();
+  uploadGameData();
+}
+
+async function useMellot() {
+  prepareMellotChange();
   await waitForCardClick();
-  if (mellotArray.length === 0) {
-    toggleCardOpacity(currentCardID);
-  }
   let firstClickedIndex = currentCardID;
   if (mellotArray.length === 0) {
     mellotArray.push(playerCards[currentCardID]);
+    toggleCardOpacity(currentCardID);
   }
-  currentInfoFunction = infoToTakeCard;
-  showInfo(currentInfoFunction);
+  uploadGameData();
+  showInfo(infoToTakeCard);
   enableObserverCards();
   await waitForCardClick();
-  //in case of a 'step back' after first click and start useMellot() again function jumps to mellotArray.push(observerCards[currentCardID]); otherwise.
   if (mellotArray.length === 1) {
     mellotArray.push(observerCards[currentCardID]);
+    // in case of a 'step back' after first click and start useMellot() again
+    // otherwise function jumps to mellotArray.push(observerCards[currentCardID]);
   } else if (mellotArray.length === 0) {
     mellotArray.push(playerCards[currentCardID]);
     firstClickedIndex = currentCardID;
   }
   toggleCardOpacity(firstClickedIndex);
-  changeMellotCards();
-  specialInProgress = false;
-  newCardOrder();
-  btnGroup2();
+  finishMellotChange();
 }
 
 /**
