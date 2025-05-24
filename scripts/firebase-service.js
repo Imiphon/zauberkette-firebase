@@ -16,7 +16,7 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 let gameRef = null;
 let gameID = null;
-let gameLink = null;
+// let gameLink = null;
 let isLocalUpdate = false;
 
 function addDataToFirestore() {
@@ -35,7 +35,7 @@ function addDataToFirestore() {
     .add(jsonData)
     .then((docRef) => {
       gameID = docRef.id;
-      gameLink = `${window.location.origin}/${gameID}`;
+      // gameLink = `${window.location.origin}/${gameID}`;
 
       console.log("new ID on firestore is:", gameID);
       gameRef = db.collection("on-table").doc(gameID);
@@ -176,31 +176,11 @@ function mapAllMaj() {
 function uploadGameData() {
   if (!gameRef) return;
   isLocalUpdate = true;
-  // const cleanPlayerCards = playerCards.map((c) => ({
-  //   nr: c.nr,
-  //   stackNr: c.stackNr,
-  //   title: c.title,
-  //   amount: c.amount,
-  //   src: c.src,
-  // }));
-  // const cleanObserverCards = observerCards.map((c) => ({
-  //   nr: c.nr,
-  //   stackNr: c.stackNr,
-  //   title: c.title,
-  //   amount: c.amount,
-  //   src: c.src,
-  // }));
-  // const cleanPlayerAccords = playerAccords.map((a) => ({
-  //   nr: a.nr,
-  //   circleNr: a.circleNr,
-  //   title: a.title,
-  //   amount: a.amount,
-  //   src: a.src,
-  // }));
+  
   const jsonData = {
-    playerCards: mapPlayerCards(),//cleanPlayerCards,
-    observerCards: mapObsCards(),//cleanObserverCards,
-    playerAccords: mapPlayAccs(),//cleanPlayerAccords,
+    playerCards: mapPlayerCards(),
+    observerCards: mapObsCards(),
+    playerAccords: mapPlayAccs(),
     observerAccords: mapObsAccs(),
     allTones: mapAllTones(),
     allMaj: mapAllMaj(),

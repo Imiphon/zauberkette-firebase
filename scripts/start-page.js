@@ -1,3 +1,4 @@
+
 /* --------------- INDEX.HTML  ------------------------*/
 
 function startInvitation(invitationID) {
@@ -112,6 +113,28 @@ function startOneTable() {
   setupGame();
 }
 
+function createLink() {  
+  // Add Event-Listener for "E-Mail senden"-Button
+  const sendEmailBtn = document.getElementById("sendEmailBtn");
+  sendEmailBtn.addEventListener("click", () => {
+    const emailField = document.getElementById("emailInputField");
+    const email = emailField.value.trim();
+
+    if (validateEmail(email)) {
+      // Send linkID with mail
+      sendEmail(email);
+    } else {
+      alert("Bitte gib eine gültige E-Mail-Adresse ein.");
+    }
+  });
+
+  // copy linkID
+  const copyLinkBtn = document.getElementById("copyLinkBtn");
+  copyLinkBtn.addEventListener("click", () => {
+    copyLink();
+  });
+}
+
 function startTwoTables() {
   // Spiele den Sound und initialisiere das Spiel
   renderTable();
@@ -134,26 +157,7 @@ function startTwoTables() {
         </div>
       </div>
     `;
-
-  // Add Event-Listener for "E-Mail senden"-Button
-  const sendEmailBtn = document.getElementById("sendEmailBtn");
-  sendEmailBtn.addEventListener("click", () => {
-    const emailField = document.getElementById("emailInputField");
-    const email = emailField.value.trim();
-
-    if (validateEmail(email)) {
-      // Send linkID with mail
-      sendEmail(email);
-    } else {
-      alert("Bitte gib eine gültige E-Mail-Adresse ein.");
-    }
-  });
-
-  // copy linkID
-  const copyLinkBtn = document.getElementById("copyLinkBtn");
-  copyLinkBtn.addEventListener("click", () => {
-    copyLink();
-  });
+createLink();
 }
 
 // validate email adress
@@ -169,22 +173,15 @@ function sendEmail(email) {
     return;
   }
 
-  const gameID = gameRef.id;
-  const gameLink = `${gameID}`;
-
-  // Define Betreff and den Body of E-Mail
   const subject = encodeURIComponent(
     "Hier die gameID zu meinem aktuellen Spiel"
   );
   const body = encodeURIComponent(
-    `Hallo,\n\nHier ist der Link zu meinem aktuellen Spiel: ${gameLink}\n\nViel Spaß!`
+    `Hallo,\n\nHier ist der Link zu meinem aktuellen Spiel: ${gameID}\n\nViel Spaß!`
   );
-
   const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
-
   // open Standard-E-Mail-Program
   window.location.href = mailtoLink;
-
   const popupOverlay = document.getElementById("popupOverlay");
   if (popupOverlay) {
     popupOverlay.parentNode.removeChild(popupOverlay);
@@ -199,12 +196,9 @@ function copyLink() {
     return;
   }
 
-  const gameID = gameRef.id;
-  const gameLink = `${gameID}`;
-
   // use Clipboard API to copy link
   navigator.clipboard
-    .writeText(gameLink)
+    .writeText(gameID)
     .then(() => {
       alert("Der Spiel-Link wurde in die Zwischenablage kopiert!");
       // remove Popup-Overlay
@@ -258,12 +252,3 @@ function detectTouchDevice() {
     });
   }
 }
-
-//document.addEventListener('DOMContentLoaded', () => {
-//    const gameId = getGameIdFromUrl();
-//    if (gameId) {
-//      joinGame(gameId);
-//    } else {
-//      setNames();
-//    }
-//  });

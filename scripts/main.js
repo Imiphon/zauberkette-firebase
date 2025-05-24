@@ -47,27 +47,67 @@ function findOptAccords(cardNr) {
 }
 
 
+// function stackOpacity1(stack, cardString) {
+//   stack.forEach((card, i) => {
+//     const el = document.getElementById(`${cardString}${i}`);
+//     if (!el) return;
+
+//     const entry = currentCardStyles.find((s) => s.stackNr === i);
+//     const opacity = entry?.opacity ?? 1;
+//     el.style.opacity = opacity;
+//   });
+
+//   if (usedSpecials.length && cardString === "playerCard") {
+//     usedSpecials.forEach(({ index: stackNr }) => {
+//       const el = document.getElementById(`${cardString}${stackNr}`);
+//       if (!el) return;
+//       const entry = currentCardStyles.find((s) => s.stackNr === stackNr);
+//       const opacity = entry?.opacity ?? 0.5;
+//       el.style.opacity = opacity;
+//       el.style.pointerEvents = "none";
+//     });
+//   }
+// }
+
+/**
+ * Apply opacity and interaction styles to a card stack.
+ *
+ * For the player’s stack (cardString === "playerCard"), it reads
+ * the latest opacities from currentCardStyles (synced via Firebase)
+ * and disables any used special cards.
+ *
+ * For the observer’s stack, all cards remain fully visible.
+ *
+ * @param {Array} stack              – the array of cards in this stack
+ * @param {string} cardString        – element ID prefix ("playerCard" or "observerCard")
+ */
 function stackOpacity1(stack, cardString) {
+  // 1. Loop through every position in the stack
   stack.forEach((card, i) => {
     const el = document.getElementById(`${cardString}${i}`);
     if (!el) return;
 
-    const entry = currentCardStyles.find((s) => s.stackNr === i);
-    const opacity = entry?.opacity ?? 1;
-    el.style.opacity = opacity;
+    if (cardString === "playerCard") {
+      // Player view: apply stored opacity (default to 1)
+      const entry = currentCardStyles.find(s => s.stackNr === i);
+      el.style.opacity = entry?.opacity ?? 1;
+    } else {
+      // Observer view: always full opacity
+      el.style.opacity = 1;
+    }
   });
 
-  if (usedSpecials.length && cardString === "playerCard") {
-    usedSpecials.forEach(({ index: stackNr }) => {
-      const el = document.getElementById(`${cardString}${stackNr}`);
-      if (!el) return;
-      const entry = currentCardStyles.find((s) => s.stackNr === stackNr);
-      const opacity = entry?.opacity ?? 0.5;
-      el.style.opacity = opacity;
-      el.style.pointerEvents = "none";
+  // 2. If this is the player’s stack, disable pointer events on used special cards
+  if (cardString === "playerCard" && usedSpecials.length > 0) {
+    usedSpecials.forEach(({ index: specialIndex }) => {
+      const specialEl = document.getElementById(`${cardString}${specialIndex}`);
+      if (specialEl) {
+        specialEl.style.pointerEvents = "none";
+      }
     });
   }
 }
+
 
 function toggleCardOpacity(stackNr) {
   if (stackNr == null) return;
@@ -218,7 +258,7 @@ function buildStack(Cards) {
   }
 
   //For testing cards and accords
-  testStack();
+  // testStack();
 
   Cards === "playerCards"
     ? renderStack("playerCard", "playerStackID")
@@ -396,7 +436,7 @@ function setCardOpacity(stackNr, opacity) {
   // State-Array update
   currentCardStyles = currentCardStyles
     .filter((s) => s.stackNr !== stackNr)
-    .concat({ stackNr: idx, opacity });
+    .concat({ stackNr, opacity });
   uploadGameData();
 }
 
