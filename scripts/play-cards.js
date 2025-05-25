@@ -19,7 +19,6 @@ function newCardOrder() {
   setCardInfo();
 }
 
-
 async function clickCardsforCombi() {
   isWaitingForCardClick = true;
   currentCardID = await waitForCardClick();
@@ -27,13 +26,13 @@ async function clickCardsforCombi() {
   let currentCard = playerCards[currentCardID];
   let currentCardNr = currentCard.nr;
   if (cardCombi.includes(currentCard)) {
-    currentInfoFunction = infoNoSameCards;
-    showInfo(currentInfoFunction);
+    // currentInfoFunction = infoNoSameCards;
+    showInfo(infoNoSameCards);
     return;
   }
   if (currentCardNr > 12) {
-    currentInfoFunction = infoNoSpecials;
-    showInfo(currentInfoFunction);
+    // currentInfoFunction = infoNoSpecials;
+    showInfo(infoNoSpecials);
     playSound("failed", "buzzer-short", 0.4);
     clickAccount++;
     return;
@@ -42,6 +41,7 @@ async function clickCardsforCombi() {
     toggleCardOpacity(currentCardID);
     cardCombi.push(currentCard);
     clickAccount++;
+    uploadGameData();
     return;
   }
 }
@@ -337,8 +337,8 @@ async function useMellot() {
     mellotArray.push(playerCards[currentCardID]);
     toggleCardOpacity(currentCardID);
   }
-  uploadGameData();
   showInfo(infoToTakeCard);
+  uploadGameData();
   enableObserverCards();
   await waitForCardClick();
   if (mellotArray.length === 1) {
@@ -366,8 +366,8 @@ function useGoblin() {
   separateSpecial("goblin");
   disableAccClicks();
   enableObserverAccordClicks();
-  currentInfoFunction = infoUseGoblin;
-  showInfo(currentInfoFunction);
+  // currentInfoFunction = infoUseGoblin;
+  showInfo(infoUseGoblin);
   btnGroup3();
   specialInProgress = true;
 }
@@ -382,8 +382,8 @@ function useWizzard() {
   separateSpecial("wizzard");
   disableAccClicks();
   enableObserverAccordClicks();
-  currentInfoFunction = infoUseWizzard;
-  showInfo(currentInfoFunction);
+  // currentInfoFunction = infoUseWizzard;
+  showInfo(infoUseWizzard);
   btnGroup3();
   specialInProgress = true;
 }

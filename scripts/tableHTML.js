@@ -44,6 +44,7 @@ function renderTable() {
                                     alt="Chain Helper">
                             </div>
                             <div class="info-text" id="infoTextID"></div>
+                            <img class="sand-clock" src="assets/images/specials/sand-clock.png" alt="wait...">
                         </div>
                     </div>
 

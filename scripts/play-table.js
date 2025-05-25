@@ -174,7 +174,7 @@ function stepBack() {
   setBackBooleans();
   playSound("failed", "backMag", 0.5);
   disableCardClicks();
-  updateGameWithNewData();
+  uploadGameData(); 
 }
 
 function enablePlayerCards() {

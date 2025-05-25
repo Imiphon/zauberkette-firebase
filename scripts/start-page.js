@@ -1,7 +1,7 @@
-
 /* --------------- INDEX.HTML  ------------------------*/
 
 function startInvitation(invitationID) {
+  
   handleStartClick(startOneTable);
   joinGame(invitationID);
 }
@@ -10,8 +10,10 @@ function setNames() {
   const invitationInput = document.getElementById("invitationInput");
   const invitationID = invitationInput ? invitationInput.value.trim() : null;
   if (invitationID) {
-    startInvitation(invitationID);
+    
+    startInvitation(invitationID);    
   } else {
+    
     const popupOverlay = document.createElement("div");
     popupOverlay.id = "popupOverlay";
     popupOverlay.classList.add("popup-overlay");
@@ -35,35 +37,40 @@ function setNames() {
           </div>
         </div>
     `;
-
     popupOverlay.addEventListener("click", function (event) {
       if (event.target === popupOverlay) {
         popupOverlay.parentNode.removeChild(popupOverlay);
       }
     });
-
-    renderStartBtns();
+    renderStartBtns();    
   }
 }
 
 /*------------- POPUP and INSERT NAMES IN INDEX ------------------*/
 
 function handleStartClick(renderFunction) {
+  // read inputs
   const input1 = document.getElementById("player1Input");
   const input2 = document.getElementById("player2Input");
   playerName1 = input1 ? input1.value.trim() : "Player1";
   playerName2 = input2 ? input2.value.trim() : "Player2";
   localStorage.setItem("player1Name", playerName1);
   localStorage.setItem("player2Name", playerName2);
+
+  localStorage.removeItem("playerRole");
+  localStorage.setItem("playerRole", "player1");
+  
+
   const popupOverlay = document.getElementById("popupOverlay");
-  if (popupOverlay) {
-    popupOverlay.parentNode.removeChild(popupOverlay);
-  }
-  renderFunction(); //startOneTable() or startTwoTables()
+  if (popupOverlay) popupOverlay.remove();
+
+  renderFunction(); // startOneTable() or startTwoTables()
   playSound("success", "clave", 0.2);
 }
 
 function renderStartBtns() {
+  
+  
   const startBtn = document.getElementById("popupStartBtn");
   const startBtn2 = document.getElementById("popupStartBtn2");
   if (startBtn) {
@@ -113,7 +120,7 @@ function startOneTable() {
   setupGame();
 }
 
-function createLink() {  
+function createLink() {
   // Add Event-Listener for "E-Mail senden"-Button
   const sendEmailBtn = document.getElementById("sendEmailBtn");
   sendEmailBtn.addEventListener("click", () => {
@@ -136,7 +143,6 @@ function createLink() {
 }
 
 function startTwoTables() {
-  // Spiele den Sound und initialisiere das Spiel
   renderTable();
   setupGame();
   addDataToFirestore();
@@ -157,7 +163,8 @@ function startTwoTables() {
         </div>
       </div>
     `;
-createLink();
+  createLink();
+  toggleUI();
 }
 
 // validate email adress

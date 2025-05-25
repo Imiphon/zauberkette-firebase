@@ -175,7 +175,7 @@ h2,
 .start-btn-frame {
 	position: relative;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	gap: 12px;
 }
 

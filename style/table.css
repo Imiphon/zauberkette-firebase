@@ -330,6 +330,10 @@ img {
   text-align: center;
 }
 
+.sand-clock {
+  width: 45%;
+}
+
 .helper-frame {
   position: relative;
   left: -24px;

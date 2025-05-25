@@ -16,30 +16,33 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 let gameRef = null;
 let gameID = null;
-// let gameLink = null;
 let isLocalUpdate = false;
 
+/**
+ *
+ * @param {boolean} isPlayer1 in first time
+ */
 function addDataToFirestore() {
   const jsonData = {
-    playerCards: playerCards,
-    observerCards: observerCards,
-    playerAccords: playerAccords,
-    observerAccords: observerAccords,
-    allTones: allTones,
-    allMaj: allMaj,
-    playerName1: playerName1,
-    playerName2: playerName2,
+    playerCards:     mapPlayerCards(),
+    observerCards:   mapObsCards(),
+    playerAccords:   mapPlayAccs(),
+    observerAccords: mapObsAccs(),
+    allTones:        mapAllTones(),
+    allMaj:          mapAllMaj(),
+    playerName1,
+    playerName2,
+    cardStyles: {
+      styles: currentCardStyles  // e.g all opacitys
+    },
+    isFinishRound: false         // to game start def false
   };
 
   db.collection("on-table")
     .add(jsonData)
     .then((docRef) => {
       gameID = docRef.id;
-      // gameLink = `${window.location.origin}/${gameID}`;
-
-      console.log("new ID on firestore is:", gameID);
       gameRef = db.collection("on-table").doc(gameID);
-
       setupSnapshotListener();
     })
     .catch((error) => {
@@ -47,13 +50,14 @@ function addDataToFirestore() {
     });
 }
 
+
 function setupSnapshotListener() {
   if (!gameRef) {
     console.error("gameRef nicht gesetzt.");
     return;
   }
 
-  // include MetadataChanges, damit metadata.hasPendingWrites in jedem Snapshot mitgeliefert wird
+  // include MetadataChanges, metadata.hasPendingWrites
   gameRef.onSnapshot(
     { includeMetadataChanges: true },
     (docSnapshot) => {
@@ -71,7 +75,7 @@ function setupSnapshotListener() {
       }
       // only remote from other client
       const game = docSnapshot.data();
-      updateGameWithNewData(game);
+      downloadGameData(game);
     },
     (error) => {
       console.error("Fehler mit Snapshots:", error);
@@ -89,9 +93,11 @@ function initializeGameWithData(gameData) {
   allMaj = gameData.allMaj;
   playerName1 = gameData.playerName1;
   playerName2 = gameData.playerName2;
+  isFinishRound = gameData.isFinishRound;
+  renderNames();
 }
 
-function updateGameWithNewData(gameData) {
+function downloadGameData(gameData) {
   playerCards = gameData.playerCards || [];
   observerCards = gameData.observerCards || [];
   playerAccords = gameData.playerAccords || [];
@@ -103,6 +109,7 @@ function updateGameWithNewData(gameData) {
   renderStack("playerCard", "playerStackID");
   renderStack("observerCard", "observerStackID");
   renderCircles();
+  isFinishRound = gameData.isFinishRound;
   if (gameData.cardStyles && Array.isArray(gameData.cardStyles.styles)) {
     // local Styles-Array synchronise
     currentCardStyles = gameData.cardStyles.styles.slice();
@@ -111,6 +118,11 @@ function updateGameWithNewData(gameData) {
       const pl = document.getElementById(`playerCard${stackNr}`);
       if (pl) pl.style.opacity = opacity;
     }
+  }
+  if(isFinishRound){
+    isActiveUI=true;
+    toggleUI();
+    isFinishRound=false;
   }
 }
 
@@ -121,7 +133,7 @@ function mapPlayerCards() {
     title: c.title,
     amount: c.amount,
     src: c.src,
-  }))
+  }));
 }
 
 function mapObsCards() {
@@ -154,29 +166,29 @@ function mapObsAccs() {
   }));
 }
 
-function mapAllTones(){
+function mapAllTones() {
   return allTones.map((t) => ({
-      nr: t.nr,
-      title: t.title,
-      amount: t.amount,
-      src: t.src,
-    }));
+    nr: t.nr,
+    title: t.title,
+    amount: t.amount,
+    src: t.src,
+  }));
 }
 
 function mapAllMaj() {
   return allMaj.map((m) => ({
-      nr: m.nr,
-      circleNr: m.circleNr,
-      title: m.title,
-      amount: m.amount,
-      src: m.src,
-    }))
+    nr: m.nr,
+    circleNr: m.circleNr,
+    title: m.title,
+    amount: m.amount,
+    src: m.src,
+  }));
 }
 
-function uploadGameData() {
+function uploadGameData(isFinish) {
   if (!gameRef) return;
   isLocalUpdate = true;
-  
+
   const jsonData = {
     playerCards: mapPlayerCards(),
     observerCards: mapObsCards(),
@@ -189,7 +201,9 @@ function uploadGameData() {
     cardStyles: {
       styles: currentCardStyles,
     },
+    isFinishRound: isFinishRound,
   };
+
   gameRef
     .set(jsonData, { merge: true })
     .catch((err) => console.error("Firestore-Error:", err));
@@ -201,13 +215,13 @@ function joinGame(gameId) {
   gameRef
     .get()
     .then((doc) => {
-      if (doc.exists) {
-        const gameData = doc.data();
-        initializeGameWithData(gameData);
-        setupSnapshotListener();
-      } else {
-        console.error("Spiel nicht gefunden!");
-      }
+      if (!doc.exists) throw new Error("Spiel nicht gefunden!");
+
+      const gameData = doc.data();
+      initializeGameWithData(gameData);
+      setupSnapshotListener();
+      isActiveUI = false;
+      toggleUI();
     })
     .catch((error) => {
       console.error("Fehler beim Beitreten zum Spiel:", error);

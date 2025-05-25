@@ -5,6 +5,9 @@ let languages = ["de", "en", "fr"];
 let language = "de";
 let currentLangIndex = 0;
 
+let isFinishRound = false; //to activate toggleUI() in other client
+let isActiveUI = true;
+
 let isChainCheck = false;
 let mirrorView = false;
 let isRotated = false; //rotates table-top

@@ -387,6 +387,7 @@ function choosePlayerAccs() {
   choosenAcc = [];
   disableAccClicks();
   enablePlayerAccordClicks();
+  uploadGameData(); 
 }
 
 /**
@@ -407,9 +408,10 @@ function startExchange(circle, circleNr, part) {
   wizzardStrike(observerAccords, playerAccords, wizzardTakes);
   wizzardStrike(playerAccords, observerAccords, wizzardGives);
   tryWizzardStrike = false;
+  specialInProgress = false; //was in setTimeout before
+  uploadGameData(); 
   showWithTimeout(infoWizzardComplete);
   setTimeout(() => {
-    specialInProgress = false;
     finishRound();
   }, 4000);
 }
@@ -461,10 +463,11 @@ function goblinStrike() {
   }
   specialInProgress = false;
   tryGoblinStrike = false;
-  currentInfoFunction = infoGoblinComplete; 
-  showInfo(currentInfoFunction);
+  specialInProgress = false;  
+  uploadGameData(); 
+  // currentInfoFunction = infoGoblinComplete; 
+  showInfo(infoGoblinComplete);
   setTimeout(() => {
-    specialInProgress = false;    
     finishRound();
   }, 2000);
 }
