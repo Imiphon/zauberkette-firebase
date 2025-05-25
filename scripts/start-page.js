@@ -1,7 +1,6 @@
 /* --------------- INDEX.HTML  ------------------------*/
 
 function startInvitation(invitationID) {
-  
   handleStartClick(startOneTable);
   joinGame(invitationID);
 }
@@ -10,10 +9,8 @@ function setNames() {
   const invitationInput = document.getElementById("invitationInput");
   const invitationID = invitationInput ? invitationInput.value.trim() : null;
   if (invitationID) {
-    
-    startInvitation(invitationID);    
+    startInvitation(invitationID);
   } else {
-    
     const popupOverlay = document.createElement("div");
     popupOverlay.id = "popupOverlay";
     popupOverlay.classList.add("popup-overlay");
@@ -42,7 +39,7 @@ function setNames() {
         popupOverlay.parentNode.removeChild(popupOverlay);
       }
     });
-    renderStartBtns();    
+    renderStartBtns();
   }
 }
 
@@ -59,7 +56,6 @@ function handleStartClick(renderFunction) {
 
   localStorage.removeItem("playerRole");
   localStorage.setItem("playerRole", "player1");
-  
 
   const popupOverlay = document.getElementById("popupOverlay");
   if (popupOverlay) popupOverlay.remove();
@@ -69,8 +65,6 @@ function handleStartClick(renderFunction) {
 }
 
 function renderStartBtns() {
-  
-  
   const startBtn = document.getElementById("popupStartBtn");
   const startBtn2 = document.getElementById("popupStartBtn2");
   if (startBtn) {
@@ -157,7 +151,7 @@ function startTwoTables() {
       <div id="popupWindow" class="popup-window">
         <h2 data-key="emailInput">${text}</h2>
         <input type="email" class="popup-input" id="emailInputField" placeholder="eMail">
-        <div class="start-btn-frame">
+        <div class="id-btn-frame">
           <button class="start-btn" id="sendEmailBtn"><img src="assets/images/btn/email-5-32.png" alt="email"></button>
           <button class="start-btn" id="copyLinkBtn"><img src="assets/images/btn/copy-48.png" alt="copy"></button>
         </div>

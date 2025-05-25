@@ -46,13 +46,15 @@ async function finishRound() {
     }, 10000);
     isWinner = false;
   } else {
-    isActiveUI = !isActiveUI;
-    toggleUI();
-    
+    if (gameID) {
+      isActiveUI = !isActiveUI;
+      toggleUI();
+    }
+
     let isStartRound = true;
     startRound(isStartRound);
   }
-  uploadGameData(isFinishRound=true);
+  uploadGameData((isFinishRound = true));
 }
 
 function animateTableFrame() {

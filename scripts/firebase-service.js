@@ -24,18 +24,20 @@ let isLocalUpdate = false;
  */
 function addDataToFirestore() {
   const jsonData = {
-    playerCards:     mapPlayerCards(),
-    observerCards:   mapObsCards(),
-    playerAccords:   mapPlayAccs(),
+    playerCards: mapPlayerCards(),
+    observerCards: mapObsCards(),
+    playerAccords: mapPlayAccs(),
     observerAccords: mapObsAccs(),
-    allTones:        mapAllTones(),
-    allMaj:          mapAllMaj(),
+    allTones: mapAllTones(),
+    allMaj: mapAllMaj(),
     playerName1,
     playerName2,
     cardStyles: {
-      styles: currentCardStyles  // e.g all opacitys
+      styles: currentCardStyles, // e.g all opacitys
     },
-    isFinishRound: false         // to game start def false
+    isFinishRound: false, // to game start def false
+    goalValue: 5,
+    isWinner: false,
   };
 
   db.collection("on-table")
@@ -49,7 +51,6 @@ function addDataToFirestore() {
       console.error("error adding game:", error);
     });
 }
-
 
 function setupSnapshotListener() {
   if (!gameRef) {
@@ -94,6 +95,8 @@ function initializeGameWithData(gameData) {
   playerName1 = gameData.playerName1;
   playerName2 = gameData.playerName2;
   isFinishRound = gameData.isFinishRound;
+  goalValue = gameData.goalvalue;
+  isWinner = gameData.isWinner;
   renderNames();
 }
 
@@ -110,6 +113,8 @@ function downloadGameData(gameData) {
   renderStack("observerCard", "observerStackID");
   renderCircles();
   isFinishRound = gameData.isFinishRound;
+  goalValue = gameData.goalvalue;
+  isWinner = gameData.isWinner;
   if (gameData.cardStyles && Array.isArray(gameData.cardStyles.styles)) {
     // local Styles-Array synchronise
     currentCardStyles = gameData.cardStyles.styles.slice();
@@ -119,10 +124,10 @@ function downloadGameData(gameData) {
       if (pl) pl.style.opacity = opacity;
     }
   }
-  if(isFinishRound){
-    isActiveUI=true;
+  if (isFinishRound) {
+    isActiveUI = true;
     toggleUI();
-    isFinishRound=false;
+    isFinishRound = false;
   }
 }
 

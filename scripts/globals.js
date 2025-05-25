@@ -257,6 +257,15 @@ allMajOriginal = [
   },
 ];
 
+let allMaj = allMajOriginal.map((obj) => ({ ...obj }));
+
+function originalStack() {
+  allMaj = allMajOriginal.map((obj) => ({ ...obj }));
+  allTones = allTonesOriginal.map((obj) => ({ ...obj }));
+  playerAccords.length = 0;
+  observerAccords.length = 0;
+}
+
 const toneColors = {
   1: "#767dfd",
   2: "#cb9066",
@@ -272,33 +281,4 @@ const toneColors = {
   12: "#ebfe47",
 };
 
-let allMaj = allMajOriginal.map((obj) => ({ ...obj }));
 
-function originalStack() {
-  allMaj = allMajOriginal.map((obj) => ({ ...obj }));
-  allTones = allTonesOriginal.map((obj) => ({ ...obj }));
-  playerAccords.length = 0;
-  observerAccords.length = 0;
-}
-
-document.addEventListener("click", globalCardClickHandler);
-
-function globalCardClickHandler(event) {
-  // Check if we're currently waiting for a card click
-  if (!isWaitingForCardClick) return;
-
-  let cardElement = event.target.closest(".card");
-  if (!cardElement) return; // Click was not on a card
-
-  const cardIndex = cardElement.getAttribute("stackNr");
-  const idx      = Number(cardIndex);
-  if (Number.isNaN(idx)) return;
-
-  if (!cardElement.classList.contains("active")) return;
-  // Resolve the promise
-  isWaitingForCardClick = false;
-  waitForCardClickResolve(idx);
-
-  getCardInfo(idx);
-  playSound("tone", playerCards[idx].title, 0.3);
-}
