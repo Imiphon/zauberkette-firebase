@@ -123,6 +123,7 @@ function updateGoal(value) {
     if (!isActiveUI) return;
     goalValue = value;
     console.log('Goal value updated to:', goalValue);
+    uploadGameData();
 }
 
 function changeView() {

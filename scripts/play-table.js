@@ -120,7 +120,7 @@ function changeWinnerCards() {
       }
       finishRound();
     })();
-  }, 5000);
+  }, 2000);
 }
 
 function fadeToSpell(cardID) {

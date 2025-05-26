@@ -190,7 +190,7 @@ function mapAllMaj() {
   }));
 }
 
-function uploadGameData(isFinish) {
+function uploadGameData() {
   if (!gameRef) return;
   isLocalUpdate = true;
 
