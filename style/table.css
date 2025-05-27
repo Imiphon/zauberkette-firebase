@@ -98,6 +98,7 @@
 }
 
 .table-mirror-frame {
+  position: absolute; 
   left: 28px;
   width: calc(100vh - 60px);
   height: 100vh;
@@ -106,18 +107,13 @@
 
 .table-frame,
 .table-mirror-frame {
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
-  height: 100%;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-image: url(./../assets/images/bgr/bgr.jpeg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 body.mirror-view .table-top {
@@ -128,13 +124,17 @@ body.mirror-view .table-top {
 .inner-table {
   position: relative;
   width: 100%;
-  height: fit-content;
+  height: 100%;
   min-height: 96%;
   display: flex;
   justify-content: center;
   align-content: center;
   flex-direction: column;
   align-items: center;
+  /* background-image: url(./../assets/images/bgr/bgr-slate-brass.png); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .table-top,
@@ -163,6 +163,7 @@ body.mirror-view .table-top {
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
+  /* z-index: 10; */
 }
 
 .left-center-frame {
@@ -216,7 +217,7 @@ body.mirror-view .table-top {
   transform: translate(-50%, -50%);
   width: 12px;
   height: 18px;
-  background-color:#cdcdcd;
+  background-color: #cdcdcd;
   border-radius: 10px;
   margin: 5px;
 }
@@ -265,7 +266,6 @@ body.mirror-view .table-top {
 .card-group {
   display: flex;
   justify-content: center;
-  /*align-items: space-evenly;*/
   flex-direction: row;
 }
 
@@ -274,7 +274,7 @@ body.mirror-view .table-top {
   width: 8vw;
   height: auto;
   min-height: 80px;
-  background-color: antiquewhite;
+  box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.8);
 }
 
 .card:hover {
@@ -284,7 +284,7 @@ body.mirror-view .table-top {
 
 img {
   cursor: pointer;
-  z-index: 10;
+  /* z-index: 10; */
 }
 
 .hide-image {
@@ -361,10 +361,10 @@ img {
 
 .chain-helper {
   display: none;
-  position: fixed;
+  position: relative;
   top: 80px;
   left: 50px;
-  z-index: 100;
+  z-index: 10;
 }
 
 .chain-frame {
@@ -456,24 +456,25 @@ img {
     /* 1px 1px 2px rgba(255, 255, 255, 0.6), */
     2px 2px 2px rgba(0, 0, 0, 0.7);
 }
+
 .opt-accord-item {
   display: block;
   margin-bottom: 0.25rem;
 }
 
-.color{
-color: #767dfd;
-color: #cb9066;
-color: #9efec7;
-color: #fe4a51;
-color: #e3fb8e;
-color: #c5adfc;
-color: #feaf4d;
-color: #8bb7fd;
-color: #fe88b0;
-color: #81ee4a;
-color: #fe42a6;
-color: #ebfe47;
+.color {
+  color: #767dfd;
+  color: #cb9066;
+  color: #9efec7;
+  color: #fe4a51;
+  color: #e3fb8e;
+  color: #c5adfc;
+  color: #feaf4d;
+  color: #8bb7fd;
+  color: #fe88b0;
+  color: #81ee4a;
+  color: #fe42a6;
+  color: #ebfe47;
 }
 
 .brass-long {

@@ -16,6 +16,7 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 let gameRef = null;
 let gameID = null;
+// let isGameID = gameID === null ? false : true;
 let isLocalUpdate = false;
 
 /**
@@ -36,9 +37,12 @@ function addDataToFirestore() {
       styles: currentCardStyles, // e.g all opacitys
     },
     isFinishRound: false, // to game start def false
-    goalValue: 5,
+    goalValue: goalValue,
+
     isWinner: false,
   };
+  const goalInput = document.getElementById("goalInputID");
+  if (goalInput) goalInput.value = goalValue;
 
   db.collection("on-table")
     .add(jsonData)
@@ -95,8 +99,9 @@ function initializeGameWithData(gameData) {
   playerName1 = gameData.playerName1;
   playerName2 = gameData.playerName2;
   isFinishRound = gameData.isFinishRound;
-  goalValue = gameData.goalvalue;
+  goalValue = gameData.goalValue;
   isWinner = gameData.isWinner;
+  goalValue = goalValue;
   renderNames();
 }
 
@@ -113,7 +118,8 @@ function downloadGameData(gameData) {
   renderStack("observerCard", "observerStackID");
   renderCircles();
   isFinishRound = gameData.isFinishRound;
-  goalValue = gameData.goalvalue;
+  goalValue = gameData.goalValue;
+  updateGoal(goalValue);
   isWinner = gameData.isWinner;
   if (gameData.cardStyles && Array.isArray(gameData.cardStyles.styles)) {
     // local Styles-Array synchronise
@@ -207,6 +213,7 @@ function uploadGameData() {
       styles: currentCardStyles,
     },
     isFinishRound: isFinishRound,
+    goalValue: goalValue,
   };
 
   gameRef

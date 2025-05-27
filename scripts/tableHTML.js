@@ -1,9 +1,9 @@
 function renderTable() {
-    const mainContent = document.getElementById('startSideContent');
+    const mainContent = document.getElementById('mainContent');
     if (mainContent) {
       mainContent.innerHTML = /*html*/`
-        <main>
-        <header id="headInfoID"></header>
+       
+        <!-- <header id="headInfoID"></header> -->
         <div class="table-frame">
             <div class="inner-table">
 
@@ -117,7 +117,7 @@ function renderTable() {
                 </div>
             </div>
         </div>
-    </main>
+    
       `;
     }
   }

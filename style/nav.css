@@ -1,17 +1,18 @@
-nav,
-header {
-  position: fixed;
+nav
+ {
+  position: relative;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: rgb(84, 83, 83);
+  /* background-color: #522a0a; */
   color: #f5deb3;
   z-index: 1000;
 }
 
 nav {
   justify-content: flex-start;
+  height: 80px;
 }
 
 .nav-left {
@@ -23,7 +24,6 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .logo {
@@ -52,7 +52,7 @@ nav {
 
 .num-picker button {
   color: #f5deb3;
-  background-color: rgb(84, 83, 83);
+  background-color:  #522a0a;
   cursor: pointer;
   ;
 }

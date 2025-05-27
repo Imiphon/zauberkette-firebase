@@ -176,7 +176,7 @@ function buildStack(Cards) {
     targetArray.push(newCard);
   }
 
-  //For testing cards and accords added in ui-utils.js
+  //For testing cards and accords 
   // testStack();
 
   Cards === "playerCards"
@@ -292,8 +292,10 @@ function updateStaticTexts() {
 function renderNames() {
   let player1 = document.getElementById("playNameID");
   let player2 = document.getElementById("obsNameID");
-  let playerName = localStorage.getItem("player1Name");
-  let obsName = localStorage.getItem("player2Name");
+  let stored1 =localStorage.getItem("player1Name");
+  let stored2 =localStorage.getItem("player2Name"); 
+  let playerName = stored1 || "ReMi";
+  let obsName = stored2 || "MiDo";
 
   player1.innerHTML = playerName;
   player2.innerHTML = obsName;
@@ -302,7 +304,7 @@ function renderNames() {
 function setupGame(isSkip, isStartRound) {
   isLandingpage = false;
   renderNames();
-  const header = document.querySelector("header");
+  const header = document.getElementById("headInfoID");
   header.innerHTML = renderHeaderHTML();
   currentInfoFunction = infoStart;
   showInfo(currentInfoFunction);
@@ -321,13 +323,13 @@ function setupGame(isSkip, isStartRound) {
 //called for landingpage
 function renderIndex() {
   isLandingpage = true;
-  let mainContent = docID("startSideContent");
+  let mainContent = docID("mainContent");
   if (mainContent) {
     mainContent.innerHTML = infoStartSite();
     updateStaticTexts(); // Update texts after rendering
   }
 
-  const header = document.querySelector("header");
+  const header = document.getElementById("headInfoID");
   header.innerHTML = renderHeaderHTML();
 }
 
