@@ -9,6 +9,7 @@ function calculateAvailableHeight() {
   return availableHeight;
 }
 
+
 function toggleUI() {
   if (!gameRef) {
     return;

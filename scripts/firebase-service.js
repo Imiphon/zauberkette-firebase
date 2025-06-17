@@ -38,7 +38,6 @@ function addDataToFirestore() {
     },
     isFinishRound: false, // to game start def false
     goalValue: goalValue,
-
     isWinner: false,
   };
   const goalInput = document.getElementById("goalInputID");
@@ -67,7 +66,7 @@ function setupSnapshotListener() {
     { includeMetadataChanges: true },
     (docSnapshot) => {
       if (!docSnapshot.exists) {
-        console.log("Spiel nicht gefunden!");
+        console.log("Game not found!");
         return;
       }
       // 🔥 ignore local Writes:
@@ -83,7 +82,7 @@ function setupSnapshotListener() {
       downloadGameData(game);
     },
     (error) => {
-      console.error("Fehler mit Snapshots:", error);
+      console.error("Error with Snapshots:", error);
     }
   );
 }
@@ -133,7 +132,7 @@ function downloadGameData(gameData) {
   if (isFinishRound) {
     isActiveUI = true;
     toggleUI();
-    isFinishRound = false;
+    isFinishRound = false;    
   }
 }
 
@@ -196,10 +195,12 @@ function mapAllMaj() {
   }));
 }
 
-function uploadGameData() {
+function uploadGameData(isFinishRound) {
   if (!gameRef) return;
   isLocalUpdate = true;
-
+  // if (typeof isFinishRound === "boolean") {
+  //   jsonData.isFinishRound = isFinishRound;
+  // } else isFinishRound = false;
   const jsonData = {
     playerCards: mapPlayerCards(),
     observerCards: mapObsCards(),
@@ -212,9 +213,15 @@ function uploadGameData() {
     cardStyles: {
       styles: currentCardStyles,
     },
-    isFinishRound: isFinishRound,
+    isFinishRound: isFinishRound || false,
+    
     goalValue: goalValue,
   };
+  // if (isFinishRound) {
+  //   isActiveUI = true;
+  //   toggleUI();
+  //   isFinishRound = false;
+  // }
 
   gameRef
     .set(jsonData, { merge: true })

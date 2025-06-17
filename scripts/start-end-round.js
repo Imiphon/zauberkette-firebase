@@ -35,7 +35,6 @@ async function finishRound() {
   checkForChain("observer");
   swapParts();
   changeNames();
-  // uploadGameData();
   if (mirrorView) {
     rotateWebsite();
   }
@@ -46,7 +45,7 @@ async function finishRound() {
     }, 10000);
     isWinner = false;
   } else {
-    if (gameID) {
+    if (gameRef) {
       isActiveUI = !isActiveUI;
       toggleUI();
     }
