@@ -183,7 +183,20 @@ h2,
 	position: relative;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
 	gap: 12px;
+}
+
+.text-btn-frame {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	gap: 6px;
+    padding: 8px;
 }
 
 .id-btn-frame {
@@ -211,13 +224,6 @@ h2,
 	border-radius: 2px;
 	border: none;
 }
-
-/* .popup-window .start-btn {
-	box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.8);
-	background-size: initial;
-	border-radius: 2px;
-	border: none;
-} */
 
 .all-chains {
 	display: none;

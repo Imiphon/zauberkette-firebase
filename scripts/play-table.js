@@ -55,7 +55,7 @@ async function changeCard(stackID) {
 
   let curOp = (cardElement.style.opacity = 0.5);
   setCardOpacity(id, curOp);
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   curOp = cardElement.style.opacity = 1;
   setCardOpacity(id, curOp);
   if (allTonesUpdate) {
@@ -103,6 +103,7 @@ function drawCard() {
   discard.push(c);
   return c;
 }
+
 function changeWinnerCards() {
   const stackIDs = cardCombi.map((c) => c.stackNr);
   stackIDs.forEach(fadeToSpell);
@@ -120,7 +121,7 @@ function changeWinnerCards() {
       }
       finishRound();
     })();
-  }, 2000);
+  }, 500);
 }
 
 function fadeToSpell(cardID) {

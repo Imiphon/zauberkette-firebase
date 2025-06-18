@@ -22,17 +22,22 @@ function setNames() {
         <input type="text" class="popup-input" id="player1Input" placeholder="Remi">
         <input type="text" class="popup-input" id="player2Input" placeholder="Lasi">
         <div class="start-btn-frame">
-        <div class="btn-descr">     
-         <button class="start-btn" id="popupStartBtn">
-              <img src="assets/images/btn/one-display.png" alt="">            
-            </button>
-            <button class="start-btn" id="popupStartBtn2">
-              <img src="assets/images/btn/two-display.png" alt="">            
-            </button>
-          </div>
-            <div class="btn-descr"><span>1 client</span><span>2 clients</span></div>
-          </div>
+          <div class="btn-descr">     
+            <div class="text-btn-frame" id="popupStartBtn">
+              <button class="start-btn">
+                <img src="assets/images/btn/one-display.png" alt="">            
+              </button>
+              <div class="btn-descr">1 client</div>
+            </div>
+            <div class="text-btn-frame" id="popupStartBtn2">
+              <button class="start-btn">
+                <img src="assets/images/btn/two-display.png" alt="">            
+              </button>
+              <div class="btn-descr">2 clients</div>
+            </div>
+          </div>            
         </div>
+      </div>
     `;
     popupOverlay.addEventListener("click", function (event) {
       if (event.target === popupOverlay) {
@@ -152,8 +157,18 @@ function startTwoTables() {
         <h2 data-key="emailInput">${text}</h2>
         <input type="email" class="popup-input" id="emailInputField" placeholder="eMail">
         <div class="id-btn-frame">
-          <button class="start-btn" id="sendEmailBtn"><img src="assets/images/btn/email-5-32.png" alt="email"></button>
-          <button class="start-btn" id="copyLinkBtn"><img src="assets/images/btn/copy-48.png" alt="copy"></button>
+          <div class="text-btn-frame" id="sendEmailBtn">
+            <button class="start-btn" ><img src="assets/images/btn/email-5-32.png" alt="email"></button>
+            <div class="btn-descr">
+              send mail
+            </div>
+          </div>
+          <div class="text-btn-frame" id="copyLinkBtn">
+            <button class="start-btn" ><img src="assets/images/btn/copy-48.png" alt="copy"></button>
+            <div class="btn-descr">
+              copy link
+            </div>
+          </div>
         </div>
       </div>
     `;

@@ -9,7 +9,10 @@ function renderHeaderHTML() {
     </div>
     <div class="nav-right">
         <div class="nav-btns">
-            <div class="game-goal" id="gameGoalID">
+            ${
+              !isLandingpage
+                ? `
+            <div class="game-goal nav-btn" id="gameGoalID">
                 <span data-key="chainLength">${
                   staticTexts.chainLength[language]
                 }:</span>
@@ -19,9 +22,6 @@ function renderHeaderHTML() {
                     <button type="button" id="increaseBtn" onclick="increaseValue()">+</button>
                 </div>
             </div>
-            ${
-              !isLandingpage
-                ? `
             <button class="nav-btn" onclick="changeView()">
                 <img class="turn" src="assets/images/btn/mirror-play.png" alt="" ${
                   mirrorView ? 'style="display:none;"' : ""
