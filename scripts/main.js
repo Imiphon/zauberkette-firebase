@@ -333,6 +333,10 @@ function renderIndex() {
   header.innerHTML = renderHeaderHTML();
 }
 
+if (!window.isSecureContext) {
+  alert("⚠️ Please use HTTPS – Clipboard might doesn't work.");
+}
+
 //second player (if exist) gets ID from firebase
 function getGameIdFromUrl() {
   const urlParts = window.location.pathname.split("/");

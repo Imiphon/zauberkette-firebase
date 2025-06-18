@@ -199,6 +199,12 @@ h2,
     padding: 8px;
 }
 
+#copyLinkBtn {
+	pointer-events: auto;
+	touch-action: manipulation;
+	cursor: pointer;
+}
+
 .id-btn-frame {
 	position: relative;
 	display: flex;
@@ -405,6 +411,8 @@ h2,
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	pointer-events: auto;
+	touch-action: manipulation;
 }
 
 .popup-window input {

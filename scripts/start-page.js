@@ -119,28 +119,6 @@ function startOneTable() {
   setupGame();
 }
 
-function createLink() {
-  // Add Event-Listener for "E-Mail senden"-Button
-  const sendEmailBtn = document.getElementById("sendEmailBtn");
-  sendEmailBtn.addEventListener("click", () => {
-    const emailField = document.getElementById("emailInputField");
-    const email = emailField.value.trim();
-
-    if (validateEmail(email)) {
-      // Send linkID with mail
-      sendEmail(email);
-    } else {
-      alert("Bitte gib eine gültige E-Mail-Adresse ein.");
-    }
-  });
-
-  // copy linkID
-  const copyLinkBtn = document.getElementById("copyLinkBtn");
-  copyLinkBtn.addEventListener("click", () => {
-    copyLink();
-  });
-}
-
 function startTwoTables() {
   renderTable();
   setupGame();
@@ -174,6 +152,28 @@ function startTwoTables() {
     `;
   createLink();
   toggleUI();
+}
+
+function createLink() {
+  // Add Event-Listener for "E-Mail senden"-Button
+  const sendEmailBtn = document.getElementById("sendEmailBtn");
+  sendEmailBtn.addEventListener("click", () => {
+    const emailField = document.getElementById("emailInputField");
+    const email = emailField.value.trim();
+
+    if (validateEmail(email)) {
+      // Send linkID with mail
+      sendEmail(email);
+    } else {
+      alert("Bitte gib eine gültige E-Mail-Adresse ein.");
+    }
+  });
+
+  // copy linkID
+  const copyLinkBtn = document.getElementById("copyLinkBtn");
+  copyLinkBtn.addEventListener("click", () => {
+    copyLink();
+  });
 }
 
 // validate email adress
