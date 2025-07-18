@@ -153,6 +153,11 @@ function fadeToSpell(cardID) {
 /*------------------------------- CLICK CARD STUFF -------------------------------*/
 
 function stepBack() {
+  currentCardStyles = []; 
+    if (gameID && isActiveUI) {
+    requestStepBack();        // activate 2. client
+  }
+  isStepBack = true;
   if (specialInProgress) {
     let special = usedSpecials.pop();
     special.card.style.opacity = 1;

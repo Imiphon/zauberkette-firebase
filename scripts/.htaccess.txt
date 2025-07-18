@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# Überprüfen, ob die angeforderte Datei existiert
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+
+# HTTPS erzwingen
+RewriteCond %{HTTP_HOST} mensching\.online [NC]
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://www.mensching.online/$1 [R,L]
+
+# Weiterleitung zu index.html, falls keine der oben genannten Bedingungen zutrifft
+RewriteRule ^(.*) /zauberkette-fb/index.html [NC,L]
+

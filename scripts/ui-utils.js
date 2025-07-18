@@ -37,6 +37,13 @@ function toggleUI() {
   }
 }
 
+function handleRemoteFinishRound() {
+  // swap names just like the host does
+  changeNames();
+  // start the next round (cards + buttons)
+  startRound(true);
+}
+
 /**
  * Apply opacity and interaction styles to a card stack.
  *

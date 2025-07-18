@@ -7,6 +7,7 @@ let currentLangIndex = 0;
 
 let isFinishRound = false; //to activate toggleUI() in other client
 let isActiveUI = true;
+let isStepBack = false;
 
 let isChainCheck = false;
 let mirrorView = false;

@@ -21,6 +21,7 @@ function handleFinishRoundClick() {
 }
 
 async function finishRound() {
+  isFinishRound = true;
   animateTableFrame();
   await new Promise((resolve) => setTimeout(resolve, 1500));
 
@@ -53,7 +54,7 @@ async function finishRound() {
     let isStartRound = true;
     startRound(isStartRound);
   }
-  uploadGameData((isFinishRound = true));
+  uploadGameData(isFinishRound);
 }
 
 function animateTableFrame() {
@@ -74,6 +75,18 @@ function changeNames() {
     playName.innerHTML,
     obsName.innerHTML,
   ];
+  if (gameID) {
+    isLocalUpdate = true;
+    gameRef
+      .set(
+        {
+          playerName1: playerName1,
+          playerName2: playerName2,
+        },
+        { merge: true }
+      )
+      .catch((err) => console.error("Firestore-Error:", err));
+  }
 }
 
 //starts after first time startRound()

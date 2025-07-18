@@ -13,11 +13,20 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+// Ensure there's always a function to call
+window.stepBack =
+  window.stepBack ||
+  function () {
+    console.log("waiting for stepBack() in play-table.js");
+  };
+
 const db = firebase.firestore();
 let gameRef = null;
+if (gameRef) gameRef.set(jsonData, { merge: true });
 let gameID = null;
 // let isGameID = gameID === null ? false : true;
 let isLocalUpdate = false;
+let onStepBack = stepBack();
 
 /**
  *
@@ -39,6 +48,7 @@ function addDataToFirestore() {
     isFinishRound: false, // to game start def false
     goalValue: goalValue,
     isWinner: false,
+    stepBack: false, // initial/default
   };
   const goalInput = document.getElementById("goalInputID");
   if (goalInput) goalInput.value = goalValue;
@@ -55,35 +65,63 @@ function addDataToFirestore() {
     });
 }
 
+//  ask the other client to perform stepBack
+function requestStepBack() {
+  if (!gameRef) return;
+  isLocalUpdate = true;
+  // set the flag on the server
+  gameRef
+    .set({ stepBack: true }, { merge: true })
+    .catch((err) => console.error("Firestore-Error:", err));
+}
+
+// include MetadataChanges, metadata.hasPendingWrites
 function setupSnapshotListener() {
   if (!gameRef) {
-    console.error("gameRef nicht gesetzt.");
+    console.error("gameRef not set");
     return;
   }
 
-  // include MetadataChanges, metadata.hasPendingWrites
   gameRef.onSnapshot(
     { includeMetadataChanges: true },
     (docSnapshot) => {
-      if (!docSnapshot.exists) {
-        console.log("Game not found!");
-        return;
-      }
-      // 🔥 ignore local Writes:
-      if (docSnapshot.metadata.hasPendingWrites) {
-        return;
-      }
+      // exit if no document
+      if (!docSnapshot.exists) return;
+      // ignore our own pending writes
+      if (docSnapshot.metadata.hasPendingWrites) return;
+      // ignore writes we triggered ourselves
       if (isLocalUpdate) {
         isLocalUpdate = false;
         return;
       }
-      // only remote from other client
-      const game = docSnapshot.data();
-      downloadGameData(game);
+      // now safe to read remote data
+      const gameData = docSnapshot.data();
+      // apply the rest of the game state
+      downloadGameData(gameData);
+      // if the other client requested stepBack, run it
+      if (gameData.stepBack) {
+        if (typeof window.stepBack === "function") {
+          window.stepBack();
+        }
+        // reset the flag so next request fires again
+        isLocalUpdate = true;
+        gameRef
+          .set({ stepBack: false }, { merge: true })
+          .catch((err) => console.error("Firestore-Error:", err));
+      }
+
+      // if (!gameData.stepBack) {
+      //   playerName1 = gameData.playerName1 || playerName1;
+      //   playerName2 = gameData.playerName2 || playerName2;
+      //   renderNames();
+      // }
+
+      if (gameData.isFinishRound) {
+        changeNames();
+        gameRef.set({ isFinishRound: false }, { merge: true });
+      }
     },
-    (error) => {
-      console.error("Error with Snapshots:", error);
-    }
+    (error) => console.error("Snapshot error:", error)
   );
 }
 
@@ -132,7 +170,7 @@ function downloadGameData(gameData) {
   if (isFinishRound) {
     isActiveUI = true;
     toggleUI();
-    isFinishRound = false;    
+    isFinishRound = false;
   }
 }
 
@@ -195,13 +233,13 @@ function mapAllMaj() {
   }));
 }
 
-function uploadGameData(isFinishRound) {
+function uploadGameData(finishFlag = false) {
   if (!gameRef) return;
+
   isLocalUpdate = true;
-  // if (typeof isFinishRound === "boolean") {
-  //   jsonData.isFinishRound = isFinishRound;
-  // } else isFinishRound = false;
+
   const jsonData = {
+    isFinishRound: finishFlag,
     playerCards: mapPlayerCards(),
     observerCards: mapObsCards(),
     playerAccords: mapPlayAccs(),
@@ -214,14 +252,9 @@ function uploadGameData(isFinishRound) {
       styles: currentCardStyles,
     },
     isFinishRound: isFinishRound || false,
-    
+
     goalValue: goalValue,
   };
-  // if (isFinishRound) {
-  //   isActiveUI = true;
-  //   toggleUI();
-  //   isFinishRound = false;
-  // }
 
   gameRef
     .set(jsonData, { merge: true })
@@ -229,8 +262,10 @@ function uploadGameData(isFinishRound) {
 }
 
 //get referenz of gameID
-function joinGame(gameId) {
-  gameRef = db.collection("on-table").doc(gameId);
+function joinGame(invitationID) {
+  gameID = invitationID;
+  gameRef = db.collection("on-table").doc(gameID);
+
   gameRef
     .get()
     .then((doc) => {
