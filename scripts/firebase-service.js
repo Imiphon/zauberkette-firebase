@@ -127,8 +127,8 @@ function initializeGameWithData(gameData) {
   observerAccords = gameData.observerAccords;
   allTones = gameData.allTones;
   allMaj = gameData.allMaj;
-  playerName1 = gameData.playerName1;
-  playerName2 = gameData.playerName2;
+  playerName1 = gameData?.playerName1;
+  playerName2 = gameData?.playerName2;
   isFinishRound = gameData.isFinishRound;
   goalValue = gameData.goalValue;
   isWinner = gameData.isWinner;

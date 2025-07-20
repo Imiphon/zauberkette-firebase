@@ -65,6 +65,15 @@ function handleStartClick(renderFunction) {
   const popupOverlay = document.getElementById("popupOverlay");
   if (popupOverlay) popupOverlay.remove();
 
+  if (gameRef) {
+    gameRef.update({
+      playerNames: {
+        player1: playerName_1,
+        player2: playerName_2,
+      },
+    });
+  }
+
   renderFunction(); // startOneTable() or startTwoTables()
   playSound("success", "clave", 0.2);
 }

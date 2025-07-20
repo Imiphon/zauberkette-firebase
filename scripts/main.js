@@ -176,7 +176,7 @@ function buildStack(Cards) {
     targetArray.push(newCard);
   }
 
-  //For testing cards and accords 
+  //For testing cards and accords
   // testStack();
 
   Cards === "playerCards"
@@ -292,13 +292,18 @@ function updateStaticTexts() {
 function renderNames() {
   let player1 = document.getElementById("playNameID");
   let player2 = document.getElementById("obsNameID");
-  let stored1 =localStorage.getItem("player1Name");
-  let stored2 =localStorage.getItem("player2Name"); 
-  let playerName = stored1 || "ReMi";
-  let obsName = stored2 || "MiDo";
+  if (gameRef) {
+    player1.innerHTML = playerName1 || "Player1";
+    player2.innerHTML = playerName2 || "Player2";
+  } else {
+    let stored1 = localStorage.getItem("player1Name");
+    let stored2 = localStorage.getItem("player2Name");
+    let playerName = stored1 || "";
+    let obsName = stored2 || "";
 
-  player1.innerHTML = playerName;
-  player2.innerHTML = obsName;
+    player1.innerHTML = playerName;
+    player2.innerHTML = obsName;
+  }
 }
 
 function setupGame(isSkip, isStartRound) {
@@ -317,7 +322,7 @@ function setupGame(isSkip, isStartRound) {
   startRound(isStartRound);
   updateStaticTexts();
   if (isStartRound) deck = [];
-   if (!gameID) document.querySelector(".sand-clock").style.display = "none";
+  if (!gameID) document.querySelector(".sand-clock").style.display = "none";
 }
 
 //called for landingpage

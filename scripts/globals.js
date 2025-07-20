@@ -47,8 +47,8 @@ let playerCards = []; //all cards in current Array of observer card-stack
 let observerCards = []; //all cards in current Array of player card-stack
 let playerAccords = []; //all Accords in current Array of player Accords
 let observerAccords = []; //all Accords in current Array of observer Accords
-let playerName1 = "Remi";
-let playerName2 = "Lasi";
+let playerName1 = "Player1";
+let playerName2 = "Player2";
 let currentCardStyles = [];
 
 allTonesOriginal = [
