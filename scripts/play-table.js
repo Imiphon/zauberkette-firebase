@@ -297,9 +297,12 @@ function showWithTimeout(func, timeout, optFunc) {
   return new Promise((resolve) => {
     setTimeout(() => {
       if (optFunc) {
-        currentInfoFunction = optFunc;
-        showInfo(currentInfoFunction);
-        //showInfo(optFunc());
+        if(optFunc === stepBack()){
+          stepBack();
+        }else {
+          currentInfoFunction = optFunc;
+          showInfo(currentInfoFunction);
+        }
       }
       resolve();
     }, timeout);

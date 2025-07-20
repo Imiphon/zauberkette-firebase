@@ -123,7 +123,8 @@ function checkRightCombi() {
     setAcc(prime, true, false, isDouble);
   } else {
     playSound("failed", "backMag", 0.5);
-    showWithTimeout(infoNoCombi, 4000);
+    showWithTimeout(infoNoCombi, 3000, stepBack());
+    
   }
 }
 

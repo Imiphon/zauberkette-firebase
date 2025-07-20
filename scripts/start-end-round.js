@@ -50,7 +50,6 @@ async function finishRound() {
       isActiveUI = !isActiveUI;
       toggleUI();
     }
-
     let isStartRound = true;
     startRound(isStartRound);
   }
@@ -104,7 +103,7 @@ function swapParts() {
 
 function startRound(isStartRound, isForObserver) {
   let name = document.getElementById("playNameID");
-
+  currentCardStyles = [];
   name.style.animation = "none";
   //a minimal delay to get sure for full animation
   requestAnimationFrame(() => {

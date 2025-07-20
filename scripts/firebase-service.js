@@ -110,12 +110,6 @@ function setupSnapshotListener() {
           .catch((err) => console.error("Firestore-Error:", err));
       }
 
-      // if (!gameData.stepBack) {
-      //   playerName1 = gameData.playerName1 || playerName1;
-      //   playerName2 = gameData.playerName2 || playerName2;
-      //   renderNames();
-      // }
-
       if (gameData.isFinishRound) {
         changeNames();
         gameRef.set({ isFinishRound: false }, { merge: true });
@@ -171,6 +165,8 @@ function downloadGameData(gameData) {
     isActiveUI = true;
     toggleUI();
     isFinishRound = false;
+    currentCardStyles = [];
+    stackOpacity1(playerCards, "playerCard");
   }
 }
 
