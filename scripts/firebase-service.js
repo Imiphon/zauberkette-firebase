@@ -133,7 +133,7 @@ function initializeGameWithData(gameData) {
   goalValue = gameData.goalValue;
   isWinner = gameData.isWinner;
   goalValue = goalValue;
-  renderNames();
+  setTimeout(() => renderNames(gameData), 50);
 }
 
 function downloadGameData(gameData) {

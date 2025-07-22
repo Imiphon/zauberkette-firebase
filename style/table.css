@@ -510,10 +510,10 @@ img {
   }
 
   .brass-plate {
-    padding: 22px;
+    padding: 12px;
     background-image: url(./../assets/images/bgr/brass-plate.png);
     text-wrap: nowrap;
-    text-align: center;
+    text-align: start;
     font-family: monospace;
     word-spacing: -0.3em;
     letter-spacing: -0.1em;
@@ -527,11 +527,11 @@ img {
   .small-font {
     color: #ffe864;
     text-shadow: 5px 7px 2px rgb(0 0 0 / 45%);
-    font-size: 0.8em;
+    font-size: 1.3em;
     white-space: nowrap;
     word-spacing: -0.1em;
     letter-spacing: -0.1em;
-    /* font-weight: 900; */
+    font-weight: 900;
   }
 
   .brass-gear1,
@@ -632,7 +632,7 @@ img {
 
   @media (max-width: 1400px) {
     .small-font {
-      font-size: 1.0em;
+      font-size: 1.3em;
     }
 
     .table-top,

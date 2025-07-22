@@ -268,16 +268,16 @@ function originalStack() {
 }
 
 const toneColors = {
-  1: "#767dfd",
+  1: "#858adcff",
   2: "#cb9066",
   3: "#9efec7",
   4: "#fe4a51",
-  5: "#e3fb8e",
+  5: "#b3e00eff",
   6: "#c5adfc",
   7: "#feaf4d",
   8: "#8bb7fd",
   9: "#fe88b0",
-  10: "#81ee4a",
+  10: "#60c130ff",
   11: "#fe42a6",
   12: "#ebfe47",
 };

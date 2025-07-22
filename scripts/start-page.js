@@ -1,4 +1,23 @@
 /* --------------- INDEX.HTML  ------------------------*/
+window.addEventListener("load", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const invitationID = urlParams.get("gameID");
+
+  if (!invitationID) return;
+
+  const interval = setInterval(() => {
+    const inputField = document.getElementById("invitationInput");
+    const startBtn = document.getElementById("firstStartBtn");
+
+    if (inputField && startBtn) {
+      clearInterval(interval);
+      inputField.value = invitationID;
+      console.log(invitationID);
+      setNames();
+    }
+  }, 100);
+});
+
 
 function startInvitation(invitationID) {
   handleStartClick(startOneTable);
@@ -163,6 +182,19 @@ function startTwoTables() {
   toggleUI();
 }
 
+function autoStartInvitation(invitationID) {
+  isLandingpage = false;
+  gameID = invitationID;
+  renderTable();
+  setupGame();
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.href.split("?")[0]
+  );
+  joinGame(invitationID);
+}
+
 function createLink() {
   // Add Event-Listener for "E-Mail senden"-Button
   const sendEmailBtn = document.getElementById("sendEmailBtn");
@@ -193,16 +225,13 @@ function validateEmail(email) {
 
 function sendEmail(email) {
   if (!gameRef) {
-    console.error("gameRef ist nicht gesetzt.");
     alert("Das Spiel ist noch nicht initialisiert.");
     return;
   }
-
-  const subject = encodeURIComponent(
-    "Hier die gameID zu meinem aktuellen Spiel"
-  );
+  const subject = encodeURIComponent("Melopoiia-Zauberkette gameID");
+  const link = `https://www.mensching.online/coding/zauberkette/index.html?gameID=${gameID}`;
   const body = encodeURIComponent(
-    `Hallo,\n\nHier ist der Link zu meinem aktuellen Spiel: ${gameID}\n\nViel Spaß!`
+    `Zauberkette Game ID:\n${gameID}\n\nZauberkette Link:\n${link}\n\nViel Spaß!`
   );
   const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
   // open Standard-E-Mail-Program
