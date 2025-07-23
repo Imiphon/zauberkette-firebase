@@ -321,8 +321,10 @@ function setupGame(isSkip, isStartRound) {
   currentCardID = -1;
   startRound(isStartRound);
   updateStaticTexts();
+  stackOpacity1(playerCards, "playerCard");
   if (isStartRound) deck = [];
   if (!gameID) document.querySelector(".sand-clock").style.display = "none";
+  if (gameID) uploadGameData(true);
 }
 
 //called for landingpage

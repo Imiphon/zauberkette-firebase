@@ -162,6 +162,7 @@ function downloadGameData(gameData) {
     }
   }
   if (isFinishRound) {
+    debugger
     isActiveUI = true;
     toggleUI();
     isFinishRound = false;
@@ -247,7 +248,7 @@ function uploadGameData(finishFlag) {
     cardStyles: {
       styles: currentCardStyles,
     },
-    isFinishRound: isFinishRound || false,
+    isFinishRound: finishFlag || false,
     goalValue: goalValue,
   };
 
