@@ -124,7 +124,6 @@ function checkRightCombi() {
   } else {
     playSound("failed", "backMag", 0.5);
     showWithTimeout(infoNoCombi, 3000, stepBack());
-    
   }
 }
 
@@ -277,9 +276,13 @@ function separateSpecial(mySpecial) {
         continue;
       } else {
         currentSpecial.stackNr = i;
-        currentSpecial.style.opacity = 0.5;
+        // currentSpecial.style.opacity = 0.5;
+        toggleCardOpacity(currentSpecial.stackNr);
         currentSpecial.style.pointerEvents = "none";
         usedSpecials.push({ card: currentSpecial, index: i });
+        if (gameID) {          
+          uploadGameData((finishFlag = false));
+        }
         break;
       }
     }
@@ -340,10 +343,12 @@ async function useMellot() {
   }
   showInfo(infoToTakeCard);
   uploadGameData();
+  disableCardClicks();
   enableObserverCards();
   await waitForCardClick();
   if (mellotArray.length === 1) {
     mellotArray.push(observerCards[currentCardID]);
+
     // in case of a 'step back' after first click and start useMellot() again
     // otherwise function jumps to mellotArray.push(observerCards[currentCardID]);
   } else if (mellotArray.length === 0) {

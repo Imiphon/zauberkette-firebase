@@ -228,8 +228,8 @@ function mapAllMaj() {
     src: m.src,
   }));
 }
-
-function uploadGameData(finishFlag = false) {
+//finishFlag = false everytime?
+function uploadGameData(finishFlag) {
   if (!gameRef) return;
 
   isLocalUpdate = true;
@@ -248,7 +248,6 @@ function uploadGameData(finishFlag = false) {
       styles: currentCardStyles,
     },
     isFinishRound: isFinishRound || false,
-
     goalValue: goalValue,
   };
 
