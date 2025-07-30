@@ -28,11 +28,28 @@ let gameID = null;
 let isLocalUpdate = false;
 let onStepBack = stepBack();
 
+function clearOldGames() {
+  const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+
+  db.collection("on-table")
+    .where("timeStamp", "<=", cutoff)
+    .get()
+    .then((snapshot) => {
+      const batch = db.batch();
+      snapshot.docs.forEach((doc) => {
+        batch.delete(doc.ref);
+      });
+      return batch.commit();
+    })
+    .catch((err) => console.error("Error clearing old games:", err));
+}
+
 /**
  *
  * @param {boolean} isPlayer1 in first time
  */
 function addDataToFirestore() {
+  let timeStamp = Date.now();
   const jsonData = {
     playerCards: mapPlayerCards(),
     observerCards: mapObsCards(),
@@ -49,6 +66,7 @@ function addDataToFirestore() {
     goalValue: goalValue,
     isWinner: false,
     stepBack: false, // initial/default
+    timeStamp,
   };
   const goalInput = document.getElementById("goalInputID");
   if (goalInput) goalInput.value = goalValue;
@@ -59,6 +77,7 @@ function addDataToFirestore() {
       gameID = docRef.id;
       gameRef = db.collection("on-table").doc(gameID);
       setupSnapshotListener();
+      clearOldGames();
     })
     .catch((error) => {
       console.error("error adding game:", error);
@@ -162,7 +181,7 @@ function downloadGameData(gameData) {
     }
   }
   if (isFinishRound) {
-    debugger
+    debugger;
     isActiveUI = true;
     toggleUI();
     isFinishRound = false;
