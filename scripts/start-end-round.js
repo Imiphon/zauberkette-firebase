@@ -120,11 +120,12 @@ function startRound(isStartRound, isForObserver) {
 function checkForWin(part) {
   let currChainArr = part === "player" ? playerChains : observerChains;
   let winnerChain = currChainArr.find((chain) => chain.length >= goalValue);
+
   if (winnerChain) {
     youWin(part, winnerChain.length);
-    setTimeout(() => {
-      return;
-    }, 4000);
+    // setTimeout(() => {
+    //   return;
+    // }, 4000);
   }
 }
 

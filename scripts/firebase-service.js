@@ -44,6 +44,35 @@ function clearOldGames() {
     .catch((err) => console.error("Error clearing old games:", err));
 }
 
+
+/**
+ * Snapshot-Listener for gameRef, react to winner-Updates.
+ */
+function setupWinnerListener() {
+  if (!gameRef) {
+    console.error('Winner-Listener: gameRef nicht gesetzt!');
+    return;
+  }
+  // denied doubles
+  if (setupWinnerListener._registered) return;
+  setupWinnerListener._registered = true;
+
+  gameRef.onSnapshot({ includeMetadataChanges: true }, docSnapshot => {
+    if (!docSnapshot.exists) return;
+    // ignore own Writes
+    if (docSnapshot.metadata.hasPendingWrites) return;
+
+    const data = docSnapshot.data();
+    if (data.winner) {
+      const { part, length, name } = data.winner;
+      // show to client
+      youWin(part, length);
+      // Winner-Flag to falls
+      gameRef.update({ winner: null }).catch(err => console.error(err));
+    }
+  }, err => console.error('Winner-Listener-Error:', err));
+}
+
 /**
  *
  * @param {boolean} isPlayer1 in first time
@@ -77,6 +106,7 @@ function addDataToFirestore() {
       gameID = docRef.id;
       gameRef = db.collection("on-table").doc(gameID);
       setupSnapshotListener();
+      setupWinnerListener();
       clearOldGames();
     })
     .catch((error) => {
@@ -93,6 +123,8 @@ function requestStepBack() {
     .set({ stepBack: true }, { merge: true })
     .catch((err) => console.error("Firestore-Error:", err));
 }
+
+
 
 // include MetadataChanges, metadata.hasPendingWrites
 function setupSnapshotListener() {
@@ -289,6 +321,7 @@ function joinGame(invitationID) {
       const gameData = doc.data();
       initializeGameWithData(gameData);
       setupSnapshotListener();
+      setupWinnerListener();
       isActiveUI = false;
       toggleUI();
     })

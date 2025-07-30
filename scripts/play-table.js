@@ -149,13 +149,12 @@ function fadeToSpell(cardID) {
   parentElement.appendChild(spellImage);
 }
 
-
 /*------------------------------- CLICK CARD STUFF -------------------------------*/
 
 function stepBack() {
-  currentCardStyles = []; 
-    if (gameID && isActiveUI) {
-    requestStepBack();        // activate 2. client
+  currentCardStyles = [];
+  if (gameID && isActiveUI) {
+    requestStepBack(); // activate 2. client
   }
   isStepBack = true;
   if (specialInProgress) {
@@ -180,7 +179,7 @@ function stepBack() {
   setBackBooleans();
   playSound("failed", "backMag", 0.5);
   disableCardClicks();
-  uploadGameData(); 
+  uploadGameData();
 }
 
 function enablePlayerCards() {
@@ -297,9 +296,9 @@ function showWithTimeout(func, timeout, optFunc) {
   return new Promise((resolve) => {
     setTimeout(() => {
       if (optFunc) {
-        if(optFunc === stepBack()){
+        if (optFunc === stepBack()) {
           stepBack();
-        }else {
+        } else {
           currentInfoFunction = optFunc;
           showInfo(currentInfoFunction);
         }
@@ -312,17 +311,80 @@ function showWithTimeout(func, timeout, optFunc) {
 /**
  * Vergleicht neue
  */
+// function youWin(part, length) {
+//   let idName = part === "player" ? "playNameID" : "obsNameID";
+//   let element = document.getElementById(idName);
+//   if (element) {
+//     let name = element.textContent;
+//     currentInfoFunction = playerWin;
+//     showInfo(currentInfoFunction(name, length));
+//     //showInfo(playerWin(name, length));
+//     isWinner = true;
+//     //alert(name + ' gewinnt mit einer Kettenzahl von: ' + length);
+//   } else {
+//     console.error('Element with ID "' + idName + '" not found.');
+//   }
+// }
+/**
+ * Creates and displays a modal popup for the win event
+ */
+function showWinPopup(name, length) {
+  // Overlay setup
+  const overlay = document.createElement("div");
+  overlay.id = "winOverlay";
+  Object.assign(overlay.style, {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  });
+  // Popup content
+  const popup = document.createElement("div");
+  Object.assign(popup.style, {
+    background: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    textAlign: "center",
+    maxWidth: "300px",
+  });
+  popup.innerHTML = `
+    <h2>Glückwunsch, ${name}!</h2>
+    <p>Du hast mit einer Kettenzahl von ${length} gewonnen.</p>
+    <button id="continueBtn">Weiterspielen</button>
+    <button id="restartBtn">Neu starten</button>
+  `;
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+  // Button handlers
+  document.getElementById("continueBtn").addEventListener("click", () => {
+    document.body.removeChild(overlay);
+  });
+  document.getElementById("restartBtn").addEventListener("click", () => {
+    setupGame(true);
+    document.body.removeChild(overlay);
+  });
+}
+
 function youWin(part, length) {
-  let idName = part === "player" ? "playNameID" : "obsNameID";
-  let element = document.getElementById(idName);
-  if (element) {
-    let name = element.textContent;
-    currentInfoFunction = playerWin;
-    showInfo(currentInfoFunction(name, length));
-    //showInfo(playerWin(name, length));
-    isWinner = true;
-    //alert(name + ' gewinnt mit einer Kettenzahl von: ' + length);
-  } else {
-    console.error('Element with ID "' + idName + '" not found.');
+  // Determine the winner's display name
+  const idName = part === "player" ? "playNameID" : "obsNameID";
+  const element = document.getElementById(idName);
+  if (!element) {
+    console.error(`Element with ID "${idName}" not found.`);
+    return;
   }
+  const name = element.textContent;
+  isWinner = true;
+  // If this is a multiplayer game, notify the other player
+  if (typeof gameRef !== "undefined" && gameRef) {
+    gameRef.update({ winner: { part, length, name } });
+  }
+  // Show custom modal popup instead of alert
+  showWinPopup(name, length);
 }
