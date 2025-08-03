@@ -29,54 +29,76 @@ let isLocalUpdate = false;
 let onStepBack = stepBack();
 
 function clearOldGames() {
-  const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+  const cutoff = Date.now() - 5 * 60 * 1000;
 
   db.collection("on-table")
     .where("timeStamp", "<=", cutoff)
     .get()
     .then((snapshot) => {
+      if (snapshot.empty) return;
       const batch = db.batch();
       snapshot.docs.forEach((doc) => {
         batch.delete(doc.ref);
       });
-      return batch.commit();
-    })
-    .catch((err) => console.error("Error clearing old games:", err));
-}
 
+      return batch
+        .commit()
+        .then(() => {
+          console.log(`[clearOldGames] ${snapshot.size}`);
+        })
+        .catch((err) => {
+          console.error("[clearOldGames] Error:", err);
+        });
+    })
+    .catch((err) => {
+      console.error("[clearOldGames] Error:", err);
+    });
+}
 
 /**
  * Snapshot-Listener for gameRef, react to winner-Updates.
  */
 function setupWinnerListener() {
-  if (!gameRef) {
-    console.error('Winner-Listener: gameRef nicht gesetzt!');
-    return;
-  }
-  // denied doubles
   if (setupWinnerListener._registered) return;
   setupWinnerListener._registered = true;
 
-  gameRef.onSnapshot({ includeMetadataChanges: true }, docSnapshot => {
+  gameRef.onSnapshot({ includeMetadataChanges: true }, (docSnapshot) => {
     if (!docSnapshot.exists) return;
-    // ignore own Writes
     if (docSnapshot.metadata.hasPendingWrites) return;
 
     const data = docSnapshot.data();
     if (data.winner) {
-      const { part, length, name } = data.winner;
-      // show to client
-      youWin(part, length);
-      // Winner-Flag to falls
-      gameRef.update({ winner: null }).catch(err => console.error(err));
+      console.log('data.winner: ',data.winner);
+      
+      const { part, length, winnerName } = data.winner;
+      // if(isActiveUI) swapParts();
+      createWinPopup(part, length, winnerName);
+      gameRef.update({ winner: null }).catch(console.error);
     }
-  }, err => console.error('Winner-Listener-Error:', err));
+
+    // --- 2) Continue-Action ---
+    if (data.action === "continue") {
+      console.log('data.action "continue": ', data.action);
+      const ov = document.getElementById("winOverlay");
+      if (ov) ov.remove();
+      continueOnline();
+     
+      gameRef
+        .update({ action: firebase.firestore.FieldValue.delete() })
+        .catch(console.error);
+    }
+
+    // --- 3) Restart-Action ---
+    if (data.action === "restart") {
+      const ov = document.getElementById("winOverlay");
+      if (ov) ov.remove();
+      gameRef
+        .update({ action: firebase.firestore.FieldValue.delete() })
+        .catch(console.error);
+    }
+  });
 }
 
-/**
- *
- * @param {boolean} isPlayer1 in first time
- */
 function addDataToFirestore() {
   let timeStamp = Date.now();
   const jsonData = {
@@ -88,6 +110,7 @@ function addDataToFirestore() {
     allMaj: mapAllMaj(),
     playerName1,
     playerName2,
+    isActiveUI,
     cardStyles: {
       styles: currentCardStyles, // e.g all opacitys
     },
@@ -99,7 +122,6 @@ function addDataToFirestore() {
   };
   const goalInput = document.getElementById("goalInputID");
   if (goalInput) goalInput.value = goalValue;
-
   db.collection("on-table")
     .add(jsonData)
     .then((docRef) => {
@@ -123,8 +145,6 @@ function requestStepBack() {
     .set({ stepBack: true }, { merge: true })
     .catch((err) => console.error("Firestore-Error:", err));
 }
-
-
 
 // include MetadataChanges, metadata.hasPendingWrites
 function setupSnapshotListener() {
@@ -162,8 +182,24 @@ function setupSnapshotListener() {
       }
 
       if (gameData.isFinishRound) {
-        changeNames();
-        gameRef.set({ isFinishRound: false }, { merge: true });
+        // Swap names both in DOM and variables
+        swapNamesInDOM();
+        [playerName1, playerName2] = [playerName2, playerName1];
+
+        // Toggle UI roles for new round
+        isActiveUI = !isActiveUI;
+        toggleUI();
+
+        // Start the next round
+        startRound(true);
+
+        // Reset finishRound flag for next use
+        isLocalUpdate = true;
+        gameRef
+          .set({ isFinishRound: false }, { merge: true })
+          .catch((err) => console.error("Firestore-Error:", err));
+
+        return; // skip final renderUI, as toggleUI and startRound handle UI
       }
     },
     (error) => console.error("Snapshot error:", error)
@@ -213,8 +249,9 @@ function downloadGameData(gameData) {
     }
   }
   if (isFinishRound) {
-    debugger;
-    isActiveUI = true;
+    if (typeof gameData.isActiveUI === "boolean") {
+      isActiveUI = gameData.isActiveUI;
+    }
     toggleUI();
     isFinishRound = false;
     currentCardStyles = [];
@@ -280,12 +317,10 @@ function mapAllMaj() {
     src: m.src,
   }));
 }
-//finishFlag = false everytime?
+//finishFlag = default false ?
 function uploadGameData(finishFlag) {
   if (!gameRef) return;
-
   isLocalUpdate = true;
-
   const jsonData = {
     isFinishRound: finishFlag,
     playerCards: mapPlayerCards(),
@@ -294,8 +329,9 @@ function uploadGameData(finishFlag) {
     observerAccords: mapObsAccs(),
     allTones: mapAllTones(),
     allMaj: mapAllMaj(),
-    playerName1,
-    playerName2,
+    playerName1: playerName1,
+    playerName2: playerName2,
+    isActiveUI: isActiveUI,
     cardStyles: {
       styles: currentCardStyles,
     },
@@ -328,6 +364,28 @@ function joinGame(invitationID) {
     .catch((error) => {
       console.error("Fehler beim Beitreten zum Spiel:", error);
     });
+}
+
+function swapNamesInDOM() {
+  const obsEl = document.getElementById("obsNameID");
+  const playEl = document.getElementById("playNameID");
+  [obsEl.innerHTML, playEl.innerHTML] = [playEl.innerHTML, obsEl.innerHTML];
+}
+
+function initializeContinueButton() {
+  const continueBtn = document.getElementById("continueBtn");
+  if (continueBtn) {
+    continueBtn.addEventListener("click", () => {
+      finishRound();
+    });
+  } else {
+    console.warn("Continue button (#continueBtn) not found");
+  }
+}
+
+function initializeGameHandlers() {
+  setupSnapshotListener();
+  initializeContinueButton();
 }
 
 //to check datas on fb

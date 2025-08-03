@@ -21,6 +21,8 @@ function handleFinishRoundClick() {
 }
 
 async function finishRound() {
+  console.log('finishRound starts');
+  
   isFinishRound = true;
   animateTableFrame();
   await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -32,28 +34,27 @@ async function finishRound() {
   if (usedSpecials.length != 0) {
     await changeSpecials();
   }
-  checkForChain("player");
-  checkForChain("observer");
   swapParts();
   changeNames();
   if (mirrorView) {
     rotateWebsite();
   }
+
+  checkForChain("player");
+  checkForChain("observer");
   if (isWinner) {
     playSound("success", "fanfare2", 0.3);
     setTimeout(() => {
       startRound();
     }, 10000);
     isWinner = false;
-  } else {
-    if (gameRef) {
-      isActiveUI = !isActiveUI;
-      toggleUI();
-    }
-    let isStartRound = true;
-    startRound(isStartRound);
   }
-  uploadGameData(isFinishRound);
+  // if (gameRef) {
+  //   uploadGameData(isFinishRound);
+  // }
+  let isStartRound = true;
+  startRound(isStartRound);
+    console.log('finishRound ends');
 }
 
 function animateTableFrame() {
@@ -68,6 +69,7 @@ function animateTableFrame() {
 }
 
 function changeNames() {
+  console.log('changeNames() starts')
   let obsName = document.getElementById("obsNameID");
   let playName = document.getElementById("playNameID");
   [obsName.innerHTML, playName.innerHTML] = [
@@ -90,6 +92,8 @@ function changeNames() {
 
 //starts after first time startRound()
 function swapParts() {
+  console.log('swapParts() starts');
+  
   let tempCards = playerCards;
   playerCards = observerCards;
   observerCards = tempCards;
@@ -101,7 +105,7 @@ function swapParts() {
   renderCircles();
 }
 
-function startRound(isStartRound, isForObserver) {
+function startRound(isStartRound) {
   let name = document.getElementById("playNameID");
   currentCardStyles = [];
   name.style.animation = "none";
@@ -121,11 +125,15 @@ function checkForWin(part) {
   let currChainArr = part === "player" ? playerChains : observerChains;
   let winnerChain = currChainArr.find((chain) => chain.length >= goalValue);
 
+  let winnerName = "";
+  if (part === "player") {
+    winnerName = document.getElementById("playNameID").textContent;
+  }
+  if (part === "observer") {
+    winnerName = document.getElementById("obsNameID").textContent;
+  }
   if (winnerChain) {
-    youWin(part, winnerChain.length);
-    // setTimeout(() => {
-    //   return;
-    // }, 4000);
+    youWin(part, winnerChain.length, winnerName);
   }
 }
 

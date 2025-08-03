@@ -267,7 +267,6 @@ function waitForCardClick() {
 function showInfo(infoContent) {
   let info = docID("infoTextID");
   if (!info) {
-    console.log("found not the info div");
     return;
   }
   info.innerHTML = "";
@@ -309,82 +308,92 @@ function showWithTimeout(func, timeout, optFunc) {
 }
 
 /**
- * Vergleicht neue
+ * Erzeugt das Win-Popup. Buttons nur wenn isActivePlayer==true.
+ * @param {string}  part            "player" or "observer"
+ * @param {number}  length
+ * @param {string}  winnerName
  */
-// function youWin(part, length) {
-//   let idName = part === "player" ? "playNameID" : "obsNameID";
-//   let element = document.getElementById(idName);
-//   if (element) {
-//     let name = element.textContent;
-//     currentInfoFunction = playerWin;
-//     showInfo(currentInfoFunction(name, length));
-//     //showInfo(playerWin(name, length));
-//     isWinner = true;
-//     //alert(name + ' gewinnt mit einer Kettenzahl von: ' + length);
-//   } else {
-//     console.error('Element with ID "' + idName + '" not found.');
-//   }
-// }
-/**
- * Creates and displays a modal popup for the win event
- */
-function showWinPopup(name, length) {
-  // Overlay setup
+function createWinPopup(winPart, length, winnerName) {
+  console.log('createWinPopup starts');
+  // mehrfaches Popup verhindern
+  const oldOverlay = document.getElementById("winOverlay");
+  if (oldOverlay) oldOverlay.remove();
+
   const overlay = document.createElement("div");
   overlay.id = "winOverlay";
-  Object.assign(overlay.style, {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "rgba(0,0,0,0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  });
-  // Popup content
   const popup = document.createElement("div");
-  Object.assign(popup.style, {
-    background: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    textAlign: "center",
-    maxWidth: "300px",
-  });
+  popup.classList.add("popup-content");
+
   popup.innerHTML = `
-    <h2>Glückwunsch, ${name}!</h2>
-    <p>Du hast mit einer Kettenzahl von ${length} gewonnen.</p>
-    <button id="continueBtn">Weiterspielen</button>
-    <button id="restartBtn">Neu starten</button>
+    <p>${winnerName} hat mit einer Kettenzahl von ${length} gewonnen.</p>
+    ${
+      isActiveUI
+        ? '<button id="continueBtn">Weiterspielen</button>' +
+          '<button id="restartBtn">Neu starten</button>'
+        : ""
+    }
   `;
+
   overlay.appendChild(popup);
   document.body.appendChild(overlay);
-  // Button handlers
-  document.getElementById("continueBtn").addEventListener("click", () => {
-    document.body.removeChild(overlay);
-  });
-  document.getElementById("restartBtn").addEventListener("click", () => {
-    setupGame(true);
-    document.body.removeChild(overlay);
-  });
+
+  // --- OFFLINE or ONLINE ---
+  if (isActiveUI) {
+    popup.querySelector("#continueBtn").addEventListener("click", () => {
+      if (gameRef) {
+        gameRef.update({ action: "continue" }).catch(console.error);
+      } else {
+        document.getElementById("winOverlay")?.remove();
+        increaseValue();
+        isWinner = false;
+      }
+    });
+
+    popup.querySelector("#restartBtn").addEventListener("click", () => {
+      if (gameRef) {
+        gameRef.update({ action: "restart" }).catch(console.error);
+      } else {
+        document.getElementById("winOverlay")?.remove();
+        skipGame();
+      }
+    });
+  }
+  console.log('isActiv:',isActiveUI);
+  console.log('createWinPopup ends');
 }
 
-function youWin(part, length) {
-  // Determine the winner's display name
-  const idName = part === "player" ? "playNameID" : "obsNameID";
-  const element = document.getElementById(idName);
-  if (!element) {
-    console.error(`Element with ID "${idName}" not found.`);
-    return;
-  }
-  const name = element.textContent;
+/**
+ * @param {"player"|"observer"} part
+ * @param {number} length
+ * @param {string} winnerName
+ */
+function youWin(part, length, winnerName) {
   isWinner = true;
-  // If this is a multiplayer game, notify the other player
-  if (typeof gameRef !== "undefined" && gameRef) {
-    gameRef.update({ winner: { part, length, name } });
+  if (gameRef) {
+    gameRef
+      .update({
+        winner: { part, length, winnerName, isActiveUI },
+      })
+      .catch(console.error);
+  } else {
+    createWinPopup(part, length, winnerName, isActiveUI);
   }
-  // Show custom modal popup instead of alert
-  showWinPopup(name, length);
+}
+
+function continueOnline() {
+  isWinner = false;
+  if (!isActiveUI) {
+    isActiveUI = true;
+    toggleUI();
+    swapParts();        
+    changeNames(); 
+    if (mirrorView) rotateWebsite();
+    increaseValue();    
+    startRound(true);
+    uploadGameData(true);
+  } else {
+    isActiveUI = false;
+    toggleUI();
+    changeNames(); 
+  }
 }

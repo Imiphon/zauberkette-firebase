@@ -18,8 +18,8 @@ window.addEventListener("load", () => {
   }, 100);
 });
 
-
 function startInvitation(invitationID) {
+  isLandingpage = false;
   handleStartClick(startOneTable);
   joinGame(invitationID);
 }
@@ -38,8 +38,8 @@ function setNames() {
     popupOverlay.innerHTML = /*html*/ `  
       <div id="popupWindow" class="popup-window">
         <h2 data-key="nameInputHeader">${header}</h2>
-        <input type="text" class="popup-input" id="player1Input" placeholder="Remi">
-        <input type="text" class="popup-input" id="player2Input" placeholder="Lasi">
+        <input type="text" class="popup-input" id="player1Input" placeholder="Player1">
+        <input type="text" class="popup-input" id="player2Input" placeholder="Player2">
         <div class="start-btn-frame">
           <div class="btn-descr">     
             <div class="text-btn-frame" id="popupStartBtn">
@@ -70,11 +70,19 @@ function setNames() {
 /*------------- POPUP and INSERT NAMES IN INDEX ------------------*/
 
 function handleStartClick(renderFunction) {
-  // read inputs
   const input1 = document.getElementById("player1Input");
   const input2 = document.getElementById("player2Input");
-  playerName1 = input1 ? input1.value.trim() : "Player1";
-  playerName2 = input2 ? input2.value.trim() : "Player2";
+  if (input1 && input1.value.trim() !== "") {
+    playerName1 = input1.value.trim();
+  } else {
+    playerName1 = "Doremifa";
+  }
+  if (input2 && input2.value.trim() !== "") {
+    playerName2 = input2.value.trim();
+  } else {
+    playerName2 = "Solasido";
+  }
+
   localStorage.setItem("player1Name", playerName1);
   localStorage.setItem("player2Name", playerName2);
 
@@ -180,19 +188,6 @@ function startTwoTables() {
     `;
   createLink();
   toggleUI();
-}
-
-function autoStartInvitation(invitationID) {
-  isLandingpage = false;
-  gameID = invitationID;
-  renderTable();
-  setupGame();
-  window.history.replaceState(
-    {},
-    document.title,
-    window.location.href.split("?")[0]
-  );
-  joinGame(invitationID);
 }
 
 function createLink() {

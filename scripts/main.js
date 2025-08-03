@@ -177,7 +177,7 @@ function buildStack(Cards) {
   }
 
   //For testing cards and accords
-  // testStack();
+  testStack();
 
   Cards === "playerCards"
     ? renderStack("playerCard", "playerStackID")
@@ -322,9 +322,26 @@ function setupGame(isSkip, isStartRound) {
   startRound(isStartRound);
   updateStaticTexts();
   stackOpacity1(playerCards, "playerCard");
-  if (isStartRound) deck = [];
-  if (!gameID) document.querySelector(".sand-clock").style.display = "none";
-  if (gameID) uploadGameData(true);
+  deck = [];
+  if (!gameRef) document.querySelector(".sand-clock").style.display = "none";
+  if (gameRef) uploadGameData((finishFlag = false)).then(finishRound());
+}
+
+function skipGame() {
+  playerChains = [];
+  observerChains = [];
+  playerCards = [];
+  observerCards = [];
+  playerAccords = [];
+  observerAccords = [];
+  deck = [];
+  updateGoal(5);
+  originalStack();
+  buildStack("playerCards"); // Render player stack
+  buildStack("observerCards");
+  renderCircles();
+  stackOpacity1(playerCards, "playerCard");
+  if (!gameRef) document.querySelector(".sand-clock").style.display = "none";
 }
 
 //called for landingpage

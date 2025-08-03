@@ -115,9 +115,9 @@ function closePopupRules() {
 
 function skipToStart() {
   //window.location.reload();
-  const isSkip = true;
-  
-  setupGame(isSkip);
+  const isSkip = true;  
+  // setupGame(isSkip);
+  skipGame();
   playSound("success", "clave", 0.2);
 }
 
