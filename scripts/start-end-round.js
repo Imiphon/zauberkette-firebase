@@ -9,54 +9,6 @@ async function changeSpecials() {
   currentSpecial = null;
 }
 
-//to prevent double-click on finishRound-btn and skip other player
-function handleFinishRoundClick() {
-  if (!finishButton) {
-    finishButton = true;
-    finishRound();
-  }
-  setTimeout(() => {
-    finishButton = false;
-  }, 3000);
-}
-
-async function finishRound() {
-  console.log('finishRound starts');
-  
-  isFinishRound = true;
-  animateTableFrame();
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-
-  if (specialInProgress) {
-    usedSpecials.pop(); // Last (not finished) special will be removed
-    specialInProgress = false;
-  }
-  if (usedSpecials.length != 0) {
-    await changeSpecials();
-  }
-  swapParts();
-  changeNames();
-  if (mirrorView) {
-    rotateWebsite();
-  }
-
-  checkForChain("player");
-  checkForChain("observer");
-  if (isWinner) {
-    playSound("success", "fanfare2", 0.3);
-    setTimeout(() => {
-      startRound();
-    }, 10000);
-    isWinner = false;
-  }
-  // if (gameRef) {
-  //   uploadGameData(isFinishRound);
-  // }
-  let isStartRound = true;
-  startRound(isStartRound);
-    console.log('finishRound ends');
-}
-
 function animateTableFrame() {
   let tableFrame;
   if (!mirrorView) tableFrame = document.querySelector(".table-frame");
@@ -69,7 +21,7 @@ function animateTableFrame() {
 }
 
 function changeNames() {
-  console.log('changeNames() starts')
+  console.log("changeNames() starts");
   let obsName = document.getElementById("obsNameID");
   let playName = document.getElementById("playNameID");
   [obsName.innerHTML, playName.innerHTML] = [
@@ -92,8 +44,8 @@ function changeNames() {
 
 //starts after first time startRound()
 function swapParts() {
-  console.log('swapParts() starts');
-  
+  console.log("swapParts() starts");
+
   let tempCards = playerCards;
   playerCards = observerCards;
   observerCards = tempCards;
@@ -103,6 +55,37 @@ function swapParts() {
   renderStack("playerCard", "playerStackID");
   renderStack("observerCard", "observerStackID");
   renderCircles();
+}
+
+function setBackArrays(isStartRound) {
+  currentCardID = -1;
+  clickAccount = 0;
+  cardCombi = [];
+  choosenCards = [];
+  accOffer = [];
+  mellotArray = [];
+  currentSpecial = null;
+  specialInProgress = false;
+  if (isStartRound) {
+    usedSpecials = [];
+  }
+
+  choosenAcc = [];
+  tryGoblinStrike = false;
+  tryWizzardStrike = false;
+  wizzardTakes = [];
+  wizzardGives = [];
+  flatNeighbor = [];
+  sharpNeighbor = [];
+  playerChains = [];
+  observerChains = [];
+  flatPlayerConnection = [];
+  sharpPlayerConnection = [];
+}
+
+function setBackBooleans() {
+  isChainCheck = false;
+  isAwaitChangeCard = false;
 }
 
 function startRound(isStartRound) {
@@ -211,33 +194,69 @@ function addToChainArray(circleNr, part, secondCircle) {
   }
 }
 
-function setBackArrays(isStartRound) {
-  currentCardID = -1;
-  clickAccount = 0;
-  cardCombi = [];
-  choosenCards = [];
-  accOffer = [];
-  mellotArray = [];
-  currentSpecial = null;
-  specialInProgress = false;
-  if (isStartRound) {
-    usedSpecials = [];
-  }
 
-  choosenAcc = [];
-  tryGoblinStrike = false;
-  tryWizzardStrike = false;
-  wizzardTakes = [];
-  wizzardGives = [];
-  flatNeighbor = [];
-  sharpNeighbor = [];
-  playerChains = [];
-  observerChains = [];
-  flatPlayerConnection = [];
-  sharpPlayerConnection = [];
+async function finishWinnerRound() {
+  console.log("finishWinnerRound starts");
+
+  isFinishRound = true;
+  playSound("success", "fanfare2", 0.3);
+  setTimeout(() => {
+    startRound();
+  }, 10000);
+  isWinner = false;
+  swapParts();
+  changeNames();  
+  let isStartRound = true;
+  startRound(isStartRound);
+  console.log("finishWinnerRound ends");
 }
 
-function setBackBooleans() {
-  isChainCheck = false;
-  isAwaitChangeCard = false;
+async function finishNormalRound() {
+  console.log("finishWinnerRound starts");
+  swapParts();
+  changeNames();
+  if (gameRef) {
+    isActiveUI = !isActiveUI;
+    toggleUI();
+  }
+  let isStartRound = true;
+  startRound(isStartRound);
+  if (gameRef) uploadGameData(isFinishRound);
+    console.log("finishNormalRound ends");
+}
+
+async function finishRound() {
+  console.log("finishRound starts");
+  isFinishRound = true;
+  animateTableFrame();
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+  if (specialInProgress) {
+    usedSpecials.pop();
+    specialInProgress = false;
+  }
+  if (usedSpecials.length !== 0) {
+    await changeSpecials();
+  }
+  if (mirrorView) {
+    rotateWebsite();
+  }
+  checkForChain("player");
+  checkForChain("observer");
+  if (isWinner) {
+    await finishWinnerRound(); // darin kein upload
+  } else {
+    await finishNormalRound(); // darin Upload etc.
+  }
+  console.log("finishRound ends");
+}
+
+//to prevent double-click on finishRound-btn and skip other player
+function handleFinishRoundClick() {
+  if (!finishButton) {
+    finishButton = true;
+    finishRound();
+  }
+  setTimeout(() => {
+    finishButton = false;
+  }, 3000);
 }

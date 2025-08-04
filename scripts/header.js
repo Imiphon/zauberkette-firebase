@@ -19,7 +19,7 @@ function renderHeaderHTML() {
                 <div class="num-picker" id="numberPicker">
                     <button type="button" id="decreaseBtn" onclick="decreaseValue()">-</button>
                     <span id="currentGoalValue">5</span>
-                    <button type="button" id="increaseBtn" onclick="increaseValue()">+</button>
+                    <button type="button" id="increaseBtn" onclick="increaseValue('btnClick')">+</button>
                 </div>
             </div>
             <button class="nav-btn" onclick="changeView()">
@@ -135,8 +135,8 @@ function decreaseValue() {
     uploadGameData();
 }
 
-function increaseValue() {
-  if (gameID && !isActiveUI) return;
+function increaseValue(btnClick) {
+  if (gameID && !isActiveUI && btnClick === 'btnClick') return;
   let value = parseInt(document.getElementById("currentGoalValue").textContent, 10);
   if (value < 12) {
     value++;

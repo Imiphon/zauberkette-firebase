@@ -380,7 +380,7 @@ function youWin(part, length, winnerName) {
   }
 }
 
-function continueOnline() {
+function skipOnline() {
   isWinner = false;
   if (!isActiveUI) {
     isActiveUI = true;
@@ -396,4 +396,26 @@ function continueOnline() {
     toggleUI();
     changeNames(); 
   }
+}
+
+function continueOnline() {
+    console.log('continueOnline() starts');
+    increaseValue();    
+  isWinner = false;
+  if (!isActiveUI) {
+    console.log('!isActiveUI in continueOnline');   
+    isActiveUI = true;
+    toggleUI();
+    swapParts();        
+    changeNames(); 
+    if (mirrorView) rotateWebsite();
+    startRound(true);
+    uploadGameData(true);
+  } else {
+    console.log('isActiveUI in continueOnline');      
+    isActiveUI = false;
+    toggleUI();
+    changeNames(); 
+  }
+      console.log('continueOnline() ends');
 }

@@ -92,6 +92,7 @@ function setupWinnerListener() {
     if (data.action === "restart") {
       const ov = document.getElementById("winOverlay");
       if (ov) ov.remove();
+      skipOnline();
       gameRef
         .update({ action: firebase.firestore.FieldValue.delete() })
         .catch(console.error);
