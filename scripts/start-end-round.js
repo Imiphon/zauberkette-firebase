@@ -21,7 +21,6 @@ function animateTableFrame() {
 }
 
 function changeNames() {
-  console.log("changeNames() starts");
   let obsName = document.getElementById("obsNameID");
   let playName = document.getElementById("playNameID");
   [obsName.innerHTML, playName.innerHTML] = [
@@ -44,8 +43,6 @@ function changeNames() {
 
 //starts after first time startRound()
 function swapParts() {
-  console.log("swapParts() starts");
-
   let tempCards = playerCards;
   playerCards = observerCards;
   observerCards = tempCards;
@@ -196,8 +193,6 @@ function addToChainArray(circleNr, part, secondCircle) {
 
 
 async function finishWinnerRound() {
-  console.log("finishWinnerRound starts");
-
   isFinishRound = true;
   playSound("success", "fanfare2", 0.3);
   setTimeout(() => {
@@ -208,11 +203,9 @@ async function finishWinnerRound() {
   changeNames();  
   let isStartRound = true;
   startRound(isStartRound);
-  console.log("finishWinnerRound ends");
 }
 
 async function finishNormalRound() {
-  console.log("finishWinnerRound starts");
   swapParts();
   changeNames();
   if (gameRef) {
@@ -222,11 +215,9 @@ async function finishNormalRound() {
   let isStartRound = true;
   startRound(isStartRound);
   if (gameRef) uploadGameData(isFinishRound);
-    console.log("finishNormalRound ends");
 }
 
 async function finishRound() {
-  console.log("finishRound starts");
   isFinishRound = true;
   animateTableFrame();
   await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -247,7 +238,6 @@ async function finishRound() {
   } else {
     await finishNormalRound(); // darin Upload etc.
   }
-  console.log("finishRound ends");
 }
 
 //to prevent double-click on finishRound-btn and skip other player

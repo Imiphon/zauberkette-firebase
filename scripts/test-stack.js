@@ -1,7 +1,8 @@
 /***************************** TEST STACK  ******************************/
-
+let testStackOn = false;
 //called in buildStack()
 function testStack() {
+if(testStackOn) return;
   playerCards = [
     {
       nr: 1,
@@ -91,4 +92,5 @@ function testStack() {
       src: "assets/images/accords/accBb.jpg",
     },
   ];
+    testStackOn = true;
 }

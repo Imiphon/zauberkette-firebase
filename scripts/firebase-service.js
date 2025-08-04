@@ -67,18 +67,14 @@ function setupWinnerListener() {
     if (docSnapshot.metadata.hasPendingWrites) return;
 
     const data = docSnapshot.data();
-    if (data.winner) {
-      console.log('data.winner: ',data.winner);
-      
+    if (data.winner) {      
       const { part, length, winnerName } = data.winner;
-      // if(isActiveUI) swapParts();
       createWinPopup(part, length, winnerName);
       gameRef.update({ winner: null }).catch(console.error);
     }
 
     // --- 2) Continue-Action ---
     if (data.action === "continue") {
-      console.log('data.action "continue": ', data.action);
       const ov = document.getElementById("winOverlay");
       if (ov) ov.remove();
       continueOnline();
@@ -398,13 +394,12 @@ function fetchGameData(gameID) {
     .get()
     .then(function (doc) {
       if (doc.exists) {
-        console.log("Spieldaten:", doc.data());
         initializeGameWithData(doc.data());
       } else {
         console.log("Kein Spiel mit dieser ID gefunden!");
       }
     })
     .catch(function (error) {
-      console.error("Fehler beim Abrufen der Spieldaten:", error);
+      console.error(error);
     });
 }

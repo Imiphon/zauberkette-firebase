@@ -314,8 +314,6 @@ function showWithTimeout(func, timeout, optFunc) {
  * @param {string}  winnerName
  */
 function createWinPopup(winPart, length, winnerName) {
-  console.log('createWinPopup starts');
-  // mehrfaches Popup verhindern
   const oldOverlay = document.getElementById("winOverlay");
   if (oldOverlay) oldOverlay.remove();
 
@@ -344,7 +342,6 @@ function createWinPopup(winPart, length, winnerName) {
         gameRef.update({ action: "continue" }).catch(console.error);
       } else {
         document.getElementById("winOverlay")?.remove();
-        increaseValue();
         isWinner = false;
       }
     });
@@ -358,8 +355,6 @@ function createWinPopup(winPart, length, winnerName) {
       }
     });
   }
-  console.log('isActiv:',isActiveUI);
-  console.log('createWinPopup ends');
 }
 
 /**
@@ -382,40 +377,36 @@ function youWin(part, length, winnerName) {
 
 function skipOnline() {
   isWinner = false;
+  skipGame();
+  updateGoal(5);
+  swapParts();
+  changeNames();
   if (!isActiveUI) {
     isActiveUI = true;
     toggleUI();
-    swapParts();        
-    changeNames(); 
     if (mirrorView) rotateWebsite();
-    increaseValue();    
     startRound(true);
     uploadGameData(true);
   } else {
     isActiveUI = false;
     toggleUI();
-    changeNames(); 
   }
 }
 
 function continueOnline() {
-    console.log('continueOnline() starts');
-    increaseValue();    
+  increaseValue();
   isWinner = false;
   if (!isActiveUI) {
-    console.log('!isActiveUI in continueOnline');   
     isActiveUI = true;
     toggleUI();
-    swapParts();        
-    changeNames(); 
+    swapParts();
+    changeNames();
     if (mirrorView) rotateWebsite();
     startRound(true);
     uploadGameData(true);
   } else {
-    console.log('isActiveUI in continueOnline');      
     isActiveUI = false;
     toggleUI();
-    changeNames(); 
+    changeNames();
   }
-      console.log('continueOnline() ends');
 }
