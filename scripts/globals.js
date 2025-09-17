@@ -1,3 +1,6 @@
+window.gameRef = window.gameRef ?? null;
+window.gameID  = window.gameID  ?? null;
+
 let vh = window.innerHeight * 0.01; //saves 1% of 100vh manual (somtimes neccassary for mobiles with border)
 document.documentElement.style.setProperty("--vh", `${vh}px`); //set var '--v' for css stuff like: height: calc(var(--vh, 1vh) * 100);
 

@@ -92,13 +92,13 @@ function handleStartClick(renderFunction) {
   const popupOverlay = document.getElementById("popupOverlay");
   if (popupOverlay) popupOverlay.remove();
 
-  if (gameRef) {
+  if (typeof gameRef !== "undefined" && gameRef) {
     gameRef.update({
       playerNames: {
-        player1: playerName_1,
-        player2: playerName_2,
+        player1: playerName1,
+        player2: playerName2,
       },
-    });
+    }).catch(console.error);
   }
 
   renderFunction(); // startOneTable() or startTwoTables()

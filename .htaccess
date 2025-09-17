@@ -1,0 +1,18 @@
+# --- Enable rewrite engine for SPA routing
+RewriteEngine On
+RewriteBase /apps/zauberkette/
+
+# If the request is for an existing file or directory, serve it
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Otherwise, route everything to index.html (SPA)
+RewriteRule . index.html [L]
+
+# --- Content Security Policy
+# First remove any CSP coming from higher-level configs (root / vhost)
+Header always unset Content-Security-Policy
+
+# Set a single, valid CSP header (no inline comments, one logical line)
+Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; script-src-elem 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; connect-src 'self' https://firestore.googleapis.com https://www.googleapis.com https://firebaseinstallations.googleapis.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com"
