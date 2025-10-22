@@ -2,7 +2,7 @@ function renderHeaderHTML() {
   return /*html*/ ` 
   <nav>
     <div class="nav-left">
-        <img class="logo" src="assets/images/logo-wheat.png" alt="">
+        <a href="http://www.melopoiia.de"><img class="logo" src="assets/images/logo-wheat.png" alt=""></a>
     </div>
     <div class="nav-center">
         <h3>Zauberkette</h3>
